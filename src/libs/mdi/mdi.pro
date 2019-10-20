@@ -20,12 +20,20 @@ include(../libs.pri)
 
 SOURCES += \
     BaseMdiArea.cpp \
+    BaseMdiDocument.cpp \
+    BaseMdiMainWindow.cpp \
     BaseMdiSubWindow.cpp \
-    Mdi.cpp
+    Mdi.cpp \
+    MdiDocumentManager.cpp \
+    MdiWindowManager.cpp
 
 HEADERS += \
     BaseMdiArea.h \
+    BaseMdiDocument.h \
+    BaseMdiMainWindow.h \
     BaseMdiSubWindow.h \
+    MdiDocumentManager.h \
+    MdiWindowManager.h \
     mdi_global.h \
     Mdi.h
 

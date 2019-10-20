@@ -2,6 +2,7 @@
 
 VVMainWindow::VVMainWindow(void)
 {
+    setObjectName("VVMainWindow");
 }
 
 VVMainWindow::~VVMainWindow()

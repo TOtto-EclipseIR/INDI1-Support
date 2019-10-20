@@ -1,8 +1,9 @@
 #pragma once
+#include "Mdi.h"
 
 #include <QMdiSubWindow>
 
-class BaseMdiSubWindow : public QMdiSubWindow
+class MDI_EXPORT BaseMdiSubWindow : public QMdiSubWindow
 {
     Q_OBJECT
 public:

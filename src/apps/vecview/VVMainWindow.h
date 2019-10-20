@@ -1,8 +1,8 @@
 #pragma once
 
-#include <exe/BaseMainWindow.h>
+#include <mdi/BaseMdiMainWindow.h>
 
-class VVMainWindow : public BaseMainWindow
+class VVMainWindow : public BaseMdiMainWindow
 {
     Q_OBJECT
 public:

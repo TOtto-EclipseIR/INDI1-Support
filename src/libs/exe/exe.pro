@@ -19,11 +19,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(../libs.pri)
 
 SOURCES += \
+    BaseAction.cpp \
+    BaseDocument.cpp \
     BaseMainWindow.cpp \
     BaseWidgetApp.cpp \
     Exe.cpp
 
 HEADERS += \
+    BaseAction.h \
+    BaseDocument.h \
     BaseMainWindow.h \
     BaseWidgetApp.h \
     exe_global.h \

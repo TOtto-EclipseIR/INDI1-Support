@@ -2,5 +2,5 @@
 
 BaseMainWindow::BaseMainWindow(void)
 {
-
+    setObjectName("BaseMainWindow");
 }
