@@ -1,3 +1,3 @@
 # libs.pri
 
-include(../common/common.pri)
+include(../src.pri)

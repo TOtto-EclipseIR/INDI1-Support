@@ -1,12 +1,13 @@
 #pragma once
+#include "Exe.h"
 
 #include <QMainWindow>
 
-class BaseMainWindow : public QMainWindow
+class EXE_EXPORT BaseMainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit BaseMainWindow(QWidget *parent = nullptr);
+    explicit BaseMainWindow(void);
 
 signals:
 

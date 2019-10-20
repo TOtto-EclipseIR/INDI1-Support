@@ -1,8 +1,9 @@
 #pragma once
+#include "Exe.h"
 
 #include <QApplication>
 
-class BaseWidgetApp : public QApplication
+class EXE_EXPORT BaseWidgetApp : public QApplication
 {
     Q_OBJECT
 public:
