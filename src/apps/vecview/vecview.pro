@@ -23,17 +23,11 @@ LIBS *= -lexe2 -lmdi2
 TARGET = VectorViewer
 
 SOURCES += \
-    PngVectorDocument.cpp \
-    VectorDocument.cpp \
-    XmlVectorDocument.cpp \
     main.cpp \
     VVMainWindow.cpp
 
 HEADERS += \
-    PngVectorDocument.h \
     VVMainWindow.h \
-    VectorDocument.h \
-    XmlVectorDocument.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -9,8 +9,13 @@ class EXE_EXPORT BaseWidgetApp : public QApplication
 public:
     explicit BaseWidgetApp(int argc, char **argv);
 
+public slots:
+
+
 signals:
 
-public slots:
+
+private:
+
 };
 
