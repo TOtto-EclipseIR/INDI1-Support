@@ -1,4 +1,4 @@
-QT += gui widgets
+QT += gui widgets xml
 
 TEMPLATE = lib
 DEFINES += MDI_LIBRARY
@@ -19,15 +19,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(../libs.pri)
 
 SOURCES += \
+    AbstractMdiDocument.cpp \
     BaseMdiArea.cpp \
     BaseMdiDocument.cpp \
     BaseMdiMainWindow.cpp \
     BaseMdiSubWindow.cpp \
-    Mdi.cpp \
     MdiDocumentManager.cpp \
-    MdiWindowManager.cpp
+    MdiWindowManager.cpp \
+    Mdi.cpp \
 
 HEADERS += \
+    AbstractMdiDocument.h \
     BaseMdiArea.h \
     BaseMdiDocument.h \
     BaseMdiMainWindow.h \
@@ -35,7 +37,7 @@ HEADERS += \
     MdiDocumentManager.h \
     MdiWindowManager.h \
     mdi_global.h \
-    Mdi.h
+    Mdi.h \
 
 # Default rules for deployment.
 unix {
