@@ -19,7 +19,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(../libs.pri)
 
 SOURCES += \
+<<<<<<< .mine
     ActionManager.cpp \
+=======
+    ApplicationSettings.cpp \
+>>>>>>> .theirs
     ApplicationSettings.cpp \
     BaseAction.cpp \
     BaseDocument.cpp \
