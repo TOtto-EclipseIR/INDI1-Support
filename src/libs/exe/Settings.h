@@ -1,10 +1,11 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
+#include "Exe.h"
 
 #include <QObject>
 #include <QSettings>
 
-class Settings : public QSettings
+class EXE_EXPORT Settings : public QSettings
 {
     Q_OBJECT
 public:
@@ -19,8 +20,8 @@ public:
     bool contains(const Key & key) const;
 
 public slots:
-    void set(Key groupId, KeyValueList kvs) {}
-    void set(Key & key, QVariant & var) {}
+    void set(Key groupId, KeyValueList kvs);
+    void set(Key & key, QVariant & var);
 
 
 signals:
