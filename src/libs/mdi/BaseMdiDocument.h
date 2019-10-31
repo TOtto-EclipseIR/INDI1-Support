@@ -17,17 +17,9 @@ class MDI_EXPORT BaseMdiDocument :public QObject
 public:
     BaseMdiDocument(const QString & baseTitle,
                     MdiDocumentManager * parent=nullptr);
-    QString baseTitle(void) const;
-    QString newTitle(const int i);
-    QString openTitle(const QFileInfo fi);
 
 public slots:
 
 protected:
-    MdiDocumentManager * cmpManager;
-    QFileInfo mFileInfo;
-    QFile * mpFile=nullptr;
-    const QString cmBaseTitle;
-    QString mTitle;
 };
 

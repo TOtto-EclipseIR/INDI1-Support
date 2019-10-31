@@ -8,7 +8,8 @@
 #include <QVariant>
 
 #include "BaseAction.h"
-class ApplicationSettings;
+#include "Settings.h"
+//class ApplicationSettings;
 class BaseWidgetApp;
 
 class ActionManager : public QObject
@@ -18,11 +19,12 @@ public:
     typedef QString ActionId; // TODO: BasicId
 
 public:
-    explicit ActionManager(BaseWidgetApp * wgtApp=nullptr);
+    explicit ActionManager(BaseWidgetApp * wgtApp);
     BaseAction * create(const ActionId id,
                         const QVariantMap config);
 
 public slots:
+    void setup(Settings::KeyValueList & kvs) {}
     void setup(ActionId settingsGroup) {;} // TODO
     void connect(ActionId id, QObject * object) {;}
     void activate(void) {;}
@@ -39,7 +41,8 @@ signals:
 
 private:
     BaseWidgetApp * cmpWgtApp=nullptr;
-    ApplicationSettings * cmpSettings=nullptr;
+//    ApplicationSettings * cmpAppSettings=nullptr;
+    Settings * cmpSettings=nullptr;
     QMap<ActionId, BaseAction *> mIdActionMap;
 };
 

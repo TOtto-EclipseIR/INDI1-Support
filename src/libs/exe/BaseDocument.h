@@ -1,26 +1,21 @@
 #pragma once
+#include <QString>
+#include <QVariant>
 
-#include <QObject>
+typedef QString VarId;
+typedef QVariantMap VarMap; // TODO
 
-#include <QFileInfo>
-
-class BaseDocument : public QObject
+class BaseDocument
 {
-    Q_OBJECT
+
 public:
-    explicit BaseDocument(QObject * parent=nullptr);
-
-public slots:
-    void newFile(void) {;}
-    void openFile(const QFileInfo & fi) {;}
-    void saveFile(void) {;}
-    void saveFileAs(const QFileInfo & fi) {;}
-    void fileOpenDialog(void) {;}
-    void fileSaveAsDialog(void) {;}
-
-signals:
+    explicit BaseDocument(void) {}
+    QVariant value(const VarId & id);
+    void set(const VarId & id, const QVariant & var);
+    bool contains(const VarId & id);
 
 private:
+    VarMap mVarMap;
 
 };
 

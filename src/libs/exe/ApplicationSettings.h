@@ -18,10 +18,12 @@ public:
     typedef QList<Layer> LayerList;
     typedef QString Key;         // TODO BasicId
     typedef QVariant Value;
+//********SettingssOURCE
     class SettingsSource
     {
         SettingsSource(void);
     };
+//********^SettingsSource
 
 public:
     explicit ApplicationSettings(QObject * parent=nullptr);
@@ -37,16 +39,11 @@ public:
 
 
 public slots:
-    void push(const SettingsSource & source)
-        {;} // TODO
-    void set(const Key & key, const Value & value)
-        {;} // TODO: top-pop layer
-    void setAt(const Layer layer, const Key & key,
-               const Value & value) {;}
-    void setAt(const LayerName layerName, const Key & key,
-               const Value & value) {;}
-    void scan(LayerList layerList=LayerList())
-        {;} // TODO
+//    void push(const SettingsSource & source)        {;} // TODO
+//    void set(const Key & key, const Value & value)        {;} // TODO: top-pop layer
+//    void setAt(const Layer layer, const Key & key, const Value & value) {;}
+//    void setAt(const LayerName layerName, const Key & key, const Value & value) {;}
+//    void scan(LayerList layerList=LayerList()) {;} // TODO
 
 signals:
     void initialStart(Layer, LayerName);
@@ -57,6 +54,7 @@ signals:
 
 
 protected:
+//********SettingsLayer
     class SettingsLayer : public QSettings
     {
     public:
@@ -72,7 +70,7 @@ protected:
 
 
     }; // Layer sub-class
-
+//******^SettingsLayer
 
 protected slots:
 
