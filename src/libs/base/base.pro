@@ -1,7 +1,7 @@
 QT -= gui
 
 TEMPLATE = lib
-DEFINES += CORE_LIBRARY
+DEFINES += BASE_LIBRARY
 
 CONFIG += c++11
 
@@ -18,22 +18,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(../libs.pri)
 
-LIBS *= -lbase2
 
 SOURCES += \
-    BasicId.cpp \
-    Core.cpp
+    AbstractIdString.cpp \
+    Base.cpp \
+    BaseIdBehavior.cpp
 
 HEADERS += \
-    BasicId.h \
-    core_global.h \
-    Core.h
+    AbstractIdString.h \
+    BaseIdBehavior.h \
+    base_global.h \
+    Base.h
 
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
 }
 !isEmpty(target.path): INSTALLS += target
-
-DISTFILES += \
-    ../libs.pri
