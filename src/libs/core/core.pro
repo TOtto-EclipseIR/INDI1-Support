@@ -1,4 +1,5 @@
-QT -= gui
+QT *= xml
+#QT -= gui
 
 TEMPLATE = lib
 DEFINES += CORE_LIBRARY
@@ -22,10 +23,22 @@ LIBS *= -lbase2
 
 SOURCES += \
     BasicId.cpp \
-    Core.cpp
+    BasicName.cpp \
+    Core.cpp \
+    Variable.cpp \
+    VariableId.cpp \
+    VariableIdList.cpp \
+    VariableSet.cpp \
+    VariableType.cpp
 
 HEADERS += \
     BasicId.h \
+    BasicName.h \
+    Variable.h \
+    VariableId.h \
+    VariableIdList.h \
+    VariableSet.h \
+    VariableType.h \
     core_global.h \
     Core.h
 

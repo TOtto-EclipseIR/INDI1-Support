@@ -59,22 +59,25 @@ QString AbstractIdString::sectionSeparator(void) const
     return _behavior->sectionSeparator();
 }
 
-QString AbstractIdString::section(int index, int repeatQutoed) const
+QString AbstractIdString::section(int index, int repeatQuoted) const
 {
-    if (repeatQutoed)
+    if (repeatQuoted)
     {
-        QString s(QString::section(_behavior->sectionSeparator(), index, index));
+        QString s(QString::section(_behavior->sectionSeparator(),
+                                   index, index));
         QStringList qsl;
-        while (repeatQutoed--) qsl << s;
+        while (repeatQuoted--) qsl << s;
         return "\"" + qsl.join("\",\"") + "\"";
     }
     else
-        return QString::section(_behavior->sectionSeparator(), index, index);
+        return QString::section(_behavior->sectionSeparator(),
+                                index, index);
 }
 
 QStringList AbstractIdString::sectionList(int first, int last) const
 {
-    return QString::section(_behavior->sectionSeparator(), first, last)
+    return QString::section(_behavior->sectionSeparator(),
+                            first, last)
                     .split(_behavior->sectionSeparator());
 }
 
@@ -93,5 +96,6 @@ int AbstractIdString::sectionCount(void) const
 
 bool AbstractIdString::startsWith(const AbstractIdString & section) const
 {
-    return QString::startsWith(section + _behavior->sectionSeparator());
+    return QString::startsWith(section
+            + _behavior->sectionSeparator());
 }

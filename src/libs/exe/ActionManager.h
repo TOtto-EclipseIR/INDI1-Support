@@ -4,8 +4,12 @@
 #include <QObject>
 
 #include <QMap>
+#include <QMenu>
 #include <QString>
 #include <QVariant>
+
+#include "../core/BasicId.h"
+#include "../core/BasicName.h"
 
 #include "BaseAction.h"
 #include "Settings.h"
@@ -16,14 +20,18 @@ class ActionManager : public QObject
 {
     Q_OBJECT
 public:
-    typedef QString ActionId; // TODO: BasicId
+    typedef BasicId ActionId;
 
 public:
     explicit ActionManager(BaseWidgetApp * wgtApp);
+    QMenu * menu(const BasicId & name)
+    { return mNameMenuMap.value(name); }
     BaseAction * create(const ActionId id,
                         const QVariantMap config);
 
 public slots:
+    void registerMenu(const BasicName & name, QMenu * menu)
+    { mNameMenuMap.insert(name, menu); }
     void setup(Settings::KeyValueList & kvs) {}
     void setup(ActionId settingsGroup) {;} // TODO
     void connect(ActionId id, QObject * object) {;}
@@ -43,6 +51,7 @@ private:
     BaseWidgetApp * cmpWgtApp=nullptr;
 //    ApplicationSettings * cmpAppSettings=nullptr;
     Settings * cmpSettings=nullptr;
+    QMap<BasicName, QMenu *> mNameMenuMap;
     QMap<ActionId, BaseAction *> mIdActionMap;
 };
 

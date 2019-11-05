@@ -74,7 +74,7 @@ public:
     void prepend(const QString & section);
     QString sortable(void) const;
     QString sectionSeparator(void) const;
-    QString section(int index, int repeatQutoed=0) const;
+    QString section(int index, int repeatQuoted=0) const;
     QStringList sectionList(int first, int last=-1) const;
     QString sections(int first, int last=-1) const;
     int sectionCount(void) const;

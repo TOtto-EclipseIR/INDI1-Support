@@ -11,7 +11,7 @@ public:
     BasicId(const char * chars);
     BasicId(const char * chars,
                const char * chars1,
-               const char * chars2=0,
-               const char * chars3=0);
+               const char * chars2=nullptr,
+               const char * chars3=nullptr);
 };
 
