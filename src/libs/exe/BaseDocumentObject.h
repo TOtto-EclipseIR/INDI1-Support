@@ -6,6 +6,7 @@
 #include "DocumentManager.h"
 
 #include <QFileInfo>
+/*
 class BaseDocumentObject : public QObject, BaseDocument
 {
     Q_OBJECT
@@ -28,5 +29,5 @@ protected:
 
 
 };
-
+*/
 #endif // BASEDOCUMENTOBJECT_H

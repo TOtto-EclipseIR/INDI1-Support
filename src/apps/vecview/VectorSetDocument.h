@@ -4,7 +4,7 @@
 #include <QVariantMap>
 
 #include "exe/BaseDocument.h"
-
+/*
 class VectorSetDocument : public BaseDocument
 {
 public:
@@ -13,5 +13,5 @@ public:
 private:
 
 };
-
+*/
 #endif // VECTORSETDOCUMENT_H
