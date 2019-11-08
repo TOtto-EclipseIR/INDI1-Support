@@ -25,6 +25,7 @@ SOURCES += \
     BasicId.cpp \
     BasicName.cpp \
     Core.cpp \
+    Identification.cpp \
     Variable.cpp \
     VariableId.cpp \
     VariableIdList.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 HEADERS += \
     BasicId.h \
     BasicName.h \
+    Identification.h \
     Variable.h \
     VariableId.h \
     VariableIdList.h \

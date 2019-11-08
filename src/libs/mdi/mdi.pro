@@ -19,22 +19,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(../libs.pri)
 
 SOURCES += \
-    AbstractMdiDocument.cpp \
     BaseMdiArea.cpp \
-    BaseMdiDocument.cpp \
     BaseMdiMainWindow.cpp \
     BaseMdiSubWindow.cpp \
-    MdiDocumentManager.cpp \
     MdiWindowManager.cpp \
     Mdi.cpp \
 
 HEADERS += \
-    AbstractMdiDocument.h \
     BaseMdiArea.h \
-    BaseMdiDocument.h \
     BaseMdiMainWindow.h \
     BaseMdiSubWindow.h \
-    MdiDocumentManager.h \
     MdiWindowManager.h \
     mdi_global.h \
     Mdi.h \

@@ -2,24 +2,24 @@
 #define VARIABLESET_H
 #include "Core.h"
 
-#include <QtCore/QSharedData>
-#include <QtCore/QSharedDataPointer>
+#include <QSharedDataPointer>
 
+#include "Identification.h"
 #include "Variable.h"
 class VariableIdList;
 
 class VariableSetData : public QSharedData
 {
 public:
-    VariableSetData(void) : key_u64(0) {}
+    VariableSetData(void) : mUllKey(0) {}
     VariableSetData(const VariableSetData & other);
 
-    QString name_s;
-    quint64 key_u64;
-    QString id_s;
-    QMap<QString, Variable> vbl_map;
-    QList<QVariant> var_list;
-    QByteArray _ba;
+    QString mName;
+    quint64 mUllKey;
+    QString mId;
+    QMap<QString, Variable> mIdMap;
+    QList<QVariant> mVariantList;
+    QByteArray mBytes;
 };
 
 
@@ -197,6 +197,7 @@ public:
 
     void set(const QVariantList & vl);
     void set(const Variable & vbl);
+    void set(const Variable::List & vbls);
     void set(const VariableId & vid,
              const QVariant & value);
     void set(const int index,
@@ -216,7 +217,7 @@ public:
     VariableIdList ids(const VariableId & within=VariableId()) const;
     void import(const VariableSet & other,
                 const VariableId & sectionId=VariableId());
-    QList<Variable> all(void) const;
+    Variable::List all(void) const;
 
 private:
 

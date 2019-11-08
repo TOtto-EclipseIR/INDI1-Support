@@ -107,5 +107,6 @@ void VariableSet::dtor(void) {} // ditto dtor
     CLASS::CLASS() : data(new DATA) { ctor(); } \
     CLASS::CLASS(const CLASS &rhs) : data(rhs.data) {} \
     CLASS &CLASS::operator=(const CLASS &rhs) \
-        { if (this != &rhs) data.operator=(rhs.data); return *this; } \
+        { if (this != &rhs) data.operator=(rhs.data); return *this;}\
     CLASS::~CLASS() { dtor(); } \
+

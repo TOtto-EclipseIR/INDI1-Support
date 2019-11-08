@@ -7,12 +7,14 @@
 
 #include <QVariant>
 
-class QDomElement;
+//class QDomElement;
 
 #include "VariableId.h"
 
 class CORE_EXPORT Variable
 {
+public:
+    typedef QList<Variable> List;
 public:
     explicit Variable(void);
     Variable(const VariableId & id,
@@ -35,8 +37,6 @@ public:
     int csvHeadingCount(void) const;
     QString csvEntryString(void) const;
     QString csvEntryHeading(int row) const;
-    //bool readXml(const QDomElement & de);
-    //QDomElement writeXml(void) const;
 
 private:
     VariableId mId;
