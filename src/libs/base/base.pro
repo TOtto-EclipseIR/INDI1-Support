@@ -22,7 +22,7 @@ include(../libs.pri)
 SOURCES += \
     AbstractIdString.cpp \
     Base.cpp \
-    BaseIdBehavior.cpp \ \
+    BaseIdBehavior.cpp \
 
 HEADERS += \
     AbstractIdString.h \

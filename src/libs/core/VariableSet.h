@@ -4,7 +4,6 @@
 
 #include <QSharedDataPointer>
 
-#include "Identification.h"
 #include "Variable.h"
 class VariableIdList;
 

@@ -20,7 +20,6 @@ include(../libs.pri)
 
 SOURCES += \
     ApplicationSettings.cpp \
-    BaseAction.cpp \
     BaseMainWindow.cpp \
     BaseWidgetApp.cpp \
     BaseWindowWidget.cpp \
@@ -30,7 +29,6 @@ SOURCES += \
 
 HEADERS += \
     ApplicationSettings.h \
-    BaseAction.h \
     BaseMainWindow.h \
     BaseWidgetApp.h \
     BaseWindowWidget.h \

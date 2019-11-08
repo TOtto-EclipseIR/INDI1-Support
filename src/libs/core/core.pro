@@ -25,21 +25,21 @@ SOURCES += \
     BasicId.cpp \
     BasicName.cpp \
     Core.cpp \
-    Identification.cpp \
     Variable.cpp \
     VariableId.cpp \
     VariableIdList.cpp \
     VariableSet.cpp \
+    VariableSetDocument.cpp \
     VariableType.cpp
 
 HEADERS += \
     BasicId.h \
     BasicName.h \
-    Identification.h \
     Variable.h \
     VariableId.h \
     VariableIdList.h \
     VariableSet.h \
+    VariableSetDocument.h \
     VariableType.h \
     core_global.h \
     Core.h
