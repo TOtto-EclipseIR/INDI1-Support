@@ -5,17 +5,21 @@
 #include "../base/DataProperty.h"
 
 #include <QBuffer>
+#include <QDataStream>
 #include <QDomDocument>
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
 #include <QJsonDocument>
+#include <QTextStream>
+#include <QVariant>
 
 #include "VariableSet.h"
 
 #define VSDOCUMENT_DATAPROPS(TND) \
     TND(QDomDocument, DomDocument, QDomDocument()) \
     TND(QJsonDocument, JsonDocument, QJsonDocument()) \
+    TND(QVariant, Variant, QVariant()) \
     TND(QImage, Image, QImage()) \
 
 
@@ -33,4 +37,21 @@ class CORE_EXPORT VariableSetDocument
 {
     DECLARE_PARENT_DATAPROPS(VSDOCUMENT_DATAPROPS)
     DECLARE_DATAPROPS(VariableSetDocument, VariableSetDocumentData)
+
+public:
+    VariableSetDocument(VariableSet * pVarSet);
+    bool read(const QFileInfo & fi);
+    bool write(const QFileInfo & fi);
+    void close(void);
+    bool parse(void);
+    bool parseImage(void);
+    bool parseDomDocument(void);
+    bool parseDomDocument(const QByteArray & bytes);
+
+private:
+    VariableSet * mpVariableSet = nullptr;
+    QFile * mpFile = nullptr;
+    QBuffer * mpBuffer = nullptr;
+    QDataStream * mpDataStream=nullptr;
+    QTextStream * mpTextStream = nullptr;
 };
