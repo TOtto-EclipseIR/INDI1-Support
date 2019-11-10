@@ -28,6 +28,7 @@ SOURCES += \
     Variable.cpp \
     VariableId.cpp \
     VariableIdList.cpp \
+    VariableMap.cpp \
     VariableSet.cpp \
     VariableSetDocument.cpp \
     VariableSetDocumentObject.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     Variable.h \
     VariableId.h \
     VariableIdList.h \
+    VariableMap.h \
     VariableSet.h \
     VariableSetDocument.h \
     VariableSetDocumentObject.h \

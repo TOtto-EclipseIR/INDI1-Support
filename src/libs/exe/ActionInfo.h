@@ -21,7 +21,7 @@ class ActionInfoData : public QSharedData
 {
     DECLARE_CHILD_DATAPROPS(ACTIONINFO_DATAPROPS)
 public:
-    LogItemData(void)
+    ActionInfoData(void)
     {
         DEFINE_DATAPROPS_CTORS(ACTIONINFO_DATAPROPS)
     }
@@ -31,7 +31,10 @@ class EXE_EXPORT ActionInfo
 {
     DECLARE_PARENT_DATAPROPS(ACTIONINFO_DATAPROPS)
     DECLARE_DATAPROPS(ActionInfo, ActionInfoData)
+
+public:
     ActionInfo(const VariableId & name); // alternate ctor
+    QAction * newAction(QObject * actionParent);
 };
 
 
