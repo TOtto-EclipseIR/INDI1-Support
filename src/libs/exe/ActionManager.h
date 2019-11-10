@@ -1,4 +1,5 @@
 #pragma once
+#include "Exe.h"
 
 #include <QObject>
 
@@ -8,16 +9,19 @@ class QMenu;
 
 #include "../core/VariableSet.h"
 
-typedef QMap<QString, QMenu *> NameMenuMap;
-typedef QMap<QString, QAction *> NameActionMap;
+#include "ActionInfo2.h"
 
-class ActionManager : public QObject
+typedef QMap<QString, QMenu *> NameMenuMap;
+typedef QMap<QString, ActionInfo2> NameActionInfoMap;
+
+class EXE_EXPORT ActionManager : public QObject
 {
     Q_OBJECT
 public:
     explicit ActionManager(QObject * parent=nullptr);
-    void configure(const VariableSet & config,
-                   NameMenuMap * nameMenus=nullptr);
+    void configure(const VariableSet & actionConfig);
+    ActionInfo2 actionInfo(const VariableId name) const
+    { return mNameActionInfoMap.value(name); }
 
 public slots:
 
@@ -25,6 +29,6 @@ public slots:
 signals:
 
 private:
-    NameActionMap mNameActionMap;
+    NameActionInfoMap mNameActionInfoMap;
 };
 

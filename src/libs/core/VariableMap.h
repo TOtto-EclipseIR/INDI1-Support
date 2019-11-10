@@ -12,7 +12,7 @@ class CORE_EXPORT VariableMap
 {
 public:
     VariableMap(void);
-    QVariant value(const VariableId & id)
+    QVariant value(const VariableId & id) const
     { return mMap.value(id); }
     void set(const VariableId & id, const QVariant & var)
     { mMap.insert(id, var); }

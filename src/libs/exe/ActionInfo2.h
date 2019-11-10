@@ -12,8 +12,11 @@ class EXE_EXPORT ActionInfo2 : public VariableMap
 public:
     ActionInfo2(const VariableId & name=VariableId());
     QAction * newAction(QObject * actionParent);
+    QAction * action(void) const
+    { return mpAction; }
+    void debug(void) const;
 
 private:
-
+    QAction * mpAction=nullptr;
 };
 
