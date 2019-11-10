@@ -1,6 +1,8 @@
 #pragma once
 
 #include <exe/BaseMainWindow.h>
+
+#include <core/VariableSet.h>
 class Settings;
 
 class VVMainWindow : public BaseMainWindow
@@ -11,8 +13,10 @@ public:
     ~VVMainWindow();
 
 public slots:
+    void configure(void);
     void setupActions(void);
 
 private:
     Settings * cmpSettings=nullptr;
+    VariableSet mConfiguration;
 };

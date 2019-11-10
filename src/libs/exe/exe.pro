@@ -18,7 +18,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(../libs.pri)
 
+LIBS *= -lcore2
+
 SOURCES += \
+    ActionInfo.cpp \
+    ActionManager.cpp \
     ApplicationSettings.cpp \
     BaseMainWindow.cpp \
     BaseWidgetApp.cpp \
@@ -28,6 +32,8 @@ SOURCES += \
     WindowManager.cpp
 
 HEADERS += \
+    ActionInfo.h \
+    ActionManager.h \
     ApplicationSettings.h \
     BaseMainWindow.h \
     BaseWidgetApp.h \

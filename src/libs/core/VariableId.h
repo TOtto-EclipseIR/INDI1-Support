@@ -1,8 +1,8 @@
-#ifndef VARIABLEID_H
-#define VARIABLEID_H
+// file: ./src/libs/core/VaribleId.h
+#pragma once
 #include "Core.h"
 
-#include "../Base/AbstractIdString.h"
+#include "../base/AbstractIdString.h"
 
 class CORE_EXPORT VariableId : public AbstractIdString
 {
@@ -17,4 +17,3 @@ public:
                const char * suffix);
 };
 
-#endif // VARIABLEID_H

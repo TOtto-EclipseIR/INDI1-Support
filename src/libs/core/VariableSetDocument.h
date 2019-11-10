@@ -47,6 +47,8 @@ public:
     bool parseImage(void);
     bool parseDomDocument(void);
     bool parseDomDocument(const QByteArray & bytes);
+    QString fileName(void) const
+    { return mpFile ? mpFile->fileName() : QString(); }
 
 private:
     VariableSet * mpVariableSet = nullptr;

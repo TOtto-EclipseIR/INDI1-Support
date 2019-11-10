@@ -16,7 +16,7 @@ public:
     QString mName;
     quint64 mUllKey;
     QString mId;
-    QMap<QString, Variable> mIdMap;
+    QMap<QString, Variable> mIdVariantMap;
     QList<QVariant> mVariantList;
     QByteArray mBytes;
 };
@@ -217,7 +217,8 @@ public:
     void import(const VariableSet & other,
                 const VariableId & sectionId=VariableId());
     Variable::List all(void) const;
-
+    Variable::List operator << (const Variable & vbl)
+    { Variable::List vbls; vbls << vbl; return vbls; }
 private:
 
 private:

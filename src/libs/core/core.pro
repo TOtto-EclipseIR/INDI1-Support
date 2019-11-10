@@ -30,6 +30,7 @@ SOURCES += \
     VariableIdList.cpp \
     VariableSet.cpp \
     VariableSetDocument.cpp \
+    VariableSetDocumentObject.cpp \
     VariableType.cpp
 
 HEADERS += \
@@ -40,6 +41,7 @@ HEADERS += \
     VariableIdList.h \
     VariableSet.h \
     VariableSetDocument.h \
+    VariableSetDocumentObject.h \
     VariableType.h \
     core_global.h \
     Core.h

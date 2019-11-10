@@ -12,7 +12,7 @@ VariableSetData::VariableSetData(const VariableSetData & other)
     , mName(other.mName)
     , mUllKey(other.mUllKey)
     , mId(other.mId)
-    , mIdMap(other.mIdMap)
+    , mIdVariantMap(other.mIdVariantMap)
     , mVariantList(other.mVariantList)
     , mBytes(other.mBytes)
 {
@@ -83,7 +83,7 @@ void VariableSet::setId(const QString & id)
 
 void VariableSet::clear(void)
 {
-    data->mIdMap.clear();
+    data->mIdVariantMap.clear();
     data->mVariantList.clear();
     data->mBytes.clear();
 }
@@ -100,18 +100,18 @@ int VariableSet::listSize(void) const
 
 int VariableSet::mapSize(void) const
 {
-    return data->mIdMap.size();
+    return data->mIdVariantMap.size();
 }
 
 bool VariableSet::contains(const VariableId & vid) const
 {
-    return data->mIdMap.contains(vid.sortable());
+    return data->mIdVariantMap.contains(vid.sortable());
 }
 
 void VariableSet::reset(void)
 {
-    foreach (QString key, data->mIdMap.keys())
-        data->mIdMap[key].reset();
+    foreach (QString key, data->mIdVariantMap.keys())
+        data->mIdVariantMap[key].reset();
 }
 
 /** @fn blog()
@@ -140,7 +140,7 @@ void VariableSet::blog(void) const
 
 bool VariableSet::isEmpty(void) const
 {
-    return data->mIdMap.isEmpty()
+    return data->mIdVariantMap.isEmpty()
                 && data->mVariantList.isEmpty()
                 && data->mBytes.isEmpty();
 }
@@ -152,7 +152,7 @@ void VariableSet::set(const QVariantList & vl)
 
 void VariableSet::set(const Variable & vbl)
 {
-    data->mIdMap[vbl.id().sortable()] = vbl;
+    data->mIdVariantMap[vbl.id().sortable()] = vbl;
 }
 
 void VariableSet::set(const Variable::List & vbls)
@@ -164,8 +164,8 @@ void VariableSet::set(const Variable::List & vbls)
 void VariableSet::set(const VariableId & vid,
                       const QVariant & value)
 {
-    QVariant def(data->mIdMap[vid.sortable()].defaultVar());
-    data->mIdMap[vid.sortable()] = Variable(vid, value, def);
+    QVariant def(data->mIdVariantMap[vid.sortable()].defaultVar());
+    data->mIdVariantMap[vid.sortable()] = Variable(vid, value, def);
 }
 
 void VariableSet::set(const int index,
@@ -183,8 +183,8 @@ void VariableSet::set(const QByteArray & ba)
 
 void VariableSet::reset(const VariableId & id)
 {
-    if (data->mIdMap.contains(id.sortable()))
-        data->mIdMap[id.sortable()].reset();
+    if (data->mIdVariantMap.contains(id.sortable()))
+        data->mIdVariantMap[id.sortable()].reset();
 }
 
 void VariableSet::append(const QVariant & value)
@@ -194,7 +194,7 @@ void VariableSet::append(const QVariant & value)
 
 Variable VariableSet::at(const VariableId & id) const
 {
-    return data->mIdMap.value(id.sortable());
+    return data->mIdVariantMap.value(id.sortable());
 }
 
 QVariant VariableSet::value(const VariableId & id,
@@ -202,9 +202,9 @@ QVariant VariableSet::value(const VariableId & id,
 {
 #if 1 // def QT_DEBUG
     QString key(id.sortable());
-    if (data->mIdMap.contains(key))
+    if (data->mIdVariantMap.contains(key))
     {
-        Variable vbl(data->mIdMap.value(key));
+        Variable vbl(data->mIdVariantMap.value(key));
         QVariant var(vbl.var());
         return var;
     }
@@ -249,12 +249,12 @@ VariableIdList VariableSet::ids(const VariableId & within) const
 {
     VariableIdList result;
     if (within.isNull())
-        foreach (Variable vbl, data->mIdMap.values())
+        foreach (Variable vbl, data->mIdVariantMap.values())
             result.append(vbl.id());
     else
     {
         QString prefix(within.sortable());
-        foreach (Variable vbl, data->mIdMap.values())
+        foreach (Variable vbl, data->mIdVariantMap.values())
             if (vbl.id().sortable().startsWith(prefix))
                 result.append(vbl.id());
     }
@@ -265,7 +265,7 @@ VariableIdList VariableSet::sectionIds(const VariableId & within) const
 {
     VariableIdList result;
     if (within.isNull())
-        foreach (Variable vbl, data->mIdMap.values())
+        foreach (Variable vbl, data->mIdVariantMap.values())
         {
             QString section(vbl.id().section(0));
             if ( ! result.contains(VariableId(section)))
@@ -274,7 +274,7 @@ VariableIdList VariableSet::sectionIds(const VariableId & within) const
     else
     {
         int n = within.sectionCount();
-        foreach (Variable vbl, data->mIdMap.values())
+        foreach (Variable vbl, data->mIdVariantMap.values())
         {
             QString section(vbl.id().section(n));
             if (QString(within) == vbl.id().sections(0, n-1))
@@ -288,7 +288,7 @@ VariableIdList VariableSet::sectionIds(const VariableId & within) const
 void VariableSet::import(const VariableSet & other,
                          const VariableId & sectionId)
 {
-    foreach (Variable vbl, other.data->mIdMap.values())
+    foreach (Variable vbl, other.data->mIdVariantMap.values())
     {
         VariableId vid(vbl.id());
         vid.prepend(sectionId);
@@ -298,5 +298,5 @@ void VariableSet::import(const VariableSet & other,
 
 Variable::List VariableSet::all(void) const
 {
-    return data->mIdMap.values();
+    return data->mIdVariantMap.values();
 }

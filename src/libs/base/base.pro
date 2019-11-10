@@ -1,4 +1,5 @@
 QT -= gui
+QT *= xml
 
 TEMPLATE = lib
 DEFINES += BASE_LIBRARY
@@ -23,13 +24,15 @@ SOURCES += \
     AbstractIdString.cpp \
     Base.cpp \
     BaseIdBehavior.cpp \
+    ErrorStatusObject.cpp \
 
 HEADERS += \
     AbstractIdString.h \
     BaseIdBehavior.h \
     DataProperty.h \
+    ErrorStatusObject.h \
     base_global.h \
-    Base.h
+    Base.h \
 
 # Default rules for deployment.
 unix {

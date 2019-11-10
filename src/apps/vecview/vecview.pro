@@ -18,7 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(../apps.pri)
 
 
-LIBS *= -lexe2 -lmdi2
+LIBS *= -lexe2 -lcore2
 
 TARGET = VectorViewer
 
