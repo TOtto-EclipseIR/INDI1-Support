@@ -26,9 +26,13 @@ SOURCES += \
     ActionInfo2.cpp \
     ActionManager.cpp \
     ApplicationSettings.cpp \
+    BaseDocumentObject.cpp \
     BaseMainWindow.cpp \
     BaseWidgetApp.cpp \
     BaseWindowWidget.cpp \
+    DocumentActions.cpp \
+    DocumentManager.cpp \
+    DocumentObject.cpp \
     Exe.cpp \
     Settings.cpp \
     WindowManager.cpp
@@ -38,9 +42,13 @@ HEADERS += \
     ActionInfo2.h \
     ActionManager.h \
     ApplicationSettings.h \
+    BaseDocumentObject.h \
     BaseMainWindow.h \
     BaseWidgetApp.h \
     BaseWindowWidget.h \
+    DocumentActions.h \
+    DocumentManager.h \
+    DocumentObject.h \
     Settings.h \
     WindowManager.h \
     exe_global.h \

@@ -9,20 +9,23 @@
 #include <QTimer>
 
 #include "core/VariableIdList.h"
+#include "exe/ActionInfo2.h"
 #include "exe/ActionManager.h"
+#include "exe/DocumentActions.h"
+#include "exe/DocumentManager.h"
 #include "exe/Settings.h"
 
 VVMainWindow::VVMainWindow(void)
     : cmpSettings(new Settings())
     , cmpActionManager(new ActionManager(this))
+    , cmpDocumentActions(new DocumentActions(this))
+    , cmpDocumentManager(new DocumentManager(this))
 {
     setObjectName("VVMainWindow");
     QTimer::singleShot(100, this, SLOT(configure()));
 }
 
-VVMainWindow::~VVMainWindow()
-{
-}
+VVMainWindow::~VVMainWindow() {}
 
 void VVMainWindow::configure(void)
 {
@@ -36,6 +39,12 @@ void VVMainWindow::configure(void)
          << Variable("Actions/Open/Text", "&Open File(s)...")
          << Variable("Actions/Open/Shortcut", "Ctl+O")
          << Variable("Actions/Open/Menu", "File")
+         << Variable("Document/OpenFiles/Caption",
+                     "Open VectorSet File(s)")
+         << Variable("Document/OpenFiles/Filter",
+                     "XML VectorSet Files (*.XML)"
+                     ";;Images with VectorSet (*.PNG)"
+                     ";;All files (*.*)")
          ;
      mConfiguration.set(vbls);
      QTimer::singleShot(100, this, SLOT(setupMenus()));
@@ -60,7 +69,6 @@ void VVMainWindow::setupActions(void)
     qDebug() << Q_FUNC_INFO;
     cmpActionManager->configure(mConfiguration);
     QTimer::singleShot(100, this, SLOT(fillMenus()));
-
 }
 
 void VVMainWindow::fillMenus()
@@ -79,5 +87,19 @@ void VVMainWindow::fillMenus()
         if (ai.action())
             menu->addAction(ai.action());
     }
+    QTimer::singleShot(100, this, SLOT(connections()));
+}
+
+void VVMainWindow::connections()
+{
+    qDebug() << Q_FUNC_INFO;
+    ActionInfo2 ai = cmpActionManager->actionInfo("Open");
+    connect(ai.action(), SIGNAL(triggered()),
+            cmpDocumentActions, SLOT(openFiles()));
+    ai = cmpActionManager->actionInfo("Quit");
+    connect(ai.action(), SIGNAL(triggered()),
+            qApp, SLOT(quit()));
+    connect(cmpActionManager, SIGNAL(openFilesList(QFileInfoist)),
+            cmpDocumentManager, SLOT(openAllFiles(QFileInfoList)));
 }
 

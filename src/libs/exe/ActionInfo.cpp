@@ -15,4 +15,5 @@ void ActionInfo::dtor(void) {}
 QAction * ActionInfo::newAction(QObject * actionParent)
 {
     QAction * action = new QAction(getText());
+    return action;
 }

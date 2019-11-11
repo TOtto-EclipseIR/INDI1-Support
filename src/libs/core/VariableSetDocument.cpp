@@ -1,8 +1,15 @@
 #include "VariableSetDocument.h"
 
+int VariableSetDocument::smSequence = 0;
+
 DEFINE_DATAPROPS(VariableSetDocument, VariableSetDocumentData)
-void VariableSetDocument::ctor(void) {}
-void VariableSetDocument::dtor(void) {} // ditto dtor
+
+void VariableSetDocument::ctor(void)
+{
+    mSequence = ++smSequence;
+}
+
+void VariableSetDocument::dtor() {} // ditto dtor
 
 VariableSetDocument::VariableSetDocument(VariableSet *pVarSet)
     : mpVariableSet(pVarSet)

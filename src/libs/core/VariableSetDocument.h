@@ -56,4 +56,6 @@ private:
     QBuffer * mpBuffer = nullptr;
     QDataStream * mpDataStream=nullptr;
     QTextStream * mpTextStream = nullptr;
+    int mSequence=0;
+    static int smSequence;
 };
