@@ -1,30 +1,60 @@
+// file: ./src/libs/exe/BaseDocumentObject.h
 #pragma once
+#include "Exe.h"
 
 #include <QObject>
 
 
 #include <QByteArray>
+#include <QDomDocument>
 #include <QFile>
 #include <QFileInfo>
+#include <QImage>
+#include <QMap>
 
-class BaseDocumentObject : public QObject
+#include "../core/VariableSet.h"
+class ErrorStatusObject;
+
+class EXE_EXPORT BaseDocumentObject : public QObject
 {
     Q_OBJECT
 public:
-    explicit BaseDocumentObject(QObject * parent=nullptr);
+    enum DocumentClass
+    {
+        nullDocumentClass = 0,
+        VectorSetXml,
+        VectorSetPng,
+
+        sizeDocumentClass
+    };
+
+public:
+    explicit BaseDocumentObject(const DocumentClass docClass,
+                                const int sequence,
+                                QObject * parent=nullptr);
+    bool isError(void) const;
+    ErrorStatusObject * errorStatus(void) const;
 
 public slots:
-    bool readFile(QFileInfo fi) {}
+    bool readFile(QFileInfo fi);
+    virtual bool parse(void) { return false; }
 
 signals:
     void fileRead(QFileInfo fi);
 
-private:
-    int mSequence=0;
+protected:
+    QImage parseImage(QImage::Format format);
+    QDomDocument parseDomDocument(void);
+    
+protected:
     QFileInfo mFileInfo;
     QFile * mpFile=nullptr;
     QByteArray mBytes;
+    VariableSet mVectorSetSet;
 
-
+private:
+    int mSequence=0;
+    DocumentClass mClass = nullDocumentClass;
+    ErrorStatusObject * mpESO=nullptr;
 };
 

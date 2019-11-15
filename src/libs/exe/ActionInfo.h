@@ -1,41 +1,26 @@
-// file: ./src/libs/exe/ActionInfo.h
+// file: ./src/libs/exe/ActionInfo.h (trying VariableMap)
 #pragma once
 #include "Exe.h"
 
-#include <QSharedDataPointer>
-
 #include <QAction>
+#include <QList>
 
-#include "../base/DataProperty.h"
 #include "../core/VariableId.h"
-typedef QAction * PtrQAction;
+#include "../core/VariableMap.h"
 
-#define ACTIONINFO_DATAPROPS(TND) \
-    TND(VariableId, Name, VariableId()) \
-    TND(QString, Text, QString()) \
-    TND(QString, Menu, QString()) \
-    TND(PtrQAction, Action, nullptr) \
-
-
-class ActionInfoData : public QSharedData
+class EXE_EXPORT ActionInfo : public VariableMap
 {
-    DECLARE_CHILD_DATAPROPS(ACTIONINFO_DATAPROPS)
 public:
-    ActionInfoData(void)
-    {
-        DEFINE_DATAPROPS_CTORS(ACTIONINFO_DATAPROPS)
-    }
-};
-
-class EXE_EXPORT ActionInfo
-{
-    DECLARE_PARENT_DATAPROPS(ACTIONINFO_DATAPROPS)
-    DECLARE_DATAPROPS(ActionInfo, ActionInfoData)
-
+    typedef QList<ActionInfo> List;
 public:
-    ActionInfo(const VariableId & name); // alternate ctor
+    ActionInfo(const VariableId & name=VariableId());
     QAction * newAction(QObject * actionParent);
+    QAction * action(void) const
+    { return mpAction; }
+    QString title(void) const;
+    void debug(void) const;
+
+private:
+    QAction * mpAction=nullptr;
 };
-
-
 

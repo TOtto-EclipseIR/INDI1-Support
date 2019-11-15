@@ -5,7 +5,7 @@
 
 #include "../core/VariableIdList.h"
 
-#include "ActionInfo2.h"
+#include "ActionInfo.h"
 
 ActionManager::ActionManager(QObject * parent)
     : QObject(parent)
@@ -21,7 +21,7 @@ void ActionManager::configure(const VariableSet & config)
     qDebug() << ids;
     foreach (VariableId actionName, ids)
     {
-        ActionInfo2 ai(actionName);
+        ActionInfo ai(actionName);
         VariableSet sectionConfig
                 = actionConfig.exportSection(actionName);
         foreach (VariableId id, sectionConfig.ids())

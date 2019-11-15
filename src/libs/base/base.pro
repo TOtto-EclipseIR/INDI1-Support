@@ -30,6 +30,7 @@ HEADERS += \
     AbstractIdString.h \
     BaseIdBehavior.h \
     DataProperty.h \
+    Debug.h \
     ErrorStatusObject.h \
     base_global.h \
     Base.h \

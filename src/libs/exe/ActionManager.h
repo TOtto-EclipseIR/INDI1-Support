@@ -9,10 +9,10 @@ class QMenu;
 
 #include "../core/VariableSet.h"
 
-#include "ActionInfo2.h"
+#include "ActionInfo.h"
 
 typedef QMap<QString, QMenu *> NameMenuMap;
-typedef QMap<QString, ActionInfo2> NameActionInfoMap;
+typedef QMap<QString, ActionInfo> NameActionInfoMap;
 
 class EXE_EXPORT ActionManager : public QObject
 {
@@ -20,7 +20,7 @@ class EXE_EXPORT ActionManager : public QObject
 public:
     explicit ActionManager(QObject * parent=nullptr);
     void configure(const VariableSet & actionConfig);
-    ActionInfo2 actionInfo(const VariableId name) const
+    ActionInfo actionInfo(const VariableId name) const
     { return mNameActionInfoMap.value(name); }
 
 public slots:

@@ -23,13 +23,19 @@ LIBS *= -lexe2 -lcore2
 TARGET = VectorViewer
 
 SOURCES += \
+    VectorSetDocument.cpp \
     main.cpp \
     VVMainWindow.cpp
 
 HEADERS += \
-    VVMainWindow.h \ \
+    VVMainWindow.h \ \ \
+    VectorSetDocument.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    ../../common/FT815/FT815375.xml \
+    ../../common/PR598/PR598659.xml

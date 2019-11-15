@@ -12,6 +12,7 @@
 #include <QQueue>
 
 #include "BaseDocumentObject.h"
+#include "../../libs/indiBase/VectorSet/VectorSetDocument.h"
 
 class EXE_EXPORT DocumentManager : public QObject
 {
@@ -20,17 +21,18 @@ public:
     explicit DocumentManager(QObject * parent=nullptr);
 
 public slots:
-    void openAllFiles(QFileInfoList fil) {}
-    void readFile(QFileInfo fi) {}
-    void fileRead(QFileInfo fi, BaseDocumentObject * doc) {}
+    void openAllFiles(QFileInfoList fil);
+    void openNextFile(void);
+//    void readFile(QFileInfo fi) {}
+    void readFile(QFileInfo fi, BaseDocumentObject * doc);
 
 signals:
     void fileRead(QFileInfo fi);
 
 private:
-    QFileInfoList mInfoSequentialList;
-    QMap<QFileInfo, BaseDocumentObject *> mInfoDocumentMap;
-    QMap<QFileInfo, BaseDocumentObject *> mInfoDocPendingMap;
-    QQueue<QFileInfo> mWaitingFiles;
+    QFileInfoList mFileInfoSequentialList;
+    QMap<QString, BaseDocumentObject *> mFileNameDocumentMap;
+    QMap<QString, BaseDocumentObject *> mFileNameDocPendingMap;
+    QQueue<QFileInfo> mWaitingFileInfoList;
 };
 

@@ -23,7 +23,7 @@ void DocumentActions::configure(const VariableSet & config,
                 : config.exportSection(sectionName);
 }
 
-void DocumentActions::openFilesDialog(QWidget * parent)
+void DocumentActions::openFilesDialog(void)
 {
     qDebug() << Q_FUNC_INFO;
     QString caption = mConfig.value("OpenFiles/Caption").toString();
@@ -31,7 +31,8 @@ void DocumentActions::openFilesDialog(QWidget * parent)
     static QDir dir = QDir::current();
     qDebug() << caption << filter << dir;
 
-    QStringList fileNames = QFileDialog::getOpenFileNames(parent,
+    QStringList fileNames =
+            QFileDialog::getOpenFileNames(mpParentWidget,
             caption, dir.path(), filter);
 
     if (fileNames.isEmpty())

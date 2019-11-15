@@ -1,4 +1,4 @@
-QT += gui widgets
+QT += gui widgets xml
 
 TEMPLATE = lib
 DEFINES += EXE_LIBRARY
@@ -23,7 +23,6 @@ LIBS *= -lcore2
 
 SOURCES += \
     ActionInfo.cpp \
-    ActionInfo2.cpp \
     ActionManager.cpp \
     ApplicationSettings.cpp \
     BaseDocumentObject.cpp \
@@ -39,7 +38,6 @@ SOURCES += \
 
 HEADERS += \
     ActionInfo.h \
-    ActionInfo2.h \
     ActionManager.h \
     ApplicationSettings.h \
     BaseDocumentObject.h \

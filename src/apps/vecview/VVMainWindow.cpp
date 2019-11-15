@@ -8,8 +8,9 @@
 #include <QSettings>
 #include <QTimer>
 
+#include "base/Debug.h"
 #include "core/VariableIdList.h"
-#include "exe/ActionInfo2.h"
+#include "exe/ActionInfo.h"
 #include "exe/ActionManager.h"
 #include "exe/DocumentActions.h"
 #include "exe/DocumentManager.h"
@@ -47,6 +48,10 @@ void VVMainWindow::configure(void)
                      ";;All files (*.*)")
          ;
      mConfiguration.set(vbls);
+     //TRACE << vbls;
+     //TRACEPCZ("Starting VVMainWindow::Configure()");
+     //TRACEQST("QString(In %1 at %2 [%3]").arg(Q_FUNC_INFO).arg(__FILE__).arg(__LINE__));
+
      QTimer::singleShot(100, this, SLOT(setupMenus()));
 }
 
@@ -74,10 +79,20 @@ void VVMainWindow::setupActions(void)
 void VVMainWindow::fillMenus()
 {
     qDebug() << Q_FUNC_INFO;
+#if 1
+    //----- File Menu -----
+    QMenu * menu = mNameMenuMap.value("File");
+    ActionInfo ai = cmpActionManager->actionInfo("Open");
+    menu->addAction(ai.action());
+    menu->addSeparator();
+    ai = cmpActionManager->actionInfo("Quit");
+    menu->addAction(ai.action());
+#else
+    ActionInfo::List actionInfos;
     QMenu * menu = mNameMenuMap.value("File");
     if (menu)
     {
-        ActionInfo2 ai = cmpActionManager->actionInfo("Open");
+        ActionInfo ai = cmpActionManager->actionInfo("Open");
         ai.debug();
         if (ai.action())
             menu->addAction(ai.action());
@@ -87,15 +102,16 @@ void VVMainWindow::fillMenus()
         if (ai.action())
             menu->addAction(ai.action());
     }
+#endif
     QTimer::singleShot(100, this, SLOT(connections()));
 }
 
 void VVMainWindow::connections()
 {
     qDebug() << Q_FUNC_INFO;
-    ActionInfo2 ai = cmpActionManager->actionInfo("Open");
+    ActionInfo ai = cmpActionManager->actionInfo("Open");
     connect(ai.action(), SIGNAL(triggered()),
-            cmpDocumentActions, SLOT(openFiles()));
+            cmpDocumentActions, SLOT(openFilesDialog()));
     ai = cmpActionManager->actionInfo("Quit");
     connect(ai.action(), SIGNAL(triggered()),
             qApp, SLOT(quit()));
