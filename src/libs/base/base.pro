@@ -25,6 +25,13 @@ SOURCES += \
     Base.cpp \
     BaseIdBehavior.cpp \
     ErrorStatusObject.cpp \
+    FunctionInfo.cpp \
+    VersionInfo.cpp \
+    XfrAgent.cpp \
+    XfrFormat.cpp \
+    XfrMain.cpp \
+    XfrPublisher.cpp \
+    XfrSubscriber.cpp
 
 HEADERS += \
     AbstractIdString.h \
@@ -32,6 +39,15 @@ HEADERS += \
     DataProperty.h \
     Debug.h \
     ErrorStatusObject.h \
+    FunctionInfo.h \
+    Singleton.h \
+    VersionInfo.h \
+    XFR.h \
+    XfrAgent.h \
+    XfrFormat.h \
+    XfrMain.h \
+    XfrPublisher.h \
+    XfrSubscriber.h \
     base_global.h \
     Base.h \
 

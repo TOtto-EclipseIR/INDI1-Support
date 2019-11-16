@@ -24,7 +24,7 @@ public slots:
     void setupActions(void);
     void fillMenus(void);
     void connections(void);
-    bool readVectorSetFile(QFileInfo fi) {}
+//    bool readVectorSetFile(QFileInfo fi) {}
 
 private:
     Settings * cmpSettings=nullptr;
