@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include <QPixmap>
 #include <QRgb>
 
 
@@ -17,6 +18,10 @@ public:
     explicit VectorSetDocument(const DocumentClass docClass,
                                const int sequence,
                                QObject * parent=nullptr);
+    void show(const QPixmap & pixmap);
+    VectorSetWidget * widget(void)
+    { return mpVectorSetWidget; }
+
 
 public slots:
     bool parse(void) override;

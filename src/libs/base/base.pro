@@ -41,6 +41,7 @@ HEADERS += \
     Debug.h \
     ErrorStatusObject.h \
     FunctionInfo.h \
+    QProperty.h \
     Singleton.h \
     VersionInfo.h \
     XFR.h \

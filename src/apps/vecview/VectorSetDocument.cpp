@@ -1,5 +1,7 @@
 #include "VectorSetDocument.h"
 
+#include <QLabel>
+#include <QPixmap>
 #include <QTextStream>
 
 #include "VectorSetWidget.h"
@@ -12,6 +14,11 @@ VectorSetDocument::VectorSetDocument(const DocumentClass docClass,
 {
     setObjectName("VectorSetDocument:#"
                   + QString::number(sequence));
+}
+
+void VectorSetDocument::show(const QPixmap & pixmap)
+{
+    widget()->label()->setPixmap(pixmap);
 }
 
 bool VectorSetDocument::parse(void)

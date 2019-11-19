@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QWidget>
+
+class QLabel;
 class QTabWidget;
 class QTextEdit;
 
@@ -12,6 +14,8 @@ class VectorSetWidget : public QWidget
     Q_OBJECT
 public:
     explicit VectorSetWidget(VectorSetDocument * doc);
+
+    QLabel * label(void) { return mpLabel; }
 
 public slots:
     void setupWidget(void);
@@ -25,6 +29,8 @@ private:
     const QTabWidget * cmpMainTabWidget=nullptr;
     const QTextEdit * cmpRawXmlPage=nullptr;
     const VectorSetGraphics * cmpGraphicsPage=nullptr;
+
+    QLabel * mpLabel=nullptr;
 };
 
 

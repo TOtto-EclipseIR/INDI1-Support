@@ -15,6 +15,12 @@ public:
 
 public:
     Vector(void);
+    CoefValue at(const int x) const
+    { return mCoefVector.at(x); }
+    int size(void) const
+    { return mCoefVector.size(); }
+    CoefValue & operator [] (const int x)
+    { return mCoefVector[x]; }
 
 private:
     MetaVector mMetaVector;
