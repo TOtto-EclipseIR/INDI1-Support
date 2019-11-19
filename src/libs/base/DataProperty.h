@@ -48,7 +48,7 @@ void LogItem::ctor(void) // common ctor behavior
     setTimeStamp(MillisecondTime::current());
 }
 
-void VariableSet::dtor(void) {} // ditto dtor
+void LogItem::dtor(void) {} // ditto dtor
 @endcode
 */
 

@@ -3,10 +3,11 @@
 #include <exe/BaseMainWindow.h>
 
 #include <QFileInfo>
-class Settings;
+class QTabWidget;
 
 #include <core/VariableSet.h>
 class ActionManager;
+class Settings;
 class DocumentActions;
 class DocumentManager;
 
@@ -33,4 +34,5 @@ private:
     ActionManager * cmpActionManager=nullptr;
     DocumentActions * cmpDocumentActions=nullptr;
     DocumentManager * cmpDocumentManager=nullptr;
+    QTabWidget * mpVectorTabWidget=nullptr;
 };

@@ -53,7 +53,7 @@ protected:
     VariableSet mVectorSetSet;
 
 private:
-    int mSequence=0;
+    int mSequence=0; // TODO: fix sequence number handling
     DocumentClass mClass = nullDocumentClass;
     ErrorStatusObject * mpESO=nullptr;
 };

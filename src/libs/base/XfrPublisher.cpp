@@ -1,6 +1,8 @@
 #include "XfrPublisher.h"
 
-XfrPublisher::XfrPublisher(QObject *parent) : QObject(parent)
+XfrPublisher::XfrPublisher(QObject * parent)
+    : QObject(parent)
 {
+    setObjectName("XfrPublisher");
 
 }

@@ -29,6 +29,7 @@ SOURCES += \
     VersionInfo.cpp \
     XfrAgent.cpp \
     XfrFormat.cpp \
+    XfrItem.cpp \
     XfrMain.cpp \
     XfrPublisher.cpp \
     XfrSubscriber.cpp
@@ -45,6 +46,7 @@ HEADERS += \
     XFR.h \
     XfrAgent.h \
     XfrFormat.h \
+    XfrItem.h \
     XfrMain.h \
     XfrPublisher.h \
     XfrSubscriber.h \

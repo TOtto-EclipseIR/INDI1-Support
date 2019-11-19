@@ -6,6 +6,7 @@
 
 #include "../../libs/exe/BaseDocumentObject.h"
 #include "../../libs/core/VariableMap.h"
+class VectorSetWidget;
 
 class VectorSetDocument : public BaseDocumentObject
 {
@@ -21,7 +22,8 @@ public slots:
 signals:
 
 private:
-    VariableMap mIdVectorSet;
+    VectorSetWidget * mpVectorSetWidget=nullptr;
+    VariableMap mIdVectorSetMap;
     const QString cmRootTag = "INDIfaceFace";
     const QString cmIdTag = "Identification";
     const QString cmVectorSetTag = "INDI-EigenFace-Template";

@@ -2,10 +2,13 @@
 
 #include <QTextStream>
 
+#include "VectorSetWidget.h"
+
 VectorSetDocument::VectorSetDocument(const DocumentClass docClass,
                                      const int sequence,
                                      QObject * parent)
     : BaseDocumentObject(docClass, sequence, parent)
+    , mpVectorSetWidget(new VectorSetWidget(this))
 {
     setObjectName("VectorSetDocument:#"
                   + QString::number(sequence));

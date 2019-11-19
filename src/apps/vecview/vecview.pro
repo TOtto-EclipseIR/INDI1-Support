@@ -24,12 +24,16 @@ TARGET = VectorViewer
 
 SOURCES += \
     VectorSetDocument.cpp \
+    VectorSetGraphics.cpp \
+    VectorSetWidget.cpp \
     main.cpp \
     VVMainWindow.cpp
 
 HEADERS += \
     VVMainWindow.h \ \ \
-    VectorSetDocument.h
+    VectorSetDocument.h \
+    VectorSetGraphics.h \
+    VectorSetWidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
