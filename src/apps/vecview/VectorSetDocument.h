@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <QRgb>
+
 
 #include "../../libs/exe/BaseDocumentObject.h"
 #include "../../libs/core/VariableMap.h"

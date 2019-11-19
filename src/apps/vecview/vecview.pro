@@ -17,12 +17,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(../apps.pri)
 
-
-LIBS *= -lexe2 -lcore2
+LIBS *= -lexe2 -lcore2 -lgui2
 
 TARGET = VectorViewer
 
 SOURCES += \
+    DocumentIndex.cpp \
+    MetaPerson.cpp \
+    MetaVector.cpp \
+    Vector.cpp \
+    VectorGraph.cpp \
     VectorSetDocument.cpp \
     VectorSetGraphics.cpp \
     VectorSetWidget.cpp \
@@ -30,7 +34,12 @@ SOURCES += \
     VVMainWindow.cpp
 
 HEADERS += \
+    DocumentIndex.h \
+    MetaPerson.h \
+    MetaVector.h \
     VVMainWindow.h \ \ \
+    Vector.h \
+    VectorGraph.h \
     VectorSetDocument.h \
     VectorSetGraphics.h \
     VectorSetWidget.h

@@ -1,9 +1,11 @@
+// file: ./src/libs/widget/BaseGraphicsWindow.h
 #pragma once
+#include "Widget.h"
 
 #include <QWidget>
 #include <QDockWidget>
 
-class BaseGraphicsWindow : public QDockWidget
+class WIDGET_EXPORT BaseGraphicsWindow : public QDockWidget
 {
     Q_OBJECT
 public:
