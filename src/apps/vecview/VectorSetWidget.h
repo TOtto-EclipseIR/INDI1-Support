@@ -8,6 +8,7 @@ class QTextEdit;
 
 class VectorSetDocument;
 class VectorSetGraphics;
+class VectorSetSummaryPage;
 
 class VectorSetWidget : public QWidget
 {
@@ -28,6 +29,7 @@ private:
     const VectorSetDocument * cmpDocument=nullptr;
     const QTabWidget * cmpMainTabWidget=nullptr;
     const QTextEdit * cmpRawXmlPage=nullptr;
+    const VectorSetSummaryPage * cmpSummaryPage=nullptr;
     const VectorSetGraphics * cmpGraphicsPage=nullptr;
 
     QLabel * mpLabel=nullptr;

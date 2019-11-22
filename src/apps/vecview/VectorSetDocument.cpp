@@ -4,6 +4,8 @@
 #include <QPixmap>
 #include <QTextStream>
 
+#include "../../libs/base/Debug.h"
+
 #include "VectorSetWidget.h"
 
 VectorSetDocument::VectorSetDocument(const DocumentClass docClass,
@@ -12,17 +14,20 @@ VectorSetDocument::VectorSetDocument(const DocumentClass docClass,
     : BaseDocumentObject(docClass, sequence, parent)
     , mpVectorSetWidget(new VectorSetWidget(this))
 {
+    TRACEFN()
     setObjectName("VectorSetDocument:#"
                   + QString::number(sequence));
 }
 
 void VectorSetDocument::show(const QPixmap & pixmap)
 {
+    TRACEFN()
     widget()->label()->setPixmap(pixmap);
 }
 
 bool VectorSetDocument::parse(void)
 {
+    TRACEFN()
     QDomDocument doc = parseDomDocument();
     if ( isError() ) return false;  //----------
 

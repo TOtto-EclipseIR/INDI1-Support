@@ -10,27 +10,31 @@
 
 #include "base/Debug.h"
 #include "core/VariableIdList.h"
-#include "exe/ActionInfo.h"
 #include "exe/ActionManager.h"
 #include "exe/DocumentActions.h"
 #include "exe/DocumentManager.h"
 #include "exe/Settings.h"
 
+#include "VVHomeStack.h"
+#include "VVHomeCoverPage.h"
+
 VVMainWindow::VVMainWindow(void)
-    : cmpSettings(new Settings())
-    , cmpActionManager(new ActionManager(this))
-    , cmpDocumentActions(new DocumentActions(this))
-    , cmpDocumentManager(new DocumentManager(this))
+    : mpSettings(new Settings())
+    , mpMainTabWidget(new QTabWidget(this))
+    , mpHomeStack(new VVHomeStack(this))
+    , mpHomePage(new VVHomeCoverPage(mpHomeStack))
+    , mpActionManager(new ActionManager(this))
+    , mpDocumentActions(new DocumentActions(this))
+    , mpDocumentManager(new DocumentManager(this))
 {
+    TRACEFN()
     setObjectName("VVMainWindow");
     QTimer::singleShot(100, this, SLOT(configure()));
 }
 
-VVMainWindow::~VVMainWindow() {}
-
 void VVMainWindow::configure(void)
 {
-    qDebug() << Q_FUNC_INFO;
+    TRACEFN()
     Variable::List vbls;
     vbls << Variable("Actions/Quit/Name", "Quit")
          << Variable("Actions/Quit/Text", "&Quit")
@@ -48,74 +52,69 @@ void VVMainWindow::configure(void)
                      ";;All files (*.*)")
          ;
      mConfiguration.set(vbls);
-     //TRACE << vbls;
-     //TRACEPCZ("Starting VVMainWindow::Configure()");
-     //TRACEQST("QString(In %1 at %2 [%3]").arg(Q_FUNC_INFO).arg(__FILE__).arg(__LINE__));
 
-     QTimer::singleShot(100, this, SLOT(setupMenus()));
-}
-
-void VVMainWindow::setupMenus()
-{
-    qDebug() << Q_FUNC_INFO;
-    QMenuBar * appMenuBar = menuBar();
-    QMenu * fileMenu = appMenuBar->addMenu("&File");
-    fileMenu->setObjectName("fileMenu");
-    mNameMenuMap.insert("File", fileMenu);
-    QMenu * helpMenu = appMenuBar->addMenu("Help");
-    helpMenu->setObjectName("helpMenu");
-    mNameMenuMap.insert("Help", helpMenu);
-    appMenuBar->show();
-    QTimer::singleShot(100, this, SLOT(setupActions()));
+     QTimer::singleShot(100, this, SLOT(setupActions()));
 }
 
 void VVMainWindow::setupActions(void)
 {
-    qDebug() << Q_FUNC_INFO;
-    cmpActionManager->configure(mConfiguration);
-    QTimer::singleShot(100, this, SLOT(fillMenus()));
+    TRACEFN()
+    mpActionManager->configure(mConfiguration);
+    QTimer::singleShot(100, this, SLOT(setupMenus()));
 }
 
-void VVMainWindow::fillMenus()
+void VVMainWindow::setupMenus()
 {
-    qDebug() << Q_FUNC_INFO;
-#if 1
+    TRACEFN()
+    QMenuBar * appMenuBar = menuBar();
+
     //----- File Menu -----
+    QMenu * fileMenu = appMenuBar->addMenu("&File");
+    fileMenu->setObjectName("fileMenu");
+    mNameMenuMap.insert("File", fileMenu);
+
     QMenu * menu = mNameMenuMap.value("File");
-    ActionInfo ai = cmpActionManager->actionInfo("Open");
+    ActionInfo ai = mpActionManager->actionInfo("Open");
     menu->addAction(ai.action());
     menu->addSeparator();
-    ai = cmpActionManager->actionInfo("Quit");
+
+    ai = mpActionManager->actionInfo("Quit");
     menu->addAction(ai.action());
-#else
-    ActionInfo::List actionInfos;
-    QMenu * menu = mNameMenuMap.value("File");
-    if (menu)
-    {
-        ActionInfo ai = cmpActionManager->actionInfo("Open");
-        ai.debug();
-        if (ai.action())
-            menu->addAction(ai.action());
-        menu->addSeparator();
-        ai = cmpActionManager->actionInfo("Quit");
-        ai.debug();
-        if (ai.action())
-            menu->addAction(ai.action());
-    }
-#endif
-    QTimer::singleShot(100, this, SLOT(connections()));
+
+    //----- File Menu -----
+    QMenu * helpMenu = appMenuBar->addMenu("Help");
+    helpMenu->setObjectName("helpMenu");
+    mNameMenuMap.insert("Help", helpMenu);
+
+    appMenuBar->show();
+
+    QTimer::singleShot(100, this, SLOT(setupWindows()));
 }
 
-void VVMainWindow::connections()
+
+void VVMainWindow::setupWindows()
 {
-    qDebug() << Q_FUNC_INFO;
-    ActionInfo ai = cmpActionManager->actionInfo("Open");
+    TRACEFN()
+
+    mpMainTabWidget->addTab(mpHomeStack, "Home");
+    BaseMainWindow::setCentralWidget(mpMainTabWidget);
+    show();
+
+
+    QTimer::singleShot(100, this, SLOT(makeConnections()));
+}
+
+
+void VVMainWindow::makeConnections()
+{
+    TRACEFN()
+    ActionInfo ai = mpActionManager->actionInfo("Open");
     connect(ai.action(), SIGNAL(triggered()),
-            cmpDocumentActions, SLOT(openFilesDialog()));
-    ai = cmpActionManager->actionInfo("Quit");
+            mpDocumentActions, SLOT(openFilesDialog()));
+    ai = mpActionManager->actionInfo("Quit");
     connect(ai.action(), SIGNAL(triggered()),
             qApp, SLOT(quit()));
-    connect(cmpActionManager, SIGNAL(openFilesList(QFileInfoist)),
-            cmpDocumentManager, SLOT(openAllFiles(QFileInfoList)));
+    connect(mpActionManager, SIGNAL(openFilesList(QFileInfoList)),
+            mpDocumentManager, SLOT(openAllFiles(QFileInfoList)));
 }
 

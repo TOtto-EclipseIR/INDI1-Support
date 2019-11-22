@@ -5,15 +5,19 @@
 #include <QColor>
 #include <QPen>
 
+#include "../../libs/base/Debug.h"
+
 QList<QRgb> VectorGraph::smColors;
 
 VectorGraph::VectorGraph(void)
 {
+    TRACEFN()
     ctor();
 }
 
 VectorGraph::VectorGraph(const Vector::List vectors)
 {
+    TRACEFN()
     foreach (Vector vector, vectors)
         append(vector);
     ctor();
@@ -22,23 +26,27 @@ VectorGraph::VectorGraph(const Vector::List vectors)
 
 void VectorGraph::ctor()
 {
+    TRACEFN()
     if (smColors.isEmpty())
         generateColors();
 }
 
 int VectorGraph::append(const Vector &vector)
 {
+    TRACEFN()
     mVectors.append(vector);
     return mVectors.size();
 }
 
 void VectorGraph::draw(const bool border)
 {
+    TRACEFN()
     drawPath(border);
 }
 
 void VectorGraph::drawPath(const bool border)
 {
+    TRACEFN()
     QRect rect(QPoint(0, 128),
                QSize(320 * mVectors.size() * mBarWidth, 256));
     mPath.clear();
@@ -72,25 +80,30 @@ void VectorGraph::drawPath(const bool border)
 
 QPixmap VectorGraph::pixmap() const
 {
+    TRACEFN()
 
 }
 
 QImage VectorGraph::image(const QImage::Format format) const
 {
+    TRACEFN()
 
 }
 
 void VectorGraph::generateColors()
 {
+    TRACEFN()
 
 }
 
 QList<QRgb> VectorGraph::getSmColors()
 {
+    TRACEFN()
     return smColors;
 }
 
 void VectorGraph::setSmColors(const QList<QRgb> &value)
 {
+    TRACEFN()
     smColors = value;
 }

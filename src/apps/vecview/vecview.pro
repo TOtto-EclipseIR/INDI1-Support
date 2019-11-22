@@ -25,10 +25,15 @@ SOURCES += \
     DocumentIndex.cpp \
     MetaPerson.cpp \
     MetaVector.cpp \
+    VVHomeCoverPage.cpp \
+    VVHomeStack.cpp \
     Vector.cpp \
     VectorGraph.cpp \
     VectorSetDocument.cpp \
     VectorSetGraphics.cpp \
+    VectorSetGridPage.cpp \
+    VectorSetStack.cpp \
+    VectorSetSummaryPage.cpp \
     VectorSetWidget.cpp \
     main.cpp \
     VVMainWindow.cpp
@@ -37,11 +42,16 @@ HEADERS += \
     DocumentIndex.h \
     MetaPerson.h \
     MetaVector.h \
+    VVHomeCoverPage.h \
+    VVHomeStack.h \
     VVMainWindow.h \ \ \
     Vector.h \
     VectorGraph.h \
     VectorSetDocument.h \
     VectorSetGraphics.h \
+    VectorSetGridPage.h \
+    VectorSetStack.h \
+    VectorSetSummaryPage.h \
     VectorSetWidget.h
 
 # Default rules for deployment.

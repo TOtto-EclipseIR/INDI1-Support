@@ -6,7 +6,6 @@
 #include <QPixmap>
 #include <QRgb>
 
-
 #include "../../libs/exe/BaseDocumentObject.h"
 #include "../../libs/core/VariableMap.h"
 class VectorSetWidget;
@@ -30,6 +29,7 @@ signals:
 
 private:
     VectorSetWidget * mpVectorSetWidget=nullptr;
+    VariableSet mVectorSetSet;
     VariableMap mIdVectorSetMap;
     const QString cmRootTag = "INDIfaceFace";
     const QString cmIdTag = "Identification";

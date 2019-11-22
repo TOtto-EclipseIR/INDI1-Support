@@ -41,6 +41,7 @@ public slots:
 
 signals:
     void fileRead(QFileInfo fi);
+    void parsed(BaseDocumentObject * doc);
 
 protected:
     QImage parseImage(QImage::Format format);
@@ -50,7 +51,6 @@ protected:
     QFileInfo mFileInfo;
     QFile * mpFile=nullptr;
     QByteArray mBytes;
-    VariableSet mVectorSetSet;
 
 private:
     int mSequence=0; // TODO: fix sequence number handling
