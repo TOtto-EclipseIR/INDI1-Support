@@ -15,7 +15,7 @@ DocumentActions::DocumentActions(QObject * parent)
 {
     TRACEFN()
     setObjectName("DocumentActions");
-    connect(this, SIGNAL(openFiles(QFileInfoList)),
+    connect(this, SIGNAL(dialogOpenFiles(QFileInfoList)),
             this, SLOT(handleFileList(QFileInfoList)));
 }
 
@@ -45,7 +45,7 @@ void DocumentActions::openFilesDialog(void)
     QString caption = mConfig.value("OpenFiles/Caption").toString();
     QString filter = mConfig.value("OpenFiles/Filter").toString();
     static QDir dir = QDir::current();
-    qDebug() << caption << filter << dir;
+    TRACE << caption << filter << dir;
 
     QStringList fileNames =
             QFileDialog::getOpenFileNames(mpParentWidget,
@@ -53,7 +53,7 @@ void DocumentActions::openFilesDialog(void)
 
     if (fileNames.isEmpty())
     {
-        qDebug() << "emit openFilesCancel()";
+        TRACE << "emit openFilesCancel()";
         emit openFilesCancel();
     }
     else
@@ -64,8 +64,8 @@ void DocumentActions::openFilesDialog(void)
             mOpenFilesList.append(fi);
         }
         dir = mOpenFilesList.first().dir();
-        TRACE << "emit openFileList()" << mOpenFilesList;
-        emit openFiles(mOpenFilesList);
+        TRACE << "emit dialogOpenFiles()" << mOpenFilesList;
+        emit dialogOpenFiles(mOpenFilesList);
     }
 }
 

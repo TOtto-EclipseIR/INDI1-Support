@@ -2,16 +2,19 @@
 
 #include <QTimer>
 
+#include "../base/Debug.h"
 
 DocumentManager::DocumentManager(QObject * parent)
     : QObject(parent)
 {
+    TRACEFN()
     setObjectName("DocumentManager");
     mFileInfoSequentialList.append(QFileInfo("{dummy[0]}"));
 }
 
 void DocumentManager::openAllFiles(QFileInfoList fil)
 {
+    TRACEFN()
     mWaitingFileInfoList.append(fil);
     if (mWaitingFileInfoList.size())
         QTimer::singleShot(100, this, SLOT(openNextFile));
@@ -19,6 +22,8 @@ void DocumentManager::openAllFiles(QFileInfoList fil)
 
 void DocumentManager::openNextFile(void)
 {
+    TRACEFN()
+    if (mWaitingFileInfoList.isEmpty()) return;
     QFileInfo fi = mWaitingFileInfoList.takeFirst();
     BaseDocumentObject * doc=nullptr;
 
@@ -43,5 +48,6 @@ void DocumentManager::openNextFile(void)
 void DocumentManager::readFile(QFileInfo fi,
                                BaseDocumentObject * doc)
 {
+    TRACEFN()
     doc->readFile(fi);
 }

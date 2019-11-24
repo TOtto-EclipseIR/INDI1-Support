@@ -1,5 +1,8 @@
 #pragma once
 
+class QGridLayout;
+
+
 #include <QWidget>
 
 class VVIndexPage : public QWidget
@@ -8,8 +11,15 @@ class VVIndexPage : public QWidget
 public:
     explicit VVIndexPage(QWidget * parent=nullptr);
 
-signals:
-
 public slots:
+    void setupGrid(void);
+
+
+signals:
+    void gridSetup(void);
+
+private:
+    QGridLayout * mpGrid;
+
 };
 

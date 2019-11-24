@@ -63,4 +63,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     ../../common/FT815/FT815375.xml \
-    ../../common/PR598/PR598659.xml
+    ../../common/PR598/PR598659.xml \
+    ../../common/art/GradStack.svg \
+    GradStack.jpg

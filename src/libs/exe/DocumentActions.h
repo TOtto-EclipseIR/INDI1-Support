@@ -25,7 +25,7 @@ public slots:
     void openFilesDialog(void);
 
 signals:
-    void openFiles(QFileInfoList files);
+    void dialogOpenFiles(QFileInfoList files);
     void openFilesCancel(void);
 
 

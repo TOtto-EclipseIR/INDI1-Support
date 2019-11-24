@@ -2,14 +2,23 @@
 
 #include <QWidget>
 
+#include <QLabel>
+#include <QPixmap>
+
 class VVHomeCoverPage : public QWidget
 {
     Q_OBJECT
 public:
     explicit VVHomeCoverPage(QWidget * parent=nullptr);
 
-signals:
-
 public slots:
+    void setup(void);
+
+signals:
+    void setup(bool success);
+
+private:
+    QPixmap mPixmap;
+    QLabel mLabel;
 };
 

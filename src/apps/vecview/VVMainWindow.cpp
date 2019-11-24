@@ -23,8 +23,6 @@ VVMainWindow::VVMainWindow(void)
     : mpSettings(new Settings())
     , mpMainTabWidget(new QTabWidget(this))
     , mpHomeStack(new VVHomeStack(this))
-    , mpHomePage(new VVHomeCoverPage(mpHomeStack))
-    , mpmpIndexPage(new VVIndexPage(mpHomeStack))
     , mpActionManager(new ActionManager(this))
     , mpDocumentActions(new DocumentActions(this))
     , mpDocumentManager(new DocumentManager(this))
@@ -42,10 +40,10 @@ void VVMainWindow::configure(void)
          << Variable("Actions/Quit/Text", "&Quit")
          << Variable("Actions/Quit/Shortcut", "Alt+F4")
          << Variable("Actions/Quit/Menu", "File")
-         << Variable("Actions/Open/Name", "OpenFiles")
-         << Variable("Actions/Open/Text", "&Open File(s)...")
-         << Variable("Actions/Open/Shortcut", "Ctl+O")
-         << Variable("Actions/Open/Menu", "File")
+         << Variable("Actions/OpenFiles/Name", "OpenFiles")
+         << Variable("Actions/OpenFiles/Text", "&Open File(s)...")
+         << Variable("Actions/OpenFiles/Shortcut", "Ctl+O")
+         << Variable("Actions/OpenFiles/Menu", "File")
          << Variable("Actions/AboutQt/Name", "AboutQt")
          << Variable("Actions/AboutQt/Text", "About &Qt")
          << Variable("Actions/AboutQt/Menu", "Help")
@@ -86,7 +84,6 @@ void VVMainWindow::setupMenus()
     //----- Help Menu -----
     QMenu * helpMenu = appMenuBar->addMenu("Help");
     helpMenu->setObjectName("helpMenu");
-    mNameMenuMap.insert("Help", helpMenu);
     ai = mpActionManager->actionInfo("AboutQt");
     helpMenu->addAction(ai.action());
 
@@ -98,6 +95,7 @@ void VVMainWindow::setupMenus()
 void VVMainWindow::setupWindows()
 {
     TRACEFN()
+    TRACE << "mpMainTabWidget->addTab(mpHomeStack, Home);";
     mpMainTabWidget->addTab(mpHomeStack, "Home");
     BaseMainWindow::setCentralWidget(mpMainTabWidget);
     show();

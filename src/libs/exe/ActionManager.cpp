@@ -1,8 +1,9 @@
 #include "ActionManager.h"
 
-#include <QtDebug>
+//#include <QtDebug>
 #include <QMenu>
 
+#include "../base/Debug.h"
 #include "../core/VariableIdList.h"
 
 #include "ActionInfo.h"
@@ -10,15 +11,16 @@
 ActionManager::ActionManager(QObject * parent)
     : QObject(parent)
 {
+    TRACEFN()
     setObjectName("ActionManager");
 }
 
 void ActionManager::configure(const VariableSet & config)
 {
-    qDebug() << Q_FUNC_INFO;
+    TRACEFN()
     VariableSet actionConfig = config.exportSection("Actions");
     VariableIdList ids = actionConfig.sectionIds();
-    qDebug() << ids;
+    TRACE << ids;
     foreach (VariableId actionName, ids)
     {
         ActionInfo ai(actionName);
@@ -27,13 +29,12 @@ void ActionManager::configure(const VariableSet & config)
         foreach (VariableId id, sectionConfig.ids())
         {
             QVariant var = sectionConfig.value(id);
-            qDebug() << id << var;
             ai.set(id, var);
         }
         QAction * action = ai.newAction(this);
         action->setObjectName("QAction:"
                               + ai.value("Name").toString());
-        ai.debug();
+//        ai.debug();
         mNameActionInfoMap.insert(actionName, ai);
     }
 }

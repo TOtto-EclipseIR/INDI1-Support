@@ -12,8 +12,6 @@ class DocumentActions;
 class DocumentManager;
 
 class VVHomeStack;
-class VVHomeCoverPage;
-class VVIndexPage;
 
 
 class VVMainWindow : public BaseMainWindow
@@ -21,6 +19,10 @@ class VVMainWindow : public BaseMainWindow
     Q_OBJECT
 public:
     VVMainWindow(void);
+    //VVHomeCoverPage * homePage(void) const
+    //{ return mpHomePage; }
+    //VVIndexPage * indexPage(void) const
+    //{ return mpIndexPage; }
 
 public slots:
     void configure(void);
@@ -33,8 +35,6 @@ private:
     Settings * mpSettings=nullptr;
     QTabWidget * mpMainTabWidget=nullptr;
     VVHomeStack * mpHomeStack=nullptr;
-    VVHomeCoverPage * mpHomePage=nullptr;
-    VVIndexPage * mpmpIndexPage;
     ActionManager * mpActionManager=nullptr;
     DocumentActions * mpDocumentActions=nullptr;
     DocumentManager * mpDocumentManager=nullptr;
