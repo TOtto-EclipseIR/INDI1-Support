@@ -2,16 +2,17 @@
 
 #include "../../libs/base/ErrorStatusObject.h"
 
+int BaseDocumentObject::smSequence = 0;
 
 BaseDocumentObject::BaseDocumentObject(DocumentClass docClass,
-                                       const int sequence,
                                        QObject * parent)
     : QObject(parent)
-    , mSequence(sequence)
     , mClass(docClass)
     , mpESO(new ErrorStatusObject(this))
 {
-        setObjectName("BaseDocumentObject");
+    ++smSequence;
+    setObjectName("BaseDocumentObject:"
+                  +QString::number(smSequence));
 }
 
 bool BaseDocumentObject::isError(void) const
@@ -26,11 +27,11 @@ ErrorStatusObject * BaseDocumentObject::errorStatus(void) const
 
 bool BaseDocumentObject::readFile(QFileInfo fi)
 {
-    mFileInfo = fi;
+    mQFI = fi;
     mpFile = new QFile(fi.filePath(), this);
     if ( ! mpFile->open(QIODevice::ReadOnly)) return false;
     mBytes = mpFile->readAll();
-    emit fileRead(mFileInfo);
+    emit fileRead(mQFI);
     return true;
 }
 

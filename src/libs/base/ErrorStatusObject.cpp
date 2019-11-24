@@ -25,7 +25,8 @@ void ErrorStatusObject::setError(QString message)
 bool ErrorStatusObject::tryDomSetContent(QDomDocument *doc,
                                          QByteArray ba)
 {
-    QString error; int errLine, errCol;
+    QString error;
+    int errLine, errCol;
     bool success = doc->setContent(ba, &error, &errLine, &errCol);
     if ( ! success)
         setError("Error parsing XML at %2,%3: %1",

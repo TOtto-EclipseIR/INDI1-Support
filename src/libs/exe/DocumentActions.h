@@ -21,15 +21,16 @@ public:
                    const VariableId & sectionName=VariableId());
 
 public slots:
+    void handleFileList(QFileInfoList files);
     void openFilesDialog(void);
 
 signals:
-    void openFileList(QFileInfoList files);
+    void openFiles(QFileInfoList files);
     void openFilesCancel(void);
 
 
 private:
-    QWidget * mpParentWidget;
+    QWidget * mpParentWidget=nullptr;
     VariableSet mConfig;
     QFileInfoList mOpenFilesList;
 };

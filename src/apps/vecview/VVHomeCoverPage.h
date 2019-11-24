@@ -1,7 +1,5 @@
 #pragma once
 
-#include "VVHomeStack.h"
-
 #include <QWidget>
 
 class VVHomeCoverPage : public QWidget

@@ -25,11 +25,11 @@ void DocumentManager::openNextFile(void)
     if ("xml" == fi.suffix().toLower())
         doc = new BaseDocumentObject(
                     BaseDocumentObject::VectorSetXml,
-                    mFileInfoSequentialList.size(), this);
+                    this);
     else if ("png" == fi.suffix().toLower())
         doc = new BaseDocumentObject(
                     BaseDocumentObject::VectorSetPng,
-                    mFileInfoSequentialList.size(), this);
+                    this);
     else
         return;
 

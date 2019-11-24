@@ -8,21 +8,21 @@
 
 #include "VectorSetWidget.h"
 
-VectorSetDocument::VectorSetDocument(const DocumentClass docClass,
-                                     const int sequence,
+VectorSetDocument::VectorSetDocument(const QFileInfo qfi,
                                      QObject * parent)
-    : BaseDocumentObject(docClass, sequence, parent)
+    : BaseDocumentObject(VectorSetXml, parent)
     , mpVectorSetWidget(new VectorSetWidget(this))
 {
     TRACEFN()
     setObjectName("VectorSetDocument:#"
-                  + QString::number(sequence));
+                  + QString::number(smSequence));
+    mQFI = qfi;
 }
 
 void VectorSetDocument::show(const QPixmap & pixmap)
 {
     TRACEFN()
-    widget()->label()->setPixmap(pixmap);
+            widget()->label()->setPixmap(pixmap);
 }
 
 bool VectorSetDocument::parse(void)

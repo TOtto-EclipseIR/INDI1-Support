@@ -13,6 +13,7 @@ class DocumentManager;
 
 class VVHomeStack;
 class VVHomeCoverPage;
+class VVIndexPage;
 
 
 class VVMainWindow : public BaseMainWindow
@@ -27,13 +28,13 @@ public slots:
     void setupActions(void);
     void setupMenus(void);
     void makeConnections(void);
-//    bool readVectorSetFile(QFileInfo fi) {}
 
 private:
     Settings * mpSettings=nullptr;
     QTabWidget * mpMainTabWidget=nullptr;
     VVHomeStack * mpHomeStack=nullptr;
     VVHomeCoverPage * mpHomePage=nullptr;
+    VVIndexPage * mpmpIndexPage;
     ActionManager * mpActionManager=nullptr;
     DocumentActions * mpDocumentActions=nullptr;
     DocumentManager * mpDocumentManager=nullptr;

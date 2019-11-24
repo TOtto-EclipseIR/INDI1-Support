@@ -14,8 +14,7 @@ class VectorSetDocument : public BaseDocumentObject
 {
     Q_OBJECT
 public:
-    explicit VectorSetDocument(const DocumentClass docClass,
-                               const int sequence,
+    explicit VectorSetDocument(const QFileInfo qfi,
                                QObject * parent=nullptr);
     void show(const QPixmap & pixmap);
     VectorSetWidget * widget(void)
@@ -23,6 +22,7 @@ public:
 
 
 public slots:
+//    bool readFile(void);
     bool parse(void) override;
 
 signals:

@@ -7,9 +7,13 @@
 #include <QFileInfoList>
 #include <QStringList>
 
+#include "../base/Debug.h"
+#include "../core/VariableSetDocument.h"
+
 DocumentActions::DocumentActions(QObject * parent)
     : QObject(parent)
 {
+    TRACEFN()
     setObjectName("DocumentActions");
     connect(this, SIGNAL(openFiles(QFileInfoList)),
             this, SLOT(handleFileList(QFileInfoList)));
@@ -18,14 +22,26 @@ DocumentActions::DocumentActions(QObject * parent)
 void DocumentActions::configure(const VariableSet & config,
                                 const VariableId & sectionName)
 {
+    TRACEFN()
     mConfig = sectionName.isNull()
                 ? config
                 : config.exportSection(sectionName);
 }
 
+void DocumentActions::handleFileList(QFileInfoList files)
+{
+    TRACEFN()
+    foreach (QFileInfo fi, files)
+    {
+//        vsd->readFile();
+//        vsd->parse();
+    }
+
+}
+
 void DocumentActions::openFilesDialog(void)
 {
-    qDebug() << Q_FUNC_INFO;
+    TRACEFN()
     QString caption = mConfig.value("OpenFiles/Caption").toString();
     QString filter = mConfig.value("OpenFiles/Filter").toString();
     static QDir dir = QDir::current();
@@ -48,8 +64,8 @@ void DocumentActions::openFilesDialog(void)
             mOpenFilesList.append(fi);
         }
         dir = mOpenFilesList.first().dir();
-        qDebug() << "emit openFileList()" << mOpenFilesList;
-        emit openFileList(mOpenFilesList);
+        TRACE << "emit openFileList()" << mOpenFilesList;
+        emit openFiles(mOpenFilesList);
     }
 }
 

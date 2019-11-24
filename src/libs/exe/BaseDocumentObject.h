@@ -15,7 +15,8 @@
 #include "../core/VariableSet.h"
 class ErrorStatusObject;
 
-class EXE_EXPORT BaseDocumentObject : public QObject
+class EXE_EXPORT
+        BaseDocumentObject : public QObject
 {
     Q_OBJECT
 public:
@@ -30,7 +31,6 @@ public:
 
 public:
     explicit BaseDocumentObject(const DocumentClass docClass,
-                                const int sequence,
                                 QObject * parent=nullptr);
     bool isError(void) const;
     ErrorStatusObject * errorStatus(void) const;
@@ -46,14 +46,16 @@ signals:
 protected:
     QImage parseImage(QImage::Format format);
     QDomDocument parseDomDocument(void);
+
+protected: // statics
+    static int smSequence;
     
 protected:
-    QFileInfo mFileInfo;
+    QFileInfo mQFI;
     QFile * mpFile=nullptr;
     QByteArray mBytes;
 
 private:
-    int mSequence=0; // TODO: fix sequence number handling
     DocumentClass mClass = nullDocumentClass;
     ErrorStatusObject * mpESO=nullptr;
 };

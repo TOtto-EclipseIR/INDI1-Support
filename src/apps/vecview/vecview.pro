@@ -27,6 +27,7 @@ SOURCES += \
     MetaVector.cpp \
     VVHomeCoverPage.cpp \
     VVHomeStack.cpp \
+    VVIndexPage.cpp \
     Vector.cpp \
     VectorGraph.cpp \
     VectorSetDocument.cpp \
@@ -44,6 +45,7 @@ HEADERS += \
     MetaVector.h \
     VVHomeCoverPage.h \
     VVHomeStack.h \
+    VVIndexPage.h \
     VVMainWindow.h \ \ \
     Vector.h \
     VectorGraph.h \
