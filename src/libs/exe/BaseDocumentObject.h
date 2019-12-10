@@ -13,10 +13,9 @@
 #include <QMap>
 
 #include "../core/VariableSet.h"
-class ErrorStatusObject;
+#include "../base/ErrorStatusObject.h"
 
-class EXE_EXPORT
-        BaseDocumentObject : public QObject
+class EXE_EXPORT BaseDocumentObject : public QObject
 {
     Q_OBJECT
 public:
@@ -32,8 +31,12 @@ public:
 public:
     explicit BaseDocumentObject(const DocumentClass docClass,
                                 QObject * parent=nullptr);
-    bool isError(void) const;
-    ErrorStatusObject * errorStatus(void) const;
+    QString fileName(void) const
+    { return mpFile ? mpFile->fileName() : QString(); }
+    bool isError(void) const
+    { return mpESO->isError(); }
+    ErrorStatusObject * errorStatus(void) const
+    { return mpESO; }
 
 public slots:
     bool readFile(QFileInfo fi);

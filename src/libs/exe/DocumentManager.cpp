@@ -16,7 +16,7 @@ void DocumentManager::openAllFiles(QFileInfoList fil)
 {
     TRACEFN()
     mWaitingFileInfoList.append(fil);
-    if (mWaitingFileInfoList.size())
+    if ( ! mWaitingFileInfoList.empty())
         QTimer::singleShot(100, this, SLOT(openNextFile));
 }
 
@@ -42,12 +42,13 @@ void DocumentManager::openNextFile(void)
     mFileNameDocPendingMap.insert(fi.absoluteFilePath(), doc);
 
     if (mWaitingFileInfoList.size())
-        QTimer::singleShot(100, this, SLOT(openNextFile));
+        QTimer::singleShot(100, this, SLOT(openNextFile()));
 }
 
 void DocumentManager::readFile(QFileInfo fi,
                                BaseDocumentObject * doc)
 {
     TRACEFN()
+    TRACE << fi << doc->objectName();
     doc->readFile(fi);
 }

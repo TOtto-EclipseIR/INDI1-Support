@@ -22,12 +22,14 @@ SOURCES += \
     BaseGraphicsWindow.cpp \
     GraphicsScene.cpp \
     GraphicsView.cpp \
+    UnitFloatWidget.cpp \
     Widget.cpp
 
 HEADERS += \
     BaseGraphicsWindow.h \
     GraphicsScene.h \
     GraphicsView.h \
+    UnitFloatWidget.h \
     widget_global.h \
     Widget.h
 

@@ -40,9 +40,10 @@ void VVHomeCoverPage::setup()
 {
     TRACEFN()
 #if 1
-//    QImage pixmapImage("GradStack.jpg");
-    mPixmap = QPixmap("GradStack.jpg");
-//    mPixmap = QPixmap::fromImage(pixmapImage);
+    QImage pixmapImage("GradStack.jpg");
+    pixmapImage.scaledToWidth(640);
+//    mPixmap = QPixmap("GradStack.jpg");
+    mPixmap = QPixmap::fromImage(pixmapImage);
     mLabel.setPixmap(mPixmap);
 //    mLabel.setSizePolicy(QSizePolicy::Minimum);
     mLabel.setMinimumSize(mPixmap.size());

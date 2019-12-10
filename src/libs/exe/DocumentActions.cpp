@@ -8,15 +8,15 @@
 #include <QStringList>
 
 #include "../base/Debug.h"
-#include "../core/VariableSetDocument.h"
+//#include "../core/VariableSetDocument.h"
 
 DocumentActions::DocumentActions(QObject * parent)
     : QObject(parent)
 {
     TRACEFN()
     setObjectName("DocumentActions");
-    connect(this, SIGNAL(dialogOpenFiles(QFileInfoList)),
-            this, SLOT(handleFileList(QFileInfoList)));
+ //   connect(this, SIGNAL(dialogOpenFiles(QFileInfoList)),
+   //         main(), SLOT(openAllFiles(QFileInfoList)));
 }
 
 void DocumentActions::configure(const VariableSet & config,

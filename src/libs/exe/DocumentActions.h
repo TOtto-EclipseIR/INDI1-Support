@@ -3,6 +3,7 @@
 #include "Exe.h"
 
 #include <QObject>
+class VVMainWindow;
 
 #include <QFileInfo>
 #include <QWidget>
@@ -17,6 +18,8 @@ public:
     explicit DocumentActions(QObject * parent=nullptr);
     void setParentWidget(QWidget * widget)
     { mpParentWidget = widget; }
+    VVMainWindow * main(void)
+    { return (VVMainWindow *)(mpParentWidget); }
     void configure(const VariableSet & config,
                    const VariableId & sectionName=VariableId());
 

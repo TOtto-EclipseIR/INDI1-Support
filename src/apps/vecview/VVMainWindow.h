@@ -23,6 +23,8 @@ public:
     //{ return mpHomePage; }
     //VVIndexPage * indexPage(void) const
     //{ return mpIndexPage; }
+    DocumentManager * manager(void)
+    { return mpDocumentManager; }
 
 public slots:
     void configure(void);

@@ -1,6 +1,8 @@
 #pragma once
 #include "Core.h"
 
+#include "../exe/BaseDocumentObject.h"
+
 #include <QSharedDataPointer>
 #include "../base/DataProperty.h"
 
@@ -33,7 +35,7 @@ public:
     }
 };
 
-class CORE_EXPORT VariableSetDocument
+class CORE_EXPORT VariableSetDocument : BaseDocumentObject
 {
     DECLARE_PARENT_DATAPROPS(VSDOCUMENT_DATAPROPS)
     DECLARE_DATAPROPS(VariableSetDocument, VariableSetDocumentData)
@@ -44,18 +46,9 @@ public:
     bool write(const QFileInfo & fi);
     void close(void);
     bool parse(void);
-    bool parseImage(void);
-    bool parseDomDocument(void);
-    bool parseDomDocument(const QByteArray & bytes);
-    QString fileName(void) const
-    { return mpFile ? mpFile->fileName() : QString(); }
 
 private:
     VariableSet * mpVariableSet = nullptr;
-    QFile * mpFile = nullptr;
-    QBuffer * mpBuffer = nullptr;
     QDataStream * mpDataStream=nullptr;
     QTextStream * mpTextStream = nullptr;
-    int mSequence=0;
-    static int smSequence;
 };

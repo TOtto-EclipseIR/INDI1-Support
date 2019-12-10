@@ -29,6 +29,7 @@ VVMainWindow::VVMainWindow(void)
 {
     TRACEFN()
     setObjectName("VVMainWindow");
+    mpDocumentActions->setParentWidget(this);
     QTimer::singleShot(100, this, SLOT(configure()));
 }
 

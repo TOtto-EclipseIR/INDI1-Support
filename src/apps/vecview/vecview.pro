@@ -29,6 +29,7 @@ SOURCES += \
     VVHomeStack.cpp \
     VVIndexPage.cpp \
     Vector.cpp \
+    VectorDocument.cpp \
     VectorGraph.cpp \
     VectorSetDocument.cpp \
     VectorSetGraphics.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     VVIndexPage.h \
     VVMainWindow.h \ \ \
     Vector.h \
+    VectorDocument.h \
     VectorGraph.h \
     VectorSetDocument.h \
     VectorSetGraphics.h \
@@ -65,4 +67,5 @@ DISTFILES += \
     ../../common/FT815/FT815375.xml \
     ../../common/PR598/PR598659.xml \
     ../../common/art/GradStack.svg \
-    GradStack.jpg
+    GradStack.jpg \
+    VectorDocument
