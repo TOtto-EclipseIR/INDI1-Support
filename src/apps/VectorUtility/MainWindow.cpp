@@ -9,9 +9,18 @@
 
 #include "Debug.h"
 #include "Vector.h"
+#include "VectorItemDelegate.h"
+#include "VectorTableHorizontalHeader.h"
+#include "VectorTableView.h"
+#include "VectorTableVerticalHeader.h"
+
 
 MainWindow::MainWindow(VectorUtilityApp * parent)
     : mpMaster(parent)
+    , mpTableView(new VectorTableView(this))
+    , mpVerticalHeader(new VectorTableVerticalHeader(this))
+    , mpHorizontalHeader(new VectorTableHorizontalHeader(this))
+    , mpItemDelegate(new VectorItemDelegate(this))
     , mpViewGroup(new QActionGroup(this))
     , mpWindowGroup(new QActionGroup(this))
 {

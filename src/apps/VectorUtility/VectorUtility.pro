@@ -19,7 +19,12 @@ SOURCES += \
     MainWindow-Setup.cpp \
     Vector.cpp \
     VectorData.cpp \
+    VectorItemDelegate.cpp \
     VectorObject.cpp \
+    VectorTableHorizontalHeader.cpp \
+    VectorTableModel.cpp \
+    VectorTableVerticalHeader.cpp \
+    VectorTableView.cpp \
     VectorUtilityApp.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -31,7 +36,12 @@ HEADERS += \
     QProperty.h \
     Vector.h \
     VectorData.h \
+    VectorItemDelegate.h \
     VectorObject.h \ \
+    VectorTableHorizontalHeader.h \
+    VectorTableModel.h \
+    VectorTableVerticalHeader.h \
+    VectorTableView.h \
     VectorUtilityApp.h
 
 # Default rules for deployment.

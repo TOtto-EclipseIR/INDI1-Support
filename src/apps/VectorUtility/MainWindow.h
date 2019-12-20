@@ -13,6 +13,10 @@
 
 #include "Vector.h"
 #include "VectorObject.h"
+class VectorItemDelegate;
+class VectorTableHorizontalHeader;
+class VectorTableView;
+class VectorTableVerticalHeader;
 
 class MainWindow : public QMainWindow
 {
@@ -59,6 +63,10 @@ private:
 
 private:
     VectorUtilityApp * mpMaster=nullptr;
+    VectorTableView * mpTableView=nullptr;
+    VectorTableVerticalHeader * mpVerticalHeader=nullptr;
+    VectorTableHorizontalHeader * mpHorizontalHeader=nullptr;
+    VectorItemDelegate * mpItemDelegate=nullptr;
     QActionGroup * mpViewGroup=nullptr;
     QActionGroup * mpWindowGroup=nullptr;
     QHash<QString, QAction *> mNameActionMap;
