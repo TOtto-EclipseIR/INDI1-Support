@@ -8,6 +8,8 @@
 #include <QMap>
 #include <QFileInfo>
 
+#include "UnitFloat.h"
+#include "UnitFloatVector.h"
 #include "Vector.h"
 #include "VectorData.h"
 
@@ -16,7 +18,8 @@ class VectorObject : public QObject
     Q_OBJECT
 public:
     typedef QList<VectorObject * > List;
-    typedef QMap<Vector::FileScope, VectorObject * > Map;
+    typedef QMap<Vector::FileScope, VectorObject *> Map;
+    typedef QMap<QString, VectorObject *> NameMap;
 
 public:
     explicit VectorObject(const Vector::FileScope scope,
@@ -24,13 +27,14 @@ public:
     Vector::FileScope scope(void) const { return cmScope; }
     VectorData data(void) const { return mData; }
     VectorData & data(void) { return mData; }
-//    UnitFloatVector coefVector(void) const
-//    { return mCoefVector; }
+    int vectorSize(void) const { return mCoefVector.size(); }
+    UnitFloatVector coefVector(void) const
+    { return mCoefVector; }
+    UnitFloat::Value at(const int x);
 
 signals:
     void openCancelled(Vector::FileScope scope);
-    void opened(Vector::FileScope scope,
-                VectorObject * vector);
+    void opened(VectorObject * vector);
     void vectorClosed(Vector::FileScope scope);
 
 public slots:
@@ -48,6 +52,6 @@ private:
     const Vector::FileScope cmScope=Vector::nullScope;
     QFileInfo mFileInfo;
     VectorData mData;
-//    UnitFloatVector mCoefVector;
+    UnitFloatVector mCoefVector;
 };
 

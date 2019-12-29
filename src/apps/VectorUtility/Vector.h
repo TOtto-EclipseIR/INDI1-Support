@@ -9,10 +9,10 @@ class Vector
 public:
     enum FileScope
     {
-        nullScope = 0,
-        BaseLineFile,
-        SubjectOneFile,
-        SubjectTwoFile,
+        nullScope       = 0,
+        BaseLineFile    = 1,
+        SubjectOneFile  = 2,
+        SubjectTwoFile  = 3,
         sizeScope
     };
 

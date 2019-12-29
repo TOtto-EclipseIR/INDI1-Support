@@ -13,24 +13,24 @@
 #include "VectorTableHorizontalHeader.h"
 #include "VectorTableView.h"
 #include "VectorTableVerticalHeader.h"
+#include "VectorTableWidget.h"
 
 
 MainWindow::MainWindow(VectorUtilityApp * parent)
     : mpMaster(parent)
-    , mpTableView(new VectorTableView(this))
-    , mpVerticalHeader(new VectorTableVerticalHeader(this))
-    , mpHorizontalHeader(new VectorTableHorizontalHeader(this))
-    , mpItemDelegate(new VectorItemDelegate(this))
-    , mpViewGroup(new QActionGroup(this))
-    , mpWindowGroup(new QActionGroup(this))
+    , mpStackedWidget(new QStackedWidget(this))
+    , mpTablePageWidget(new VectorTableWidget(mpStackedWidget))
+    , mpViewActionGroup(new QActionGroup(this))
+    , mpWindowActionGroup(new QActionGroup(this))
 {
     TRACEFN()
     setObjectName("MainWindow:VectorUtility");
-    mpViewGroup->setObjectName("QActionGroup:View");
-    mpViewGroup->setExclusive(true);
-    mpWindowGroup->setObjectName("QActionGroup:Window");
-    mpWindowGroup->setExclusive(true);
+    mpViewActionGroup->setObjectName("QActionGroup:View");
+    mpViewActionGroup->setExclusive(true);
+    mpWindowActionGroup->setObjectName("QActionGroup:Window");
+    mpWindowActionGroup->setExclusive(true);
     QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
+    // See MainWondow-Setup.cpp
 }
 
 MainWindow::~MainWindow()

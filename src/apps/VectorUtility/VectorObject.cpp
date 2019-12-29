@@ -15,10 +15,18 @@ VectorObject::VectorObject(const Vector::FileScope scope,
     setObjectName("VectorObject:"+Vector::scopeString(cmScope));
 }
 
+UnitFloat::Value VectorObject::at(const int x)
+{
+/*    return (x >= 0 && x < mCoefVector.size())
+            ? UnitFloat::Value(coefVector().at(x))
+            : UnitFloat(); */
+    return coefVector().at(x);
+}
+
 void VectorObject::openFileName(const QString &fileName)
 {
     TRACEFN()
-    mFileInfo.setFile(fileName);
+            mFileInfo.setFile(fileName);
     if ("png" == mFileInfo.suffix().toLower())
             QTimer::singleShot(100, this,
                                &VectorObject::readPngFile);
@@ -83,7 +91,8 @@ void VectorObject::parseVectorElement(void)
     }
     else
     {
-        deVector = rootElement.firstChildElement("INDI-EigenFace-EigenFaceVector");
+        deVector = rootElement
+                .firstChildElement("INDI-EigenFace-EigenFaceVector");
     }
     int count = deVector.attribute("Count").toInt();
     //TRACE << deVector.text();
@@ -97,12 +106,10 @@ void VectorObject::parseVectorElement(void)
 void VectorObject::setVectorCoefData(void)
 {
     TRACEFN()
-#if 0
-            mCoefVector.setFromText(mData.getCoefText(),
-                            mData.getCoefCount());
+    mCoefVector.setFromText(mData.getCoefText(),
+                    mData.getCoefCount());
     TRACE << mCoefVector.at(0);
-    emit opened(cmScope, this);
-#endif
+    emit opened(this);
 }
 
 void VectorObject::close(void)

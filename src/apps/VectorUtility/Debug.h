@@ -1,9 +1,10 @@
-// file: ./VectrAnalyst/Debug.h
+// file: ./Debug.h
 #pragma once
 
 #include <QtDebug>
 
 #define TRACE qDebug()
 #define TRACEFN() { qDebug() << Q_FUNC_INFO; }
-//#define TRACEPCZ(pcz) { QDebug(pcz); }
-//#define TRACEQST(qst) { QDebug(qPrintable(qst)); }
+#define TRACEPSZ(psz) { qDebug(psz); }
+#define TRACEQST(qst) { qDebug(qPrintable(qst)); }
+

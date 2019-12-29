@@ -8,6 +8,7 @@
 #include <QHash>
 #include <QMap>
 #include <QMenu>
+#include <QStackedWidget>
 #include <QString>
 #include <QVariant>
 
@@ -17,6 +18,7 @@ class VectorItemDelegate;
 class VectorTableHorizontalHeader;
 class VectorTableView;
 class VectorTableVerticalHeader;
+class VectorTableWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -28,6 +30,8 @@ public:
     ~MainWindow();
     VectorUtilityApp * master(void)
     { return mpMaster; }
+    QStackedWidget * stack(void)
+    { return mpStackedWidget; }
 
 public slots:
 
@@ -63,13 +67,12 @@ private:
 
 private:
     VectorUtilityApp * mpMaster=nullptr;
-    VectorTableView * mpTableView=nullptr;
-    VectorTableVerticalHeader * mpVerticalHeader=nullptr;
-    VectorTableHorizontalHeader * mpHorizontalHeader=nullptr;
-    VectorItemDelegate * mpItemDelegate=nullptr;
-    QActionGroup * mpViewGroup=nullptr;
-    QActionGroup * mpWindowGroup=nullptr;
+    QStackedWidget * mpStackedWidget=nullptr;
+    VectorTableWidget * mpTablePageWidget=nullptr;
+
     QHash<QString, QAction *> mNameActionMap;
+    QActionGroup * mpViewActionGroup=nullptr;
+    QActionGroup * mpWindowActionGroup=nullptr;
     QMenu * mpFileMenu=nullptr;
     QMenu * mpViewMenu=nullptr;
     QMenu * mpWindowMenu=nullptr;

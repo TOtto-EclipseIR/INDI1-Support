@@ -28,31 +28,31 @@ void MainWindow::setupMenuActions(void)
     mpViewMenu = menuBar()->addMenu("&View");
     mpViewMenu->setObjectName("QMenu:View");
     QAction * homeAction = menuAction(mpViewMenu, "Home",
-               "ViewHome", Vector::nullView, mpViewGroup);
+               "ViewHome", Vector::nullView, mpViewActionGroup);
     homeAction->setShortcut(QKeySequence::Cancel); // Esc
     menuAction(mpViewMenu, "Summary",
-               "ViewSummary", Vector::Summary, mpViewGroup);
+               "ViewSummary", Vector::Summary, mpViewActionGroup);
     menuAction(mpViewMenu, "Gri&d",
-               "ViewGrid", Vector::Grid, mpViewGroup);
+               "ViewGrid", Vector::Grid, mpViewActionGroup);
     menuAction(mpViewMenu, "Gra&ph",
-               "ViewGraph", Vector::Graph, mpViewGroup);
+               "ViewGraph", Vector::Graph, mpViewActionGroup);
     menuAction(mpViewMenu, "E&ye Location",
-               "ViewEyeLocation", Vector::EyeLocation, mpViewGroup);
+               "ViewEyeLocation", Vector::EyeLocation, mpViewActionGroup);
     menuAction(mpViewMenu, "&Normal-Reconstruction",
-               "ViewNormalRecon", Vector::NormalRecon, mpViewGroup);
+               "ViewNormalRecon", Vector::NormalRecon, mpViewActionGroup);
     menuAction(mpViewMenu, "Raw &XML",
-               "ViewRawXml", Vector::RawXml, mpViewGroup);
+               "ViewRawXml", Vector::RawXml, mpViewActionGroup);
 
     mpWindowMenu = menuBar()->addMenu("&Window");
     mpWindowMenu->setObjectName("QMenu:Window");
     menuAction(mpWindowMenu, "&Baseline",
-               "ScopeBaseline", Vector::BaseLine, mpWindowGroup);
+               "ScopeBaseline", Vector::BaseLine, mpWindowActionGroup);
     menuAction(mpWindowMenu, "Subject&One",
-               "ScopeSubjectOne", Vector::SubjectOne, mpWindowGroup);
+               "ScopeSubjectOne", Vector::SubjectOne, mpWindowActionGroup);
     menuAction(mpWindowMenu, "Subject&Two",
-               "ScopeSubjectTwo", Vector::SubjectTwo, mpWindowGroup);
+               "ScopeSubjectTwo", Vector::SubjectTwo, mpWindowActionGroup);
     menuAction(mpWindowMenu, "BaseBot&h",
-               "ScopeBaseBoth", Vector::BaseBoth, mpWindowGroup);
+               "ScopeBaseBoth", Vector::BaseBoth, mpWindowActionGroup);
 
     QTimer::singleShot(100, this,
                        &MainWindow::setupActionConnections);
@@ -73,10 +73,12 @@ void MainWindow::setupActionConnections(void)
             this, &MainWindow::closeAll);
     connect(action("Quit"), &QAction::triggered,
             qApp, &QApplication::quit);
-    connect(mpWindowGroup, &QActionGroup::triggered,
+    connect(mpWindowActionGroup, &QActionGroup::triggered,
             this, &MainWindow::windowGroupTriggered);
-    connect(mpViewGroup, &QActionGroup::triggered,
+    connect(mpViewActionGroup, &QActionGroup::triggered,
             this, &MainWindow::viewGroupTriggered);
+    connect(this, &MainWindow::openDialogFileName,
+            mpMaster, &VectorUtilityApp::openVectorFile);
     emit setupComplete();
 }
 

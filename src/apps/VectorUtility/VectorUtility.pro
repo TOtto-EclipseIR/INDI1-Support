@@ -17,14 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     MainWindow-Setup.cpp \
+    UnitFloat.cpp \
+    UnitFloatLabel.cpp \
+    UnitFloatVector.cpp \
     Vector.cpp \
     VectorData.cpp \
     VectorItemDelegate.cpp \
+    VectorItemModel.cpp \
     VectorObject.cpp \
     VectorTableHorizontalHeader.cpp \
+    VectorTableIndex.cpp \
+    VectorTableItem.cpp \
     VectorTableModel.cpp \
     VectorTableVerticalHeader.cpp \
     VectorTableView.cpp \
+    VectorTableWidget.cpp \
     VectorUtilityApp.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -33,15 +40,23 @@ HEADERS += \
     DataProperty.h \
     Debug.h \
     MainWindow.h \
+    Matrix.h \
     QProperty.h \
+    UnitFloat.h \
+    UnitFloatLabel.h \
+    UnitFloatVector.h \
     Vector.h \
     VectorData.h \
     VectorItemDelegate.h \
+    VectorItemModel.h \
     VectorObject.h \ \
     VectorTableHorizontalHeader.h \
+    VectorTableIndex.h \
+    VectorTableItem.h \
     VectorTableModel.h \
     VectorTableVerticalHeader.h \
     VectorTableView.h \
+    VectorTableWidget.h \
     VectorUtilityApp.h
 
 # Default rules for deployment.
