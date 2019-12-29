@@ -7,6 +7,7 @@
 #include <QMenuBar>
 #include <QTimer>
 
+#include "CentralStack.h"
 #include "Debug.h"
 #include "Vector.h"
 #include "VectorItemDelegate.h"
@@ -18,8 +19,8 @@
 
 MainWindow::MainWindow(VectorUtilityApp * parent)
     : mpMaster(parent)
-    , mpStackedWidget(new QStackedWidget(this))
-    , mpTablePageWidget(new VectorTableWidget(mpStackedWidget))
+    , mpCentralStack(new CentralStack(this))
+    , mpTablePageWidget(new VectorTableWidget(mpCentralStack))
     , mpViewActionGroup(new QActionGroup(this))
     , mpWindowActionGroup(new QActionGroup(this))
 {

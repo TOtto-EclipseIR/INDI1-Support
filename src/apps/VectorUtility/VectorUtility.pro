@@ -16,6 +16,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AbstractCentralPage.cpp \
+    BlankPage.cpp \
+    CentralStack.cpp \
     MainWindow-Setup.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
@@ -37,6 +40,9 @@ SOURCES += \
     MainWindow.cpp \
 
 HEADERS += \
+    AbstractCentralPage.h \
+    BlankPage.h \
+    CentralStack.h \
     DataProperty.h \
     Debug.h \
     MainWindow.h \

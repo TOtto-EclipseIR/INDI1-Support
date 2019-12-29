@@ -4,9 +4,11 @@
 
 #include <QObject>
 #include <QApplication>
-class QSettings;
 
 
+#include <QSettings>
+
+#include "VectorItemModel.h"
 #include "VectorObject.h"
 class VectorTableModel;
 
@@ -15,6 +17,9 @@ class VectorUtilityApp : public QApplication
     Q_OBJECT
 public:
     explicit VectorUtilityApp(int ArgC, char * ArgV[]);
+    QSettings * settings(void)
+    { return mpSettings; }
+    QSettings::SettingsMap settings(const QString & groupName);
     VectorObject * vector(const Vector::FileScope scope)
     { return mScopeVectorMap.value(scope); }
 
@@ -30,6 +35,7 @@ signals:
 
 private:
     VectorTableModel * mpTableModel=nullptr;
+    VectorItemModel mItemModel;
     QSettings * mpSettings=nullptr;
     int mCoefRows = 320;
     VectorObject::Map mScopeVectorMap;

@@ -1,6 +1,8 @@
 #include "UnitFloatLabel.h"
 
 qreal UnitFloatLabel::smEpsilon = 0.00001;
+QFont UnitFloatLabel::smFont("Courier", 12);
+int UnitFloatLabel::smDecimals = 6;
 
 UnitFloatLabel::UnitFloatLabel(QWidget * parent)
     : QLabel(parent)
@@ -55,7 +57,7 @@ QChar UnitFloatLabel::sign(void)
     return qch;
 }
 
-qreal UnitFloatLabel::getEpsilon()
+qreal UnitFloatLabel::getEpsilon(void)
 {
     return smEpsilon;
 }
@@ -63,4 +65,13 @@ qreal UnitFloatLabel::getEpsilon()
 void UnitFloatLabel::setEpsilon(const qreal &value)
 {
     smEpsilon = value;
+}
+
+QSize UnitFloatLabel::sizeHint(void) const
+{
+    QLabel tempLabel;
+    tempLabel.setFont(smFont);
+    tempLabel.setText("+"+QString(smDecimals
+                                  ? smDecimals : 6, QChar('8')));
+    return tempLabel.size();
 }

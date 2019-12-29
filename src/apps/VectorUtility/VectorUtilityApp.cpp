@@ -5,32 +5,42 @@
 
 #include <QSettings>
 
-
+#include "Debug.h"
 #include "VectorTableModel.h"
 
 
 VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     : QApplication(ArgC, ArgV)
     , mpTableModel(nullptr)
-    , mpSettings(new QSettings(this))
 {
-    setObjectName("VectorUtilityApp");
+    TRACEFN()
     setParent(qApp);
+    setObjectName("VectorUtilityApp");
+
+#ifdef QT_DEBUG
+    setOrganizationName("EclipseR&D");
+#else
+    setOrganizationName("EclipseIR");
+#endif
+    setOrganizationName("EclipseR&D");
+    setApplicationName("VectorUtility");
+    mpSettings = new QSettings(QSettings::UserScope, this);
+    TRACE << mpSettings->fileName();
     mCoefRows = mpSettings->value("Vector/CoefRows",
                                   mCoefRows).toInt();
-    /*
-    VectorObject * baseVectorObject
-            = new VectorObject(Vector::BaseLineFile);
-    VectorObject * sub1VectorObject
-            = new VectorObject(Vector::SubjectOneFile);
-    VectorObject * sub2VectorObject
-            = new VectorObject(Vector::SubjectTwoFile);
-    set(baseVectorObject);
-    set(sub1VectorObject);
-    set(sub2VectorObject);
-    connect(baseVectorObject, &VectorObject::opened,
-            mpTableModel, &VectorTableModel::incomingVector);
-  */
+}
+
+QSettings::SettingsMap VectorUtilityApp::
+        settings(const QString & groupName)
+{
+    TRACE << Q_FUNC_INFO << mpSettings->fileName();
+    QSettings::SettingsMap snapshot;
+    mpSettings->beginGroup(groupName);
+    QStringList keys = mpSettings->allKeys();
+    foreach (QString key, keys)
+        snapshot.insert(key, mpSettings->value(key));
+    mpSettings->endGroup();
+    return  snapshot;
 }
 
 void VectorUtilityApp::set(VectorObject * vector)
@@ -38,6 +48,7 @@ void VectorUtilityApp::set(VectorObject * vector)
     mScopeVectorMap.insert(vector->scope(), vector);
     connect(vector, &VectorObject::opened,
             mpTableModel, &VectorTableModel::appendVector);
+    mItemModel.set(vector);
 }
 
 void VectorUtilityApp::openVectorFile(Vector::FileScope scope,

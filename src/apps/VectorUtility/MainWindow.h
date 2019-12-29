@@ -14,6 +14,7 @@
 
 #include "Vector.h"
 #include "VectorObject.h"
+class CentralStack;
 class VectorItemDelegate;
 class VectorTableHorizontalHeader;
 class VectorTableView;
@@ -30,8 +31,8 @@ public:
     ~MainWindow();
     VectorUtilityApp * master(void)
     { return mpMaster; }
-    QStackedWidget * stack(void)
-    { return mpStackedWidget; }
+    CentralStack * stack(void)
+    { return mpCentralStack; }
 
 public slots:
 
@@ -67,7 +68,7 @@ private:
 
 private:
     VectorUtilityApp * mpMaster=nullptr;
-    QStackedWidget * mpStackedWidget=nullptr;
+    CentralStack * mpCentralStack=nullptr;
     VectorTableWidget * mpTablePageWidget=nullptr;
 
     QHash<QString, QAction *> mNameActionMap;

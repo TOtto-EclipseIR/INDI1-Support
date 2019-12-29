@@ -2,7 +2,7 @@
 
 #include "UnitFloatLabel.h"
 
-VectorItemModel::VectorItemModel(const QSize size, QObject * parent)
+VectorItemModel::VectorItemModel(QObject * parent)
     : QAbstractItemModel(parent)
 {
     setObjectName("VectorItemModel");
@@ -15,7 +15,7 @@ VectorItemModel::VectorItemModel(const QSize size, QObject * parent)
 QVariant VectorItemModel::data(const QModelIndex & index,
                                int role) const
 {
-    if ( ! isValid(index)) return QVariant();
+    if ( ! isValidIndex(index)) return QVariant();
     VectorObject * vector = mVectors.at(index.column());
     UnitFloat uf = vector->at(index.column());
     UnitFloatLabel ufl(uf);
@@ -47,22 +47,34 @@ int VectorItemModel::columnCount(const QModelIndex & parent) const
     return mVectors.size();
 }
 
-bool VectorItemModel::isValid(const QModelIndex ix) const
+bool VectorItemModel::isValidIndex(const QModelIndex & mx) const
 {
-
+    return mx.row() >= 0 && mx.row() < rowCount()
+            && mx.column() >= 0 && mx.column() < columnCount();
 }
 
-bool VectorItemModel::set(const QModelIndex &ix, const QVariant value, int role)
+bool VectorItemModel::set(const QModelIndex & mx,
+                          const UnitFloat value,
+                          const int role)
 {
-
+    mCalculatedColumnsDirty =  true;
+    emit dataChanged(mx, mx);
+    return setData(mx, QVariant(value), role);
 }
 
-void VectorItemModel::set(VectorObject *vector)
+void VectorItemModel::set(VectorObject * vector)
 {
+    Vector::FileScope scope = vector->scope();
+    int row = 0, col = int(scope);
+    foreach (UnitFloat uf, vector->coefVector().values())
+    {
+        QModelIndex mx = index(row, col);
+        set(mx, uf);
+    }
 
 }
 
 void VectorItemModel::update()
 {
-
+    // TODO
 }

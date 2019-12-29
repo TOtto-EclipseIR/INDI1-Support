@@ -6,6 +6,7 @@
 #include <QList>
 #include <QSize>
 
+#include "UnitFloat.h"
 #include "Vector.h"
 #include "VectorObject.h"
 
@@ -13,8 +14,7 @@ class VectorItemModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit VectorItemModel(const QSize size,
-                             QObject * parent=nullptr);
+    explicit VectorItemModel(QObject * parent=nullptr);
     virtual QVariant data(const QModelIndex & index,
                    int role=Qt::DisplayRole) const;
     virtual QModelIndex index(int row, int column,
@@ -22,10 +22,10 @@ public:
     virtual QModelIndex parent(const QModelIndex & index) const;
     virtual int rowCount(const QModelIndex & parent=QModelIndex()) const;
     virtual int columnCount(const QModelIndex & parent=QModelIndex()) const;
-    bool isValid(const QModelIndex ix) const;
-    bool set(const QModelIndex & ix,
-             const QVariant value,
-             int role=Qt::EditRole);
+    bool isValidIndex(const QModelIndex & mx) const;
+    bool set(const QModelIndex & mx,
+             const UnitFloat value,
+             const int role=Qt::DisplayRole);
 
 public slots:
     void set(VectorObject * vector);
