@@ -1,7 +1,12 @@
 #include "CentralStack.h"
 
+#include <QTimer>
+
+#include "AbstractCentralPage.h"
 #include "Debug.h"
 #include "MainWindow.h"
+
+#include "BlankPage.h"
 
 CentralStack::CentralStack(MainWindow * parent)
     : QStackedWidget(parent)
@@ -13,41 +18,38 @@ CentralStack::CentralStack(MainWindow * parent)
             this, &CentralStack::indexChanged);
 
 
-
+    QTimer::singleShot(100, this, &CentralStack::setupPages);
 }
 
-void CentralStack::setCurrentPage(const QString &name, const int sequence)
+void CentralStack::setCurrentPage(const QString &fullName)
 {
-    QWidget * newPage = mPageMap.value(makeName(name, sequence));
+    QWidget * newPage = mFullNamePageDMap.at(fullName);
     if (newPage) setCurrentWidget(newPage);
 }
 
-QWidget *CentralStack::createPage(const QString &name,
-                                  const int sequence)
+void CentralStack::setupPages()
+{
+    //    addPage(new BlankPage(this, 0));
+}
+
+void CentralStack::addPage(AbstractCentralPage *newPage)
+{
+    // TODO TBD
+}
+
+/*
+QWidget *CentralStack::createPage(const QString & baseName)
 {
     TRACEFN()
     QSettings::SettingsMap pageSettings(master()->
-            settings("{app}/{desktop}/{CentralStack}/pages/" + name));
+            settings("{app}/{desktop}/{CentralStack}/pages/" + baseName));
     TRACE << pageSettings.keys();
 
 }
-
-QWidget *CentralStack::homePage(QSettings::SettingsMap pageSettings)
-{
-
-}
-
-QString CentralStack::makeName(const QString &name,
-                               const int sequence)
-{
-    QString fullName = name;
-    if (sequence)
-        fullName += QString("%1")
-                .arg(sequence, 3, 10, QChar('0'));
-    return fullName;
-}
+*/
 
 void CentralStack::indexChanged(int newIndex)
 {
-    // emit currentChanged()
+    QWidget * newPage = QStackedWidget::widget(newIndex);
+    emit currentChanged(mFullNamePageDMap.at(newPage), newPage);
 }

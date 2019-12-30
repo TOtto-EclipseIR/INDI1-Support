@@ -5,6 +5,7 @@
 #include <QKeySequence>
 #include <QMenu>
 #include <QMenuBar>
+#include <QStatusBar>
 #include <QTimer>
 
 #include "CentralStack.h"
@@ -92,6 +93,17 @@ void MainWindow::viewGroupTriggered(QAction * action)
     TRACE << Q_FUNC_INFO << action->objectName() << action->data();
     emit viewChanged(Vector::View(action->data().toInt()));
 
+}
+
+void MainWindow::showMessage(const QString & status,
+                             const int msecTime)
+{
+    QMainWindow::statusBar()->showMessage(status, msecTime);
+}
+
+void MainWindow::clearMessage()
+{
+    QMainWindow::statusBar()->clearMessage();
 }
 
 QAction * MainWindow::action(const QString &actionName) const

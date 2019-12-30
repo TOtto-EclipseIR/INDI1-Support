@@ -8,6 +8,8 @@
 #include <QString>
 #include <QWidget>
 
+#include "DualMap.h"
+class AbstractCentralPage;
 class MainWindow;
 class VectorUtilityApp;
 
@@ -18,34 +20,27 @@ public:
     explicit CentralStack(MainWindow * parent=nullptr);
     VectorUtilityApp * master(void)
     { return mpMaster; }
-    QWidget * page(const QString & name,
-                   const int sequence=0);
+    QWidget * page(const QString & fullName);
 
 
 public slots:
-    void setCurrentPage(const QString & name,
-                        const int sequence=0);
-
+    void setCurrentPage(const QString & fullName);
 
 protected:
-    QWidget * createPage(const QString & name,
-                         const int sequence=0);
-    QWidget * homePage(QSettings::SettingsMap pageSettings);
-    QString makeName(const QString & name,
-                     const int sequence);
+//    QWidget * createPage(const QString & baseName, const int sequence=0);
 
 protected slots:
+    void setupPages(void);
+
+    void addPage(AbstractCentralPage * newPage);
     void indexChanged(int newIndex);
 
-
 signals:
-    void pageCreated(QString name, QWidget * page);
-    void currentChanged(QString name, QWidget * page);
-
-
+//    void pageCreated(QString fullName, QWidget * page);
+    void currentChanged(QString fullName, QWidget * page);
 
 private:
     VectorUtilityApp * mpMaster=nullptr;
-    QMap<QString, QWidget *> mPageMap;
+    DualMap<QString, QWidget *> mFullNamePageDMap;
 };
 

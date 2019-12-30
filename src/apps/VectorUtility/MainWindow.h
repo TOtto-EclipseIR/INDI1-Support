@@ -35,9 +35,15 @@ public:
     { return mpCentralStack; }
 
 public slots:
+    void showMessage(const QString & status,
+                     const int msecTime=0);
+    void clearMessage(void);
+//  TODO setStatusLabel(), startStatusProgress(), enableCancel()
+//  TODO mainToolBar
 
 protected slots:
     void setupMenuActions(void);
+    void setupStatus(void);
     void setupActionConnections(void);
     void openBaseline(void);
     void openSubjectOne(void);
@@ -50,12 +56,14 @@ protected slots:
 
 signals:
     void setupComplete(void);
+    void messageChanged(QString status);
     void openDialogCancelled(Vector::FileScope scope);
     void openDialogFileName(Vector::FileScope scope,
                              QString fileName);
     void closeScope(Vector::FileScope scope);
     void windowChanged(Vector::Window newWindow);
     void viewChanged(Vector::View newView);
+
 
 private:
     QAction * menuAction(QMenu * menu,

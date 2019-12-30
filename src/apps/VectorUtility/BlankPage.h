@@ -8,7 +8,9 @@ class BlankPage : public AbstractCentralPage
 {
     Q_OBJECT
 public:
-    explicit BlankPage(AbstractCentralPage * parent);
+    explicit BlankPage(CentralStack * parent,
+                       const int flags=0);
+    virtual QString pageName(void) const override;
 
 public slots:
 

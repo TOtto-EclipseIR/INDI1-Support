@@ -7,6 +7,7 @@
 #include <QKeySequence>
 #include <QMenu>
 #include <QMenuBar>
+#include <QStatusBar>
 #include <QTimer>
 
 #include "Debug.h"
@@ -54,6 +55,16 @@ void MainWindow::setupMenuActions(void)
     menuAction(mpWindowMenu, "BaseBot&h",
                "ScopeBaseBoth", Vector::BaseBoth, mpWindowActionGroup);
 
+    QTimer::singleShot(100, this,
+                       &MainWindow::setupStatus);
+}
+
+
+void MainWindow::setupStatus(void)
+{
+    QStatusBar * statusBar = QMainWindow::statusBar();
+    connect(statusBar, &QStatusBar::messageChanged,
+            this, &MainWindow::messageChanged);
     QTimer::singleShot(100, this,
                        &MainWindow::setupActionConnections);
 }

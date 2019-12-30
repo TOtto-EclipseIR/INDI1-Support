@@ -4,6 +4,7 @@
 
 #include "Debug.h"
 
+/*
 BlankPage::BlankPage(AbstractCentralPage * parent)
     : AbstractCentralPage(parent->stack())
 {
@@ -15,6 +16,22 @@ BlankPage::BlankPage(AbstractCentralPage * parent)
     setObjectName("BlankPage");
 
     QTimer::singleShot(100, this, &BlankPage::setup0);
+}
+*/
+
+BlankPage::BlankPage(CentralStack * parent,
+                     const int flags)
+    : AbstractCentralPage(parent, flags)
+{
+    TRACEFN()
+    setObjectName("BlankPage");
+
+    QTimer::singleShot(100, this, &BlankPage::setup0);
+}
+
+QString BlankPage::pageName() const
+{
+    return QString("Blank");
 }
 
 void BlankPage::setup0()

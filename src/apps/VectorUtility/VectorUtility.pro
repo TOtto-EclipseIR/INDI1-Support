@@ -45,6 +45,7 @@ HEADERS += \
     CentralStack.h \
     DataProperty.h \
     Debug.h \
+    DualMap.h \
     MainWindow.h \
     Matrix.h \
     QProperty.h \
@@ -63,7 +64,7 @@ HEADERS += \
     VectorTableVerticalHeader.h \
     VectorTableView.h \
     VectorTableWidget.h \
-    VectorUtilityApp.h
+    VectorUtilityApp.h \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -71,4 +72,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    .gitignore
+    .gitignore \
