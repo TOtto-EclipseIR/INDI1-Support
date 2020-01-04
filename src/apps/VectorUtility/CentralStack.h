@@ -27,12 +27,12 @@ public slots:
     void setCurrentPage(const QString & fullName);
 
 protected:
-//    QWidget * createPage(const QString & baseName, const int sequence=0);
 
 protected slots:
     void setupPages(void);
+    void setupComplete(void);
 
-    void addPage(AbstractCentralPage * newPage);
+    void addCentralPage(AbstractCentralPage * newPage);
     void indexChanged(int newIndex);
 
 signals:

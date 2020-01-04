@@ -19,6 +19,7 @@ SOURCES += \
     AbstractCentralPage.cpp \
     BlankPage.cpp \
     CentralStack.cpp \
+    HomePage.cpp \
     MainWindow-Setup.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     DataProperty.h \
     Debug.h \
     DualMap.h \
+    HomePage.h \
     MainWindow.h \
     Matrix.h \
     QProperty.h \

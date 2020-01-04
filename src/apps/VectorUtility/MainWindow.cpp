@@ -31,6 +31,7 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     mpViewActionGroup->setExclusive(true);
     mpWindowActionGroup->setObjectName("QActionGroup:Window");
     mpWindowActionGroup->setExclusive(true);
+    QMainWindow::setCentralWidget(mpCentralStack);
     QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
     // See MainWondow-Setup.cpp
 }

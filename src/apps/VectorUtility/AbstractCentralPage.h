@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+class QGridLayout;
 
 #include "CentralStack.h"
 
@@ -12,6 +13,7 @@ public:
 protected:
     explicit AbstractCentralPage(CentralStack * parent,
                                  const int flags=0);
+    QGridLayout * layout(void);
 
 public:
     CentralStack * stack(void)
@@ -40,5 +42,6 @@ private:
     QString mFullName;
     QString mSuffix;
     int mSequence=0;
+    QGridLayout * mpGridLayout=nullptr;
 };
 

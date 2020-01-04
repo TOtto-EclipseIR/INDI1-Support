@@ -6,7 +6,7 @@
 #include "Debug.h"
 #include "MainWindow.h"
 
-#include "BlankPage.h"
+#include "HomePage.h"
 
 CentralStack::CentralStack(MainWindow * parent)
     : QStackedWidget(parent)
@@ -21,35 +21,43 @@ CentralStack::CentralStack(MainWindow * parent)
     QTimer::singleShot(100, this, &CentralStack::setupPages);
 }
 
-void CentralStack::setCurrentPage(const QString &fullName)
+void CentralStack::setCurrentPage(const QString & fullName)
 {
+    TRACEFN()
     QWidget * newPage = mFullNamePageDMap.at(fullName);
     if (newPage) setCurrentWidget(newPage);
+    updateGeometry();
+    update();
+    show();
 }
 
 void CentralStack::setupPages()
 {
-    //    addPage(new BlankPage(this, 0));
+    TRACEFN()
+    addCentralPage(new HomePage(this, 0));
+    QTimer::singleShot(100, this, &CentralStack::setupComplete);
 }
 
-void CentralStack::addPage(AbstractCentralPage *newPage)
-{
-    // TODO TBD
-}
-
-/*
-QWidget *CentralStack::createPage(const QString & baseName)
+void CentralStack::setupComplete()
 {
     TRACEFN()
-    QSettings::SettingsMap pageSettings(master()->
-            settings("{app}/{desktop}/{CentralStack}/pages/" + baseName));
-    TRACE << pageSettings.keys();
-
+    setCurrentPage("Home");
 }
-*/
+
+void CentralStack::addCentralPage(AbstractCentralPage * newPage)
+{
+    TRACEFN()
+    // TODO TBD
+    QStackedWidget::addWidget(newPage);
+    // UNDO
+    show();
+//    QStackedWidget::setCurrentWidget(newPage);
+}
 
 void CentralStack::indexChanged(int newIndex)
 {
     QWidget * newPage = QStackedWidget::widget(newIndex);
+    TRACE << Q_FUNC_INFO << newPage->objectName()
+          << qobject_cast<AbstractCentralPage *>(newPage)->fullName();
     emit currentChanged(mFullNamePageDMap.at(newPage), newPage);
 }

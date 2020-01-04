@@ -1,11 +1,21 @@
 #include "AbstractCentralPage.h"
 
+#include <QGridLayout>
+
 AbstractCentralPage::AbstractCentralPage(CentralStack * parent, const int flags)
     : QWidget(parent)
     , mpStack(parent)
     , mFlags(flags)
+    , mpGridLayout(new QGridLayout)
 {
     setObjectName("AbstractCentralPage");
+    setLayout(mpGridLayout);
+    show();
+}
+
+QGridLayout *AbstractCentralPage::layout()
+{
+    return mpGridLayout;
 }
 
 QString AbstractCentralPage::baseName(void) const

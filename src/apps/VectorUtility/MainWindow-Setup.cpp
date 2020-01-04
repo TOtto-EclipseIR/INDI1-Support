@@ -90,6 +90,7 @@ void MainWindow::setupActionConnections(void)
             this, &MainWindow::viewGroupTriggered);
     connect(this, &MainWindow::openDialogFileName,
             mpMaster, &VectorUtilityApp::openVectorFile);
+    show();
     emit setupComplete();
 }
 
