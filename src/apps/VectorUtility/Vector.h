@@ -19,6 +19,7 @@ public:
     enum View
     {
         nullView = 0,
+        Home,
         Summary,
         Grid,
         Graph,

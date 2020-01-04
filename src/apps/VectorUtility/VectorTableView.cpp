@@ -3,5 +3,5 @@
 VectorTableView::VectorTableView(QWidget * parent)
     : QTableView(parent)
 {
-
+    setObjectName("VectorTableView");
 }

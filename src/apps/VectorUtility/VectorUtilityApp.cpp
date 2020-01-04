@@ -11,7 +11,7 @@
 
 VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     : QApplication(ArgC, ArgV)
-    , mpTableModel(nullptr)
+    , mpTableModel(new VectorTableModel())
 {
     TRACEFN()
     setParent(qApp);

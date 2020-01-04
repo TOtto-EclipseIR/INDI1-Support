@@ -19,6 +19,7 @@ SOURCES += \
     AbstractCentralPage.cpp \
     BlankPage.cpp \
     CentralStack.cpp \
+    GridPage.cpp \
     HomePage.cpp \
     MainWindow-Setup.cpp \
     UnitFloat.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     DataProperty.h \
     Debug.h \
     DualMap.h \
+    GridPage.h \
     HomePage.h \
     MainWindow.h \
     Matrix.h \

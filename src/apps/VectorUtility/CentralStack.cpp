@@ -6,6 +6,7 @@
 #include "Debug.h"
 #include "MainWindow.h"
 
+#include "GridPage.h"
 #include "HomePage.h"
 
 CentralStack::CentralStack(MainWindow * parent)
@@ -35,6 +36,11 @@ void CentralStack::setupPages()
 {
     TRACEFN()
     addCentralPage(new HomePage(this, 0));
+
+    GridPage * gridPage = new GridPage(this, 0);
+    gridPage->setModel(master()->tableModel());
+    addCentralPage(gridPage);
+
     QTimer::singleShot(100, this, &CentralStack::setupComplete);
 }
 

@@ -22,6 +22,8 @@ public:
     QSettings::SettingsMap settings(const QString & groupName);
     VectorObject * vector(const Vector::FileScope scope)
     { return mScopeVectorMap.value(scope); }
+    VectorTableModel * tableModel(void)
+    { return mpTableModel; }
 
 public slots:
     void set(VectorObject * vector);
