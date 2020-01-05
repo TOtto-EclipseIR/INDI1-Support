@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images/jpg">
+        <file alias="SplashPixmap">qrc/image/jpg/GradStack.jpg</file>
+    </qresource>
+</RCC>

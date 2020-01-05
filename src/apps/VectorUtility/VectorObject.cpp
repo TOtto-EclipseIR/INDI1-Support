@@ -26,7 +26,7 @@ UnitFloat::Value VectorObject::at(const int x)
 void VectorObject::openFileName(const QString &fileName)
 {
     TRACEFN()
-            mFileInfo.setFile(fileName);
+    mFileInfo.setFile(fileName);
     if ("png" == mFileInfo.suffix().toLower())
             QTimer::singleShot(100, this,
                                &VectorObject::readPngFile);

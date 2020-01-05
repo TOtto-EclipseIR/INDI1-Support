@@ -15,6 +15,7 @@ VectorItemModel::VectorItemModel(QObject * parent)
 QVariant VectorItemModel::data(const QModelIndex & index,
                                int role) const
 {
+    Q_UNUSED(role)
     if ( ! isValidIndex(index)) return QVariant();
     VectorObject * vector = mVectors.at(index.column());
     UnitFloat uf = vector->at(index.column());

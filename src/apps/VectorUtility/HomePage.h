@@ -20,7 +20,7 @@ public slots:
 signals:
 
 protected slots:
-    void setup0(void);
+    void setupWidgets(void);
 
 private:
 

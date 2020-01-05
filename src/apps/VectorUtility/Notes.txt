@@ -1,0 +1,19 @@
+[ ] 200104T1202aho
+void VectorUtilityApp::openVectorFile(Vector::FileScope scope,
+                                      QString fileName)
+{
+    vector(scope)->openFileName(fileName);
+}
+
+Called with vector(scope) null.
+===
+[ ] 200104T1431aho
+QSettings ctor in VectorUtilityApp
+===
+[ ] 200104T1433aho
+SplashPixmap in built-in resources, Main Icon too, also github
+===
+[ ] 200104T1511aho
+QQPointer class ignores use of null QObject pointer with specified
+QtDbgMsg level (Default: QFatal debug, QCritical release).
+===

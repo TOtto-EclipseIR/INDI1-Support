@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 
 #include <QApplication>
+#include <QDir>
+#include <QFileInfo>
 #include <QFileDialog>
 #include <QKeySequence>
 #include <QMenu>
@@ -32,6 +34,12 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     mpWindowActionGroup->setObjectName("QActionGroup:Window");
     mpWindowActionGroup->setExclusive(true);
     QMainWindow::setCentralWidget(mpCentralStack);
+
+    QDir  qrc(":/images/jpg");
+    QFileInfoList qrcInfos = qrc.entryInfoList();
+    TRACE << qrcInfos;
+
+
     QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
     // See MainWondow-Setup.cpp
 }

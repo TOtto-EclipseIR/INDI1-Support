@@ -14,7 +14,7 @@ HomePage::HomePage(CentralStack * parent,
     TRACEFN()
     setObjectName("HomePage");
 
-    QTimer::singleShot(100, this, &HomePage::setup0);
+    QTimer::singleShot(100, this, &HomePage::setupWidgets);
 }
 
 QString HomePage::pageName() const
@@ -22,14 +22,13 @@ QString HomePage::pageName() const
     return QString("Home");
 }
 
-void HomePage::setup0()
+void HomePage::setupWidgets()
 {
     TRACEFN()
-    QPixmap splashPixmap("/Temp/art/GradStack.jpg");
+    QPixmap splashPixmap(":/images/jpg/SplashPixmap");
     TRACE << splashPixmap.size();
     QLabel * splashLabel = new QLabel;
     splashLabel->setPixmap(splashPixmap);
     layout()->addWidget(splashLabel);
     show();
-    //    QTimer::singleShot(100, this, &HomePage::setup1);
 }
