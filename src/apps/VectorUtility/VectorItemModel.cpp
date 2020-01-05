@@ -7,8 +7,8 @@ VectorItemModel::VectorItemModel(QObject * parent)
 {
     setObjectName("VectorItemModel");
 
-    mVectors.reserve(Vector::sizeColumns);
-    while (mVectors.size() < Vector::sizeColumns)
+    mVectors.reserve(VectorObject::columnCount());
+    while (mVectors.size() < VectorObject::columnCount())
         mVectors << nullptr;
 }
 

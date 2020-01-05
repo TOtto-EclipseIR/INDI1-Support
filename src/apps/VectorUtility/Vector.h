@@ -42,20 +42,6 @@ public:
         sizeWindow
     };
 */
-    enum Columns
-    {
-        nullColumn = 0,
-        BaseLineCol,
-        SubjectOneCol,
-        SubjectTwoCol,
-        DeltaBaseOne,
-        DeltaBaseTwo,
-        DeltaOneTwo,
-        RatioBaseOne,
-        RatioBaseTwo,
-        RatioOneTwo,
-        sizeColumns
-    };
 
     //typedef QPair<Window, View> WindowView;
 
