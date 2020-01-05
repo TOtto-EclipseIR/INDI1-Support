@@ -1,4 +1,4 @@
-[ ] 200104T1202aho
+[+] 200104T1202aho
 void VectorUtilityApp::openVectorFile(Vector::FileScope scope,
                                       QString fileName)
 {
@@ -7,10 +7,10 @@ void VectorUtilityApp::openVectorFile(Vector::FileScope scope,
 
 Called with vector(scope) null.
 ===
-[ ] 200104T1431aho
+[+] 200104T1431aho
 QSettings ctor in VectorUtilityApp
 ===
-[ ] 200104T1433aho
+[X] 200104T1433aho
 SplashPixmap in built-in resources, Main Icon too, also github
 ===
 [ ] 200104T1511aho

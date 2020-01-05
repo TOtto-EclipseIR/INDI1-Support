@@ -22,11 +22,31 @@ CentralStack::CentralStack(MainWindow * parent)
     QTimer::singleShot(100, this, &CentralStack::setupPages);
 }
 
+void CentralStack::setCurrentView(const Vector::View & view)
+{
+    TRACE << Q_FUNC_INFO << view;
+#if 1
+    int x = 0;
+    AbstractCentralPage * page;
+    while (page = (AbstractCentralPage *)(widget(x++)))
+        if (view == page->view())
+            setCurrentWidget(page);
+#else
+    QString fullName = Vector::viewString(view);
+    setCurrentPage(fullName);
+#endif
+}
+
 void CentralStack::setCurrentPage(const QString & fullName)
 {
-    TRACEFN()
+    TRACE << Q_FUNC_INFO << fullName;
+    TRACE << mFullNamePageDMap.keys();
     QWidget * newPage = mFullNamePageDMap.at(fullName);
-    if (newPage) setCurrentWidget(newPage);
+    if (newPage)
+    {
+        setCurrentWidget(newPage);
+        TRACE << newPage->objectName();
+    }
     updateGeometry();
     update();
     show();
@@ -41,12 +61,14 @@ void CentralStack::setupPages()
     gridPage->setModel(master()->tableModel());
     addCentralPage(gridPage);
 
-    QTimer::singleShot(100, this, &CentralStack::setupComplete);
+    QTimer::singleShot(100, this, &CentralStack::setupConnections);
 }
 
-void CentralStack::setupComplete()
+void CentralStack::setupConnections()
 {
     TRACEFN()
+    connect(master()->mainWindow(), &MainWindow::viewChanged,
+            this, &CentralStack::setCurrentView);
     setCurrentPage("Home");
 }
 
@@ -55,6 +77,7 @@ void CentralStack::addCentralPage(AbstractCentralPage * newPage)
     TRACEFN()
     // TODO TBD
     QStackedWidget::addWidget(newPage);
+    mFullNamePageDMap.insertUnique(newPage->fullName(), newPage);
     // UNDO
     show();
 //    QStackedWidget::setCurrentWidget(newPage);

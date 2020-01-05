@@ -9,10 +9,10 @@ class Vector
 public:
     enum FileScope
     {
-        nullScope       = 0,
-        BaseLineFile    = 1,
-        SubjectOneFile  = 2,
-        SubjectTwoFile  = 3,
+        nullScope   = 0,
+        BaseLine    = 1,
+        SubjectOne  = 2,
+        SubjectTwo  = 3,
         sizeScope
     };
 
@@ -28,7 +28,7 @@ public:
         RawXml,
         sizeView
     };
-
+/*
     enum Window
     {
         nullWindow = 0,
@@ -41,7 +41,7 @@ public:
         BaseBoth,
         sizeWindow
     };
-
+*/
     enum Columns
     {
         nullColumn = 0,
@@ -57,7 +57,7 @@ public:
         sizeColumns
     };
 
-    typedef QPair<Window, View> WindowView;
+    //typedef QPair<Window, View> WindowView;
 
 public:
     Vector(void);
@@ -65,9 +65,11 @@ public:
 public: // static
     static QString scopeString(const FileScope scope);
     static QString viewString(const View view);
+    /*
     static QString windowString(const Window window);
     static QString windowViewString(const WindowView windowView);
     static bool windowIncludesScope(const Window window,
                                     const FileScope scope);
+                                    */
 };
 

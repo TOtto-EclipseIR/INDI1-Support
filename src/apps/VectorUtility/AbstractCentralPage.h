@@ -4,6 +4,7 @@
 class QGridLayout;
 
 #include "CentralStack.h"
+#include "Vector.h"
 
 class AbstractCentralPage : public QWidget
 {
@@ -20,6 +21,7 @@ public:
     { return mpStack; }
 
 public: // virtual
+    virtual Vector::View view(void) const = 0;
     virtual QString pageName(void) const = 0;
     virtual QString baseName(void) const;
     virtual QString fullName(void) const;

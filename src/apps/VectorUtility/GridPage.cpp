@@ -16,6 +16,11 @@ GridPage::GridPage(CentralStack * parent,
     QTimer::singleShot(100, this, &GridPage::setupViews);
 }
 
+Vector::View GridPage::view() const
+{
+    return Vector::Grid;
+}
+
 QString GridPage::pageName() const
 {
     return QString("Grid");

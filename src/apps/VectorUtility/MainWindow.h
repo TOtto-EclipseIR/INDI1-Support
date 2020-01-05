@@ -51,7 +51,7 @@ protected slots:
     void openVectorDialog(Vector::FileScope scope);
     void closeAll(void);
     void close(const Vector::FileScope scope);
-    void windowGroupTriggered(QAction * action);
+    void scopeGroupTriggered(QAction * action);
     void viewGroupTriggered(QAction * action);
 
 signals:
@@ -61,7 +61,7 @@ signals:
     void openDialogFileName(Vector::FileScope scope,
                              QString fileName);
     void closeScope(Vector::FileScope scope);
-    void windowChanged(Vector::Window newWindow);
+    void scopeChanged(Vector::FileScope newScope);
     void viewChanged(Vector::View newView);
 
 
@@ -81,8 +81,8 @@ private:
 
     QHash<QString, QAction *> mNameActionMap;
     QActionGroup * mpViewActionGroup=nullptr;
-    QActionGroup * mpWindowActionGroup=nullptr;
+    QActionGroup * mpScopeActionGroup=nullptr;
     QMenu * mpFileMenu=nullptr;
     QMenu * mpViewMenu=nullptr;
-    QMenu * mpWindowMenu=nullptr;
+    QMenu * mpScopeMenu=nullptr;
 };

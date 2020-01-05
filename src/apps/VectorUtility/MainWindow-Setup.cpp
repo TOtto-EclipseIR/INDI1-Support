@@ -44,16 +44,14 @@ void MainWindow::setupMenuActions(void)
     menuAction(mpViewMenu, "Raw &XML",
                "ViewRawXml", Vector::RawXml, mpViewActionGroup);
 
-    mpWindowMenu = menuBar()->addMenu("&Window");
-    mpWindowMenu->setObjectName("QMenu:Window");
-    menuAction(mpWindowMenu, "&Baseline",
-               "ScopeBaseline", Vector::BaseLine, mpWindowActionGroup);
-    menuAction(mpWindowMenu, "Subject&One",
-               "ScopeSubjectOne", Vector::SubjectOne, mpWindowActionGroup);
-    menuAction(mpWindowMenu, "Subject&Two",
-               "ScopeSubjectTwo", Vector::SubjectTwo, mpWindowActionGroup);
-    menuAction(mpWindowMenu, "BaseBot&h",
-               "ScopeBaseBoth", Vector::BaseBoth, mpWindowActionGroup);
+    mpScopeMenu = menuBar()->addMenu("&Scope");
+    mpScopeMenu->setObjectName("QMenu:Scope");
+    menuAction(mpScopeMenu, "&Baseline",
+               "ScopeBaseline", Vector::BaseLine, mpScopeActionGroup);
+    menuAction(mpScopeMenu, "Subject&One",
+               "ScopeSubjectOne", Vector::SubjectOne, mpScopeActionGroup);
+    menuAction(mpScopeMenu, "Subject&Two",
+               "ScopeSubjectTwo", Vector::SubjectTwo, mpScopeActionGroup);
 
     QTimer::singleShot(100, this,
                        &MainWindow::setupStatus);
@@ -84,8 +82,8 @@ void MainWindow::setupActionConnections(void)
             this, &MainWindow::closeAll);
     connect(action("Quit"), &QAction::triggered,
             qApp, &QApplication::quit);
-    connect(mpWindowActionGroup, &QActionGroup::triggered,
-            this, &MainWindow::windowGroupTriggered);
+    connect(mpScopeActionGroup, &QActionGroup::triggered,
+            this, &MainWindow::scopeGroupTriggered);
     connect(mpViewActionGroup, &QActionGroup::triggered,
             this, &MainWindow::viewGroupTriggered);
     connect(this, &MainWindow::openDialogFileName,
@@ -100,8 +98,7 @@ QAction *  MainWindow::menuAction(QMenu * menu,
                             const QVariant & actionData,
                             QActionGroup * actionGroup)
 {
-//    TRACE << Q_FUNC_INFO << menu->title() << menuText
-  //        << actionName << actionData;
+    //TRACE << Q_FUNC_INFO << menu->title() << menuText << actionName << actionData;
     QAction * newAction = menu->addAction(menuText);
     if ( ! actionData.isNull()) newAction->setData(actionData);
     newAction->setObjectName("QAction:"+actionName);
@@ -115,7 +112,7 @@ QAction *  MainWindow::menuAction(QMenu * menu,
 }
 
 
-QList<QAction *> MainWindow::menuActions(QMenu *menu) const
+QList<QAction *> MainWindow::menuActions(QMenu * menu) const
 {
     TRACEFN()
     QList<QAction *> result;

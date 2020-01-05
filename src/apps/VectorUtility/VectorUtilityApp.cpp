@@ -4,8 +4,10 @@
 #include "VectorUtilityApp.h"
 
 #include <QSettings>
+#include <QTimer>
 
 #include "Debug.h"
+#include "MainWindow.h"
 #include "VectorTableModel.h"
 
 
@@ -22,9 +24,9 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
 #else
     setOrganizationName("EclipseIR");
 #endif
-    setOrganizationName("EclipseR&D");
     setApplicationName("VectorUtility");
-    mpSettings = new QSettings(QSettings::UserScope, this);
+    mpSettings = new QSettings(QSettings::UserScope, organizationName(),
+                               applicationName(), this);
     TRACE << mpSettings->fileName();
     mCoefRows = mpSettings->value("Vector/CoefRows",
                                   mCoefRows).toInt();
@@ -51,8 +53,24 @@ void VectorUtilityApp::set(VectorObject * vector)
     mItemModel.set(vector);
 }
 
+void VectorUtilityApp::set(MainWindow *mainWindow)
+{
+    mpMainWindow = mainWindow;
+}
+
 void VectorUtilityApp::openVectorFile(Vector::FileScope scope,
                                       QString fileName)
 {
-    vector(scope)->openFileName(fileName);
+    VectorObject * vec = vector(scope);
+    if ( ! vec)
+    {
+        vec = new VectorObject(scope, this);
+        set(vec);
+    }
+    vec->openFileName(fileName);
+}
+
+void VectorUtilityApp::setupConnections()
+{
+
 }

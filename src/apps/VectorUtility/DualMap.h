@@ -27,6 +27,8 @@ public:
         {	return contains(key) ? mapT1toT2.value(key) : T2(); }
     T1 at(const T2 & key) const
         {	return contains(key) ? mapT2toT1.value(key) : T1(); }
+    QList<T1> keys(void) const
+        { return mapT1toT2.keys(); }
     QList<T1> all(const T1 & key) const
     {
         (void)key;

@@ -7,9 +7,9 @@ QString Vector::scopeString(const Vector::FileScope scope)
     switch (scope)
     {
     case nullScope:         return "{null}";
-    case BaseLineFile:      return "BaseLine";
-    case SubjectOneFile:    return "SubjectOne";
-    case SubjectTwoFile:    return "SubjectTwo";
+    case BaseLine:      return "BaseLine";
+    case SubjectOne:    return "SubjectOne";
+    case SubjectTwo:    return "SubjectTwo";
     default:                return "{???}";
     }
 }
@@ -29,6 +29,7 @@ QString Vector::viewString(const Vector::View view)
     }
 }
 
+/*
 QString Vector::windowString(const Vector::Window window)
 {
     switch (window)
@@ -93,3 +94,4 @@ bool Vector::windowIncludesScope(const Vector::Window window,
     }
     return false;
 }
+*/

@@ -17,6 +17,11 @@ HomePage::HomePage(CentralStack * parent,
     QTimer::singleShot(100, this, &HomePage::setupWidgets);
 }
 
+Vector::View HomePage::view() const
+{
+    return Vector::Home;
+}
+
 QString HomePage::pageName() const
 {
     return QString("Home");

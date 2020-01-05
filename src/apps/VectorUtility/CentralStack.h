@@ -9,6 +9,7 @@
 #include <QWidget>
 
 #include "DualMap.h"
+#include "Vector.h"
 class AbstractCentralPage;
 class MainWindow;
 class VectorUtilityApp;
@@ -24,13 +25,14 @@ public:
 
 
 public slots:
+    void setCurrentView(const Vector::View & View);
     void setCurrentPage(const QString & fullName);
 
 protected:
 
 protected slots:
     void setupPages(void);
-    void setupComplete(void);
+    void setupConnections(void);
 
     void addCentralPage(AbstractCentralPage * newPage);
     void indexChanged(int newIndex);

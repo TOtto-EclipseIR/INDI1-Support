@@ -25,14 +25,15 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     , mpCentralStack(new CentralStack(this))
     , mpTablePageWidget(new VectorTableWidget(mpCentralStack))
     , mpViewActionGroup(new QActionGroup(this))
-    , mpWindowActionGroup(new QActionGroup(this))
+    , mpScopeActionGroup(new QActionGroup(this))
 {
     TRACEFN()
     setObjectName("MainWindow:VectorUtility");
+    mpMaster->set(this);
     mpViewActionGroup->setObjectName("QActionGroup:View");
     mpViewActionGroup->setExclusive(true);
-    mpWindowActionGroup->setObjectName("QActionGroup:Window");
-    mpWindowActionGroup->setExclusive(true);
+    mpScopeActionGroup->setObjectName("QActionGroup:Window");
+    mpScopeActionGroup->setExclusive(true);
     QMainWindow::setCentralWidget(mpCentralStack);
 
     QDir  qrc(":/images/jpg");
@@ -51,19 +52,19 @@ MainWindow::~MainWindow()
 void MainWindow::openBaseline(void)
 {
     TRACEFN()
-    openVectorDialog(Vector::BaseLineFile);
+    openVectorDialog(Vector::BaseLine);
 }
 
 void MainWindow::openSubjectOne(void)
 {
     TRACEFN()
-    openVectorDialog(Vector::SubjectOneFile);
+    openVectorDialog(Vector::SubjectOne);
 }
 
 void MainWindow::openSubjectTwo(void)
 {
     TRACEFN()
-    openVectorDialog(Vector::SubjectTwoFile);
+    openVectorDialog(Vector::SubjectTwo);
 }
 
 void MainWindow::openVectorDialog(Vector::FileScope scope)
@@ -79,9 +80,9 @@ void MainWindow::openVectorDialog(Vector::FileScope scope)
 void MainWindow::closeAll(void)
 {
     TRACEFN()
-    close(Vector::BaseLineFile);
-    close(Vector::SubjectOneFile);
-    close(Vector::SubjectTwoFile);
+    close(Vector::BaseLine);
+    close(Vector::SubjectOne);
+    close(Vector::SubjectTwo);
 }
 
 void MainWindow::close(const Vector::FileScope scope)
@@ -90,10 +91,10 @@ void MainWindow::close(const Vector::FileScope scope)
     emit closeScope(scope);
 }
 
-void MainWindow::windowGroupTriggered(QAction * action)
+void MainWindow::scopeGroupTriggered(QAction * action)
 {
     TRACE << Q_FUNC_INFO << action->objectName() << action->data();
-    emit windowChanged(Vector::Window(action->data().toInt()));
+    emit scopeChanged(Vector::FileScope(action->data().toInt()));
 
 }
 

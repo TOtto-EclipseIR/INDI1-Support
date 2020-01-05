@@ -10,6 +10,7 @@ class HomePage : public AbstractCentralPage
 public:
     explicit HomePage(CentralStack * parent,
                        const int flags=0);
+    virtual Vector::View view(void) const override;
     virtual QString pageName(void) const override;
 
 public slots:
