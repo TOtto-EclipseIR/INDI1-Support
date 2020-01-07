@@ -8,6 +8,7 @@
 
 #include "Debug.h"
 #include "MainWindow.h"
+#include "QObjectInfo.h"
 #include "VectorTableModel.h"
 
 
@@ -30,6 +31,8 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     TRACE << mpSettings->fileName();
     mCoefRows = mpSettings->value("Vector/CoefRows",
                                   mCoefRows).toInt();
+
+    QTimer::singleShot(1000, this, &VectorUtilityApp::setupConnections);
 }
 
 QSettings::SettingsMap VectorUtilityApp::
@@ -72,5 +75,8 @@ void VectorUtilityApp::openVectorFile(Vector::FileScope scope,
 
 void VectorUtilityApp::setupConnections()
 {
-
+    TRACEFN()
+    VectorObject * vo = new VectorObject(Vector::BaseLine);
+    QObjectInfo qoi(vo);
+    TRACE << qoi.enumNames();
 }

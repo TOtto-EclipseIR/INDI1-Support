@@ -59,6 +59,8 @@ public: // static
     static int columnCount(void)
     { return sizeColumns & ColMaskIndex; }
 
+
+
 signals:
     void openCancelled(Vector::FileScope scope);
     void opened(VectorObject * vector);

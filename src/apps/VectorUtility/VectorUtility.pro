@@ -22,6 +22,8 @@ SOURCES += \
     GridPage.cpp \
     HomePage.cpp \
     MainWindow-Setup.cpp \
+    QObjectInfo.cpp \
+    QQObject.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
     UnitFloatVector.cpp \
@@ -52,7 +54,9 @@ HEADERS += \
     HomePage.h \
     MainWindow.h \
     Matrix.h \
+    QObjectInfo.h \
     QProperty.h \
+    QQObject.h \
     UnitFloat.h \
     UnitFloatLabel.h \
     UnitFloatVector.h \
