@@ -8,6 +8,7 @@
 
 class VariantMatrix
 {
+public:
     typedef QVector<QVariant> QVariantVector;
 
     class Size : private QPair<int, int>
@@ -27,11 +28,13 @@ class VariantMatrix
         Index(void);
         Index(const int row, const int col);
         void set(const int row, const int col);
+        void setRow(const int row);
+        void setCol(const int col);
         int row(void) const;
         int col(void) const;
         int & row(void);
         int & col(void);
-        int index(const Size size);
+        int index(const Size size) const;
     };
 
 public:
@@ -49,7 +52,7 @@ public:
     int count(void) const;
     void set(const Index index, const QVariant value);
     QVariant & at(const Index index);
-    QVariant value(const Index index);
+    QVariant value(const Index index) const;
     int rowCount(void) const;
     int colCount(void) const;
     void setRow(int row, QVariantVector values);

@@ -24,8 +24,6 @@ public:
     void set(VectorObject * vector);
     VectorObject * vector(const Vector::FileScope scope)
     { return mVectorMap.value(scope); }
-    void openVectorFile(Vector::FileScope scope,
-                        QString fileName);
     void startSetup(QObject * thisObject);
     void finishSetup(QObject * thisObject)
     { Q_UNUSED(thisObject); emit setupFinished(this); }
@@ -38,6 +36,8 @@ public: // virtual
 
 public slots:
     void setup(void);
+    void set(const Vector::FileScope scope,
+             UnitFloatVector coefs);
 
 signals:
     void ctorFinished(QObject * thisObject);
@@ -49,7 +49,6 @@ protected:
     void recalculate(const VectorObject::Columns column);
 
 private:
-    int mNumRows=00;
     VariantMatrix mMatrix;
     QMap<Vector::FileScope, VectorObject *> mVectorMap;
 };

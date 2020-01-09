@@ -9,7 +9,6 @@
 
 VectorTableModel::VectorTableModel(const int rows, QObject * parent)
     : QAbstractTableModel(parent)
-    , mNumRows(rows)
 {
     TRACEFN()
     setObjectName("VectorTableModel");
@@ -19,39 +18,24 @@ VectorTableModel::VectorTableModel(const int rows, QObject * parent)
 int VectorTableModel::rowCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent)
-    return mNumRows;
+    return mMatrix.rowCount();
 }
 
 int VectorTableModel::columnCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent)
-    return VectorObject::sizeColumns;
+    return mMatrix.colCount();
 }
 
 QVariant VectorTableModel::data(const QModelIndex & mx,
                                 const int role) const
 {
-    TRACEQFI << mx.row() << mx.column();
     Q_UNUSED(role)
-    QVariant result;
-    double value = qQNaN();
-    if (mx.column() >= 0 && mx.column() < Vector::sizeScope)
-    {
-        Vector::FileScope scope = Vector::FileScope(mx.column());
-//        value = mUnitMap[scope].at(mx.row());
-    }
-    else if (mx.column() >= Vector::sizeScope
-             && mx.column() < VectorObject::sizeColumns)
-    {
-        VectorObject::Columns column = VectorObject::Columns(mx.column());
-//        value = mFloatMap[column].at(mx.row());
-    }
-    if ( ! qIsNaN(value))
-        result.setValue(value);
+    QVariant result = mMatrix.value(
+                VariantMatrix::Index(mx.row(), mx.column()));
+    TRACEQFI << mx.row() << mx.column() << result;
     return result;
 }
-
-
 
 void VectorTableModel::startSetup(QObject * thisObject)
 {
@@ -87,11 +71,28 @@ void VectorTableModel::setup(void)
     finishSetup(this);
 }
 
+void VectorTableModel::set(const Vector::FileScope scope,
+                           UnitFloatVector coefs)
+{
+    TRACEQFI << Vector::scopeString(scope);
+    int rows = mMatrix.rowCount();
+    coefs.resize(rows);
+    VariantMatrix::Index ix;
+    ix.setCol(int(scope));
+    for (int row = 0; row < rows; ++row)
+    {
+        ix.setRow(row);
+        mMatrix.set(ix, QVariant(coefs.at(row)));
+    }
+    recalculate(scope);
+}
+
 
 void VectorTableModel::set(VectorObject * vector)
 {
     TRACEQFI << "TODO" << vector->objectName() << vector->vectorSize();
     mVectorMap.insert(vector->scope(), vector);
+    set(vector->scope(), vector->coefVector());
 }
 
 void VectorTableModel::recalculate(void)
