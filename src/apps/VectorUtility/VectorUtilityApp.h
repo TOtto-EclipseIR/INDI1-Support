@@ -23,18 +23,14 @@ public:
     QSettings * settings(void)
     { return mpSettings; }
     QSettings::SettingsMap settings(const QString & groupName);
-    VectorObject * vector(const Vector::FileScope scope);
-//    { return mScopeVectorMap.value(scope); }
     VectorTableModel * tableModel(void)
     { return mpTableModel; }
 
 public slots:
-    void set(VectorObject * vector);
     void set(MainWindow * mainWindow);
     void openVectorFile(Vector::FileScope scope,
                         QString fileName);
 
-protected slots:
     void startSetup(QObject * thisObject);
     void finishSetup(QObject * thisObject)
     { Q_UNUSED(thisObject); emit setupFinished(this); }
@@ -52,6 +48,5 @@ private:
     //VectorItemModel mItemModel;
     QSettings * mpSettings=nullptr;
     int mCoefRows = 320;
-//    VectorObject::Map mScopeVectorMap;
 };
 

@@ -13,8 +13,6 @@ VectorTableModel::VectorTableModel(const int rows, QObject * parent)
 {
     TRACEFN()
     setObjectName("VectorTableModel");
-    connect(this, &VectorTableModel::ctorFinished,
-            this, &VectorTableModel::startSetup);
     emit ctorFinished(this);
 }
 
@@ -40,38 +38,26 @@ QVariant VectorTableModel::data(const QModelIndex & mx,
     if (mx.column() >= 0 && mx.column() < Vector::sizeScope)
     {
         Vector::FileScope scope = Vector::FileScope(mx.column());
-        value = mUnitMap[scope].at(mx.row());
+//        value = mUnitMap[scope].at(mx.row());
     }
     else if (mx.column() >= Vector::sizeScope
              && mx.column() < VectorObject::sizeColumns)
     {
         VectorObject::Columns column = VectorObject::Columns(mx.column());
-        value = mFloatMap[column].at(mx.row());
+//        value = mFloatMap[column].at(mx.row());
     }
     if ( ! qIsNaN(value))
         result.setValue(value);
     return result;
 }
 
-bool VectorTableModel::setHeaderData(int section,
-                                     Qt::Orientation orientation,
-                                     const QVariant & value,
-                                     int role)
-{
-    TRACEQFI << section << value;
-    emit headerData(section, orientation, role);
-    return QAbstractTableModel::setHeaderData(section,
-                                              orientation,
-                                              value,
-                                              role);
-}
 
 
 void VectorTableModel::startSetup(QObject * thisObject)
 {
     TRACEFN()
     Q_UNUSED(thisObject);
-    QTimer::singleShot(100, this, SLOT(setup));
+    QTimer::singleShot(100, this, &VectorTableModel::setup);
 }
 
 void VectorTableModel::setup(void)
@@ -104,8 +90,8 @@ void VectorTableModel::setup(void)
 
 void VectorTableModel::set(VectorObject * vector)
 {
-    TRACEQFI << vector->objectName() << vector->vectorSize();
-    mUnitMap.insert(vector->scope(), vector->coefVector());
+    TRACEQFI << "TODO" << vector->objectName() << vector->vectorSize();
+    mVectorMap.insert(vector->scope(), vector);
 }
 
 void VectorTableModel::recalculate(void)

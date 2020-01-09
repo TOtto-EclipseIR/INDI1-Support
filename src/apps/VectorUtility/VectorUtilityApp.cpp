@@ -32,12 +32,13 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
                                   mCoefRows).toInt();
 
     mpTableModel = new VectorTableModel(mCoefRows, this);
-//    QTimer::singleShot(200, mpTableModel, &VectorTableModel::setup);
 
     connect(this, &VectorUtilityApp::ctorFinished,
             this, &VectorUtilityApp::startSetup);
+    connect(this, &VectorUtilityApp::ctorFinished,
+            mpTableModel, &VectorTableModel::startSetup);
+
     emit ctorFinished(this);
-  //  QTimer::singleShot(100, this, &VectorUtilityApp::setup);
 }
 
 QSettings::SettingsMap VectorUtilityApp::
@@ -53,19 +54,7 @@ QSettings::SettingsMap VectorUtilityApp::
     return  snapshot;
 }
 
-void VectorUtilityApp::set(VectorObject * vector)
-{
-#if 1
-    TRACEQFI << "TODO:" << vector->objectName();
-#else
-    mScopeVectorMap.insert(vector->scope(), vector);
-    connect(vector, &VectorObject::opened,
-            mpTableModel, &VectorTableModel::appendVector);
-    mItemModel.set(vector);
-#endif
-}
-
-void VectorUtilityApp::set(MainWindow *mainWindow)
+void VectorUtilityApp::set(MainWindow * mainWindow)
 {
     mpMainWindow = mainWindow;
 }
@@ -73,17 +62,7 @@ void VectorUtilityApp::set(MainWindow *mainWindow)
 void VectorUtilityApp::openVectorFile(Vector::FileScope scope,
                                       QString fileName)
 {
-#if 1
-    TRACE << Q_FUNC_INFO << "TODO";
-#else
-    VectorObject * vec = vector(scope);
-    if ( ! vec)
-    {
-        vec = new VectorObject(scope, this);
-        set(vec);
-    }
-    vec->openFileName(fileName);
-#endif
+    TRACEQFI << "TODO";
 }
 
 

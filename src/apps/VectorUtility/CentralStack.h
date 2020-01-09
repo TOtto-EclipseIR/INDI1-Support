@@ -28,7 +28,10 @@ public slots:
     void setCurrentView(const Vector::View & View);
     void setCurrentPage(const QString & fullName);
 
-protected:
+    void startSetup(QObject * thisObject);
+    void finishSetup(QObject * thisObject)
+    { Q_UNUSED(thisObject); emit setupFinished(this); }
+
 
 protected slots:
     void setupPages(void);

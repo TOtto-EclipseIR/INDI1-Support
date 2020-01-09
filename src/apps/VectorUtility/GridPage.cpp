@@ -31,7 +31,7 @@ QString GridPage::pageName() const
 void GridPage::setModel(VectorTableModel * model)
 {
     mpTableModel = model;
-    TRACEQFI << mpTableModel->unitMapCount() << mpTableModel->floatMapCount();
+    TRACEQFI ;
 }
 
 void GridPage::startSetup(QObject * thisObject)
@@ -43,9 +43,10 @@ void GridPage::startSetup(QObject * thisObject)
 
 void GridPage::setupViews(void)
 {
-    TRACEQFI << mpTableModel->unitMapCount() << mpTableModel->floatMapCount();
+    TRACEQFI ;
     mpTableView->setModel(mpTableModel);
     mpHeaderView->setModel(mpTableModel);
     layout()->addWidget(mpTableView);
     finishSetup(this);
+    TRACEQFI << "return";
 }

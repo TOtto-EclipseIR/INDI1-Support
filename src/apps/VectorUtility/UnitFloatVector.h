@@ -13,8 +13,7 @@ public:
     void setFromText(const QString vectorText,
                      const int expectedSize);
     int size(void) const { return mVector.size(); }
-    UnitFloat::Value at(const int index) const
-    { return mVector.at(index); }
+    UnitFloat::Value at(const int index) const;
     UnitFloat::Value operator [] (const int index) const
     { return at(index); }
     UnitFloat::Vector values(void) const

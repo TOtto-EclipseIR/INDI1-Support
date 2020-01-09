@@ -23,9 +23,11 @@ SOURCES += \
     HomePage.cpp \
     MainWindow-Setup.cpp \
     QObjectInfo.cpp \
+    QQVector.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
     UnitFloatVector.cpp \
+    VariantMatrix.cpp \
     Vector.cpp \
     VectorData.cpp \
     VectorItemDelegate.cpp \
@@ -54,9 +56,11 @@ HEADERS += \
     Matrix.h \
     QObjectInfo.h \
     QProperty.h \
+    QQVector.h \
     UnitFloat.h \
     UnitFloatLabel.h \
     UnitFloatVector.h \
+    VariantMatrix.h \
     Vector.h \
     VectorData.h \
     VectorItemDelegate.h \

@@ -1,13 +1,14 @@
 #pragma once
 
-#include <QVector>
+//#include <QVector>
+#include "QQVector.h"
 
 
 class UnitFloat
 {
 public:
     typedef qreal Value;
-    typedef QVector<Value> Vector;
+    typedef QQVector<Value> Vector;
 
 public:
     UnitFloat(void) : mValue(smNull) {}

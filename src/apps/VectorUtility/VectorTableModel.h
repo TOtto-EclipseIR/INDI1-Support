@@ -8,6 +8,8 @@
 #include <QVariant>
 
 #include "UnitFloatVector.h"
+#include "VariantMatrix.h"
+#include "Vector.h"
 #include "VectorObject.h"
 
 
@@ -19,25 +21,20 @@ public:
 
 public:
     VectorTableModel(const int rows, QObject * parent=nullptr);
-    int floatMapCount(void) const
-    { return mFloatMap.size(); }
-    int unitMapCount(void)
-    { return mUnitMap.size(); }
+    void set(VectorObject * vector);
+    VectorObject * vector(const Vector::FileScope scope)
+    { return mVectorMap.value(scope); }
+    void openVectorFile(Vector::FileScope scope,
+                        QString fileName);
+    void startSetup(QObject * thisObject);
+    void finishSetup(QObject * thisObject)
+    { Q_UNUSED(thisObject); emit setupFinished(this); }
 
 public: // virtual
     virtual int rowCount(const QModelIndex & parent=QModelIndex()) const;
     virtual int columnCount(const QModelIndex & parent=QModelIndex()) const;
     virtual QVariant data(const QModelIndex & mx,
                   const int role=Qt::DisplayRole) const;
-    virtual bool setHeaderData(int section,
-                               Qt::Orientation orientation,
-                               const QVariant & value,
-                               int role=Qt::EditRole);
-
-protected slots:
-    void startSetup(QObject * thisObject);
-    void finishSetup(QObject * thisObject)
-    { Q_UNUSED(thisObject); emit setupFinished(this); }
 
 public slots:
     void setup(void);
@@ -47,15 +44,13 @@ signals:
     void setupFinished(QObject * thisObject);
 
 protected:
-    void set(VectorObject * vector);
     void recalculate(void);
     void recalculate(const Vector::FileScope scope);
     void recalculate(const VectorObject::Columns column);
 
 private:
-    int cmIndexColumn = 0;
-    int mNumRows = 320;
-    QMap<VectorObject::Columns, FloatVector> mFloatMap;
-    QMap<Vector::FileScope, UnitFloatVector> mUnitMap;
+    int mNumRows=00;
+    VariantMatrix mMatrix;
+    QMap<Vector::FileScope, VectorObject *> mVectorMap;
 };
 

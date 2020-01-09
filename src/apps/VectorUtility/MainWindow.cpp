@@ -42,9 +42,9 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
 
     connect(this, &MainWindow::ctorFinished,
             this, &MainWindow::startSetup);
+    connect(this, &MainWindow::setupFinished,
+            mpCentralStack, &CentralStack::startSetup);
     emit ctorFinished(this);
-    //QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
-    // See MainWondow-Setup.cpp
 }
 
 MainWindow::~MainWindow()

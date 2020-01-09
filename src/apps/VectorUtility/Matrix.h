@@ -2,7 +2,8 @@
 #define MATRIX_H
 
 #include <QSize>
-#include <QVector>
+//#include <QVector>
+#include "QQVector.h"
 
 template <class T> class Matrix
 {
@@ -69,7 +70,7 @@ private:
 
 private:
     QSize Size;
-    QVector<T> Data;
+    QQVector<T> Data;
 };
 
 #endif // MATRIX_H
