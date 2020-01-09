@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+#include <QHeaderView>
+
 #include "AbstractCentralPage.h"
 #include "VectorTableModel.h"
 #include "VectorTableView.h"
@@ -23,14 +25,18 @@ public slots:
 
 
 signals:
+    void ctorFinished(QObject * thisObject);
+    void setupFinished(QObject * thisObject);
 
 protected slots:
-    void setupModel(void);
+    void startSetup(QObject * thisObject);
+    void finishSetup(QObject * thisObject)
+    { Q_UNUSED(thisObject); emit setupFinished(this); }
     void setupViews(void);
 
 private:
     VectorTableModel * mpTableModel=nullptr;
     VectorTableView * mpTableView=nullptr;
-
+    QHeaderView * mpHeaderView=nullptr;
 };
 

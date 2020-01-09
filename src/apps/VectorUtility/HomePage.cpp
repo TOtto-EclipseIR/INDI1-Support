@@ -13,8 +13,9 @@ HomePage::HomePage(CentralStack * parent,
 {
     TRACEFN()
     setObjectName("HomePage");
-
-    QTimer::singleShot(100, this, &HomePage::setupWidgets);
+    connect(this, &HomePage::ctorFinished,
+            this, &HomePage::startSetup);
+    emit ctorFinished(this);
 }
 
 Vector::View HomePage::view() const
@@ -27,7 +28,16 @@ QString HomePage::pageName() const
     return QString("Home");
 }
 
-void HomePage::setupWidgets()
+
+void HomePage::startSetup(QObject * thisObject)
+{
+    TRACEFN()
+    Q_UNUSED(thisObject);
+    QTimer::singleShot(100, this, &HomePage::setupWidgets);
+}
+
+
+void HomePage::setupWidgets(void)
 {
     TRACEFN()
     QPixmap splashPixmap(":/images/jpg/SplashPixmap");
@@ -36,4 +46,5 @@ void HomePage::setupWidgets()
     splashLabel->setPixmap(splashPixmap);
     layout()->addWidget(splashLabel);
     show();
+    finishSetup(this);
 }

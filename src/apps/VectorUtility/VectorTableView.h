@@ -15,6 +15,8 @@ public slots:
 
 
 signals:
+    void ctorFinished(QObject * thisObject);
+    void setupFinished(QObject * thisObject);
 
 
 private:

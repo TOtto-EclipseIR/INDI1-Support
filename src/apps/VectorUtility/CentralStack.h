@@ -38,6 +38,9 @@ protected slots:
     void indexChanged(int newIndex);
 
 signals:
+    void ctorFinished(QObject * thisObject);
+    void setupFinished(QObject * thisObject);
+
 //    void pageCreated(QString fullName, QWidget * page);
     void currentChanged(QString fullName, QWidget * page);
 

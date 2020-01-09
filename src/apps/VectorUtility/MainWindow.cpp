@@ -40,8 +40,10 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     QFileInfoList qrcInfos = qrc.entryInfoList();
     TRACE << qrcInfos;
 
-
-    QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
+    connect(this, &MainWindow::ctorFinished,
+            this, &MainWindow::startSetup);
+    emit ctorFinished(this);
+    //QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
     // See MainWondow-Setup.cpp
 }
 
@@ -115,6 +117,7 @@ void MainWindow::clearMessage()
 {
     QMainWindow::statusBar()->clearMessage();
 }
+
 
 QAction * MainWindow::action(const QString &actionName) const
 {

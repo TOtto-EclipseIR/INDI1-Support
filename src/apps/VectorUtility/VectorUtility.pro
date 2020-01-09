@@ -23,14 +23,12 @@ SOURCES += \
     HomePage.cpp \
     MainWindow-Setup.cpp \
     QObjectInfo.cpp \
-    QQObject.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
     UnitFloatVector.cpp \
     Vector.cpp \
     VectorData.cpp \
     VectorItemDelegate.cpp \
-    VectorItemModel.cpp \
     VectorObject.cpp \
     VectorTableHorizontalHeader.cpp \
     VectorTableIndex.cpp \
@@ -56,14 +54,12 @@ HEADERS += \
     Matrix.h \
     QObjectInfo.h \
     QProperty.h \
-    QQObject.h \
     UnitFloat.h \
     UnitFloatLabel.h \
     UnitFloatVector.h \
     Vector.h \
     VectorData.h \
     VectorItemDelegate.h \
-    VectorItemModel.h \
     VectorObject.h \ \
     VectorTableHorizontalHeader.h \
     VectorTableIndex.h \

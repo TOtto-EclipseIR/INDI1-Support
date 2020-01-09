@@ -9,11 +9,13 @@ GridPage::GridPage(CentralStack * parent,
                      const int flags)
     : AbstractCentralPage(parent, flags)
     , mpTableView(new VectorTableView(this))
+    , mpHeaderView(new QHeaderView(Qt::Horizontal, this))
 {
     TRACEFN()
     setObjectName("GridPage");
-
-    QTimer::singleShot(100, this, &GridPage::setupViews);
+    connect(this, &GridPage::ctorFinished,
+            this, &GridPage::startSetup);
+    emit ctorFinished(this);
 }
 
 Vector::View GridPage::view() const
@@ -26,21 +28,24 @@ QString GridPage::pageName() const
     return QString("Grid");
 }
 
-void GridPage::setModel(VectorTableModel *model)
+void GridPage::setModel(VectorTableModel * model)
 {
     mpTableModel = model;
-    setupModel();
+    TRACEQFI << mpTableModel->unitMapCount() << mpTableModel->floatMapCount();
 }
 
-void GridPage::setupModel()
-{
-    mpTableView->setModel(mpTableModel);
-}
-
-void GridPage::setupViews()
+void GridPage::startSetup(QObject * thisObject)
 {
     TRACEFN()
-    layout()->addWidget(mpTableView);
+    Q_UNUSED(thisObject);
+    QTimer::singleShot(100, this, &GridPage::setupViews);
+}
 
-    //    QTimer::singleShot(100, this, &GridPage::setup1);
+void GridPage::setupViews(void)
+{
+    TRACEQFI << mpTableModel->unitMapCount() << mpTableModel->floatMapCount();
+    mpTableView->setModel(mpTableModel);
+    mpHeaderView->setModel(mpTableModel);
+    layout()->addWidget(mpTableView);
+    finishSetup(this);
 }

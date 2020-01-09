@@ -23,8 +23,8 @@ public:
     QSettings * settings(void)
     { return mpSettings; }
     QSettings::SettingsMap settings(const QString & groupName);
-    VectorObject * vector(const Vector::FileScope scope)
-    { return mScopeVectorMap.value(scope); }
+    VectorObject * vector(const Vector::FileScope scope);
+//    { return mScopeVectorMap.value(scope); }
     VectorTableModel * tableModel(void)
     { return mpTableModel; }
 
@@ -35,19 +35,23 @@ public slots:
                         QString fileName);
 
 protected slots:
-    void setupConnections(void);
+    void startSetup(QObject * thisObject);
+    void finishSetup(QObject * thisObject)
+    { Q_UNUSED(thisObject); emit setupFinished(this); }
 
 
 
 signals:
+    void ctorFinished(QObject * thisObject);
+    void setupFinished(QObject * thisObject);
 
 
 private:
     VectorTableModel * mpTableModel=nullptr;
     MainWindow * mpMainWindow=nullptr;
-    VectorItemModel mItemModel;
+    //VectorItemModel mItemModel;
     QSettings * mpSettings=nullptr;
     int mCoefRows = 320;
-    VectorObject::Map mScopeVectorMap;
+//    VectorObject::Map mScopeVectorMap;
 };
 

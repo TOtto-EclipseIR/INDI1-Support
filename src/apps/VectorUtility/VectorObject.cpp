@@ -6,6 +6,7 @@
 #include <QTimer>
 
 #include "Debug.h"
+#include "QObjectInfo.h"
 
 VectorObject::VectorObject(const Vector::FileScope scope,
                            QObject * parent)
@@ -13,14 +14,16 @@ VectorObject::VectorObject(const Vector::FileScope scope,
     , cmScope(scope)
 {
     setObjectName("VectorObject:"+Vector::scopeString(cmScope));
+    QObjectInfo qoi(this);
 }
 
-UnitFloat::Value VectorObject::at(const int x)
+
+UnitFloat::Value VectorObject::at(const int x) const
 {
-/*    return (x >= 0 && x < mCoefVector.size())
+    TRACEQFI << x << vectorSize();
+    return (x >= 0 && x < vectorSize())
             ? UnitFloat::Value(coefVector().at(x))
-            : UnitFloat(); */
-    return coefVector().at(x);
+            : 0.0;
 }
 
 void VectorObject::openFileName(const QString &fileName)
@@ -114,8 +117,7 @@ void VectorObject::setVectorCoefData(void)
 
 void VectorObject::close(void)
 {
-    TRACEFN()
-    TRACE << "Anything to do?";
+    TRACEQFI << "Anything to do?";
     emit vectorClosed(cmScope);
 }
 

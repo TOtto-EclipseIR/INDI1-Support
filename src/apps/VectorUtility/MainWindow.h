@@ -42,6 +42,9 @@ public slots:
 //  TODO mainToolBar
 
 protected slots:
+    void startSetup(QObject * thisObject);
+    void finishSetup(QObject * thisObject)
+    { Q_UNUSED(thisObject); emit setupFinished(this); }
     void setupMenuActions(void);
     void setupStatus(void);
     void setupActionConnections(void);
@@ -55,7 +58,10 @@ protected slots:
     void viewGroupTriggered(QAction * action);
 
 signals:
-    void setupComplete(void);
+    void ctorFinished(QObject * thisObject);
+    void setupFinished(QObject * thisObject);
+//    void setupComplete(void);
+
     void messageChanged(QString status);
     void openDialogCancelled(Vector::FileScope scope);
     void openDialogFileName(Vector::FileScope scope,

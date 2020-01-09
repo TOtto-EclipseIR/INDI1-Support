@@ -15,7 +15,10 @@ BlankPage::BlankPage(CentralStack * parent,
     TRACEFN()
     setObjectName("BlankPage");
 
-    QTimer::singleShot(100, this, &BlankPage::setup0);
+    connect(this, &BlankPage::ctorFinished,
+            this, &BlankPage::startSetup);
+    emit ctorFinished(this);
+    //    QTimer::singleShot(100, this, &BlankPage::setup0);
 }
 
 QString BlankPage::pageName() const
@@ -23,9 +26,9 @@ QString BlankPage::pageName() const
     return QString("Blank");
 }
 
-void BlankPage::setup0()
+void BlankPage::startSetup(QObject * thisObject)
 {
     TRACEFN()
-
-    //    QTimer::singleShot(100, this, &BlankPage::setup1);
+    Q_UNUSED(thisObject);
+    finishSetup(this);
 }

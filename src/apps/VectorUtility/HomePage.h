@@ -15,10 +15,16 @@ public:
 
 public slots:
 
+protected slots:
+    void startSetup(QObject * thisObject);
+    void finishSetup(QObject * thisObject)
+    { Q_UNUSED(thisObject); emit setupFinished(this); }
 
 
 
 signals:
+    void ctorFinished(QObject * thisObject);
+    void setupFinished(QObject * thisObject);
 
 protected slots:
     void setupWidgets(void);

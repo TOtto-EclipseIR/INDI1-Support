@@ -18,10 +18,11 @@ QVariant VectorItemModel::data(const QModelIndex & index,
     Q_UNUSED(role)
     if ( ! isValidIndex(index)) return QVariant();
     VectorObject * vector = mVectors.at(index.column());
-    UnitFloat uf = vector->at(index.column());
-    UnitFloatLabel ufl(uf);
+//    UnitFloat uf = vector->at(index.column());
+    //UnitFloatLabel ufl(uf);
     // TODO handle role
-    return ufl.text();
+    //return ufl.text();
+    return QVariant();
 }
 
 QModelIndex VectorItemModel::index(int row, int column,

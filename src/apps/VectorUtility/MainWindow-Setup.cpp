@@ -13,6 +13,12 @@
 #include "Debug.h"
 #include "Vector.h"
 
+void MainWindow::startSetup(QObject *thisObject)
+{
+    QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
+
+}
+
 void MainWindow::setupMenuActions(void)
 {
     TRACEFN()
@@ -89,7 +95,7 @@ void MainWindow::setupActionConnections(void)
     connect(this, &MainWindow::openDialogFileName,
             mpMaster, &VectorUtilityApp::openVectorFile);
     show();
-    emit setupComplete();
+    emit setupFinished(this);
 }
 
 QAction *  MainWindow::menuAction(QMenu * menu,

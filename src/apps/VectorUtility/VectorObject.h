@@ -43,6 +43,7 @@ public:
         ColMaskRatio        = 0x20000000,
     };
     Q_ENUM(Columns);
+    typedef QList<Columns> ColumnList;
 
 public:
     explicit VectorObject(const Vector::FileScope scope,
@@ -53,13 +54,11 @@ public:
     int vectorSize(void) const { return mCoefVector.size(); }
     UnitFloatVector coefVector(void) const
     { return mCoefVector; }
-    UnitFloat::Value at(const int x);
+    UnitFloat::Value at(const int x) const;
 
 public: // static
     static int columnCount(void)
     { return sizeColumns & ColMaskIndex; }
-
-
 
 signals:
     void openCancelled(Vector::FileScope scope);
@@ -83,4 +82,3 @@ private:
     VectorData mData;
     UnitFloatVector mCoefVector;
 };
-
