@@ -48,5 +48,5 @@ void GridPage::setupViews(void)
     mpHeaderView->setModel(mpTableModel);
     layout()->addWidget(mpTableView);
     finishSetup(this);
-    TRACEQFI << "return";
+//    TRACEQFI << "exit";
 }

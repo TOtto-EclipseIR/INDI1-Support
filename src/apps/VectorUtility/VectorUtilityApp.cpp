@@ -59,11 +59,6 @@ void VectorUtilityApp::set(MainWindow * mainWindow)
     mpMainWindow = mainWindow;
 }
 
-void VectorUtilityApp::openVectorFile(Vector::FileScope scope,
-                                      QString fileName)
-{
-    TRACEQFI << "TODO";
-}
 
 
 void VectorUtilityApp::startSetup(QObject * thisObject)

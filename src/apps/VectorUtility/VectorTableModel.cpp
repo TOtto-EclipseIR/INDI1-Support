@@ -9,8 +9,10 @@
 
 VectorTableModel::VectorTableModel(const int rows, QObject * parent)
     : QAbstractTableModel(parent)
+    , mMatrix(VariantMatrix::Size(rows,
+                  VectorObject::columnCount()))
 {
-    TRACEFN()
+    TRACEQFI << mMatrix.rowCount() << mMatrix.colCount();
     setObjectName("VectorTableModel");
     emit ctorFinished(this);
 }
@@ -33,7 +35,7 @@ QVariant VectorTableModel::data(const QModelIndex & mx,
     Q_UNUSED(role)
     QVariant result = mMatrix.value(
                 VariantMatrix::Index(mx.row(), mx.column()));
-    TRACEQFI << mx.row() << mx.column() << result;
+    TRACEQFI << "return :" << mx.row() << mx.column() << result;
     return result;
 }
 
@@ -47,12 +49,13 @@ void VectorTableModel::startSetup(QObject * thisObject)
 void VectorTableModel::setup(void)
 {
     TRACEFN()
-    QModelIndex mx = createIndex(0, 0);
-    beginInsertColumns(mx, 0, columnCount(mx));
-    insertColumns(0, columnCount(mx), mx);
+    // QModelIndex mx00 = createIndex(0, 0);
+    QModelIndex mxRoot;
+    beginInsertColumns(mxRoot, 0, mMatrix.colCount());
+    EXPECT(insertColumns(0, mMatrix.colCount(), mxRoot));
     endInsertColumns();
-    beginInsertRows(mx, 0, rowCount(mx));
-    insertRows(0, rowCount(), mx);
+    beginInsertRows(mxRoot, 0, mMatrix.rowCount());
+    EXPECT(insertRows(0, mMatrix.rowCount(), mxRoot));
     endInsertRows();
 
     setHeaderData(VectorObject::nullColumn,         Qt::Horizontal, "Index");
@@ -74,23 +77,52 @@ void VectorTableModel::setup(void)
 void VectorTableModel::set(const Vector::FileScope scope,
                            UnitFloatVector coefs)
 {
-    TRACEQFI << Vector::scopeString(scope);
+    TRACEQFI << Vector::scopeString(scope) << coefs.size()
+             << mMatrix.rowCount() << mMatrix.colCount();
     int rows = mMatrix.rowCount();
     coefs.resize(rows);
+    TRACE << "coefs.resize()" << coefs.size();
     VariantMatrix::Index ix;
     ix.setCol(int(scope));
     for (int row = 0; row < rows; ++row)
     {
         ix.setRow(row);
-        mMatrix.set(ix, QVariant(coefs.at(row)));
+//        TRACE << ix.row() << ix.col() << coefs.at(row);
+        mMatrix.set(ix, QVariant(coefs.value(row)));
     }
     recalculate(scope);
+}
+
+void VectorTableModel::openVectorFile(Vector::FileScope scope,
+                                      QString fileName)
+{
+    TRACEQFI << scope << fileName;
+    VectorObject * openVector = new VectorObject(scope, this);
+    connect(openVector, &VectorObject::openCancelled,
+            mainWindow(), &MainWindow::openDialogCancelled);
+    connect(openVector, &VectorObject::opened,
+            this, &VectorTableModel::vectorOpened);
+    openVector->openFileName(fileName);
+}
+
+void VectorTableModel::vectorOpened(VectorObject * newVector)
+{
+    TRACEQFI << newVector->scope();
+    Vector::FileScope scope = newVector->scope();
+    VectorObject * oldVector = vector(scope);
+    if (oldVector)
+    {
+        emit closed(scope);
+        oldVector->deleteLater();
+    }
+    set(newVector);
+    emit opened(newVector);
 }
 
 
 void VectorTableModel::set(VectorObject * vector)
 {
-    TRACEQFI << "TODO" << vector->objectName() << vector->vectorSize();
+    TRACEQFI << vector->objectName() << vector->vectorSize();
     mVectorMap.insert(vector->scope(), vector);
     set(vector->scope(), vector->coefVector());
 }

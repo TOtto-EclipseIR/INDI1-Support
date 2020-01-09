@@ -7,6 +7,7 @@
 #include <QMap>
 #include <QVariant>
 
+#include "MainWindow.h"
 #include "UnitFloatVector.h"
 #include "VariantMatrix.h"
 #include "Vector.h"
@@ -21,7 +22,11 @@ public:
 
 public:
     VectorTableModel(const int rows, QObject * parent=nullptr);
+    MainWindow * mainWindow(void)
+    { return mpMainWindow; }
     void set(VectorObject * vector);
+    void set(MainWindow * mainWindow)
+    { mpMainWindow = mainWindow; }
     VectorObject * vector(const Vector::FileScope scope)
     { return mVectorMap.value(scope); }
     void startSetup(QObject * thisObject);
@@ -38,10 +43,15 @@ public slots:
     void setup(void);
     void set(const Vector::FileScope scope,
              UnitFloatVector coefs);
+    void openVectorFile(Vector::FileScope scope,
+                        QString fileName);
+    void vectorOpened(VectorObject * vector);
 
 signals:
     void ctorFinished(QObject * thisObject);
     void setupFinished(QObject * thisObject);
+    void opened(VectorObject * vector);
+    void closed(Vector::FileScope scope);
 
 protected:
     void recalculate(void);
@@ -49,6 +59,7 @@ protected:
     void recalculate(const VectorObject::Columns column);
 
 private:
+    MainWindow * mpMainWindow=nullptr;
     VariantMatrix mMatrix;
     QMap<Vector::FileScope, VectorObject *> mVectorMap;
 };

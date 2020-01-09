@@ -12,6 +12,7 @@
 
 #include "Debug.h"
 #include "Vector.h"
+#include "VectorTableModel.h"
 
 void MainWindow::startSetup(QObject *thisObject)
 {
@@ -93,7 +94,7 @@ void MainWindow::setupActionConnections(void)
     connect(mpViewActionGroup, &QActionGroup::triggered,
             this, &MainWindow::viewGroupTriggered);
     connect(this, &MainWindow::openDialogFileName,
-            mpMaster, &VectorUtilityApp::openVectorFile);
+            master()->tableModel(), &VectorTableModel::openVectorFile);
     show();
     emit setupFinished(this);
 }

@@ -17,3 +17,11 @@ SplashPixmap in built-in resources, Main Icon too, also github
 QQPointer class ignores use of null QObject pointer with specified
 QtDbgMsg level (Default: QFatal debug, QCritical release).
 ===
+[?] 200109T1151aho
+mMatrix ctor size
+===
+[ ] 200109T1239aho
+Refactor VectorObject member vars to VectorData as needed
+===
+[ ] 200109T1244aho LoPri
+Refactor out 320 constants with one source in QSettings

@@ -12,6 +12,7 @@ VectorObject::VectorObject(const Vector::FileScope scope,
                            QObject * parent)
     : QObject(parent)
     , cmScope(scope)
+    , mCoefVector(320)
 {
     setObjectName("VectorObject:"+Vector::scopeString(cmScope));
     QObjectInfo qoi(this);
@@ -22,13 +23,13 @@ UnitFloat::Value VectorObject::at(const int x) const
 {
     TRACEQFI << x << vectorSize();
     return (x >= 0 && x < vectorSize())
-            ? UnitFloat::Value(coefVector().at(x))
+            ? UnitFloat::Value(coefVector().value(x))
             : 0.0;
 }
 
-void VectorObject::openFileName(const QString &fileName)
+void VectorObject::openFileName(const QString & fileName)
 {
-    TRACEFN()
+    TRACEQFI << fileName;
     mFileInfo.setFile(fileName);
     if ("png" == mFileInfo.suffix().toLower())
             QTimer::singleShot(100, this,
@@ -111,7 +112,7 @@ void VectorObject::setVectorCoefData(void)
     TRACEFN()
     mCoefVector.setFromText(mData.getCoefText(),
                     mData.getCoefCount());
-    TRACE << mCoefVector.at(0);
+//    TRACE << mCoefVector.at(0);
     emit opened(this);
 }
 

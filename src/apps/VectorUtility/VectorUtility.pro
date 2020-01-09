@@ -23,7 +23,6 @@ SOURCES += \
     HomePage.cpp \
     MainWindow-Setup.cpp \
     QObjectInfo.cpp \
-    QQVector.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
     UnitFloatVector.cpp \

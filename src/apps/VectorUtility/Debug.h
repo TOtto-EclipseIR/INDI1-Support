@@ -9,3 +9,4 @@
 #define TRACEPSZ(psz) { qDebug(psz); }
 #define TRACEQST(qst) { qDebug(qPrintable(qst)); }
 
+#define EXPECT(bexp) { if ( ! bexp) qWarning() << "Expectation Failed:" << #bexp; }

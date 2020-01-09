@@ -11,6 +11,8 @@ public:
     { mMaxCapacity = n; }
     int size(void) const
     { checkCapacity(); return QVector<T>::size(); }
+    int capacity(void) const
+    { return QVector<T>::capacity(); }
     bool isEmpty(void) const
     { checkCapacity(); return QVector<T>::isEmpty(); }
     void append(const T & t)
@@ -23,8 +25,14 @@ public:
 
 private:
     void checkCapacity(void) const
-    { if (QVector<T>::capacity() < mMaxCapacity)
-            qFatal("QQVector : over capacity"); }
+    {
+#if 0
+        int capSize = capacity();
+        qDebug() << Q_FUNC_INFO << size() << capSize << mMaxCapacity;
+        if (capSize > mMaxCapacity)
+            qFatal("QQVector : over capacity");
+#endif
+    }
 
 private:
     int mMaxCapacity = 4096;

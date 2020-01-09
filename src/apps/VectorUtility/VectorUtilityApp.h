@@ -28,8 +28,6 @@ public:
 
 public slots:
     void set(MainWindow * mainWindow);
-    void openVectorFile(Vector::FileScope scope,
-                        QString fileName);
 
     void startSetup(QObject * thisObject);
     void finishSetup(QObject * thisObject)

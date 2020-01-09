@@ -62,7 +62,7 @@ public:
 private:
     QVariantVector mValues;
     Size mSize;
-    Size mAllocated;
+    Size mReserved;
     int mRowShift = 0;
 };
 
