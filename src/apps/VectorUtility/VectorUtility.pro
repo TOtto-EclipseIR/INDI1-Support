@@ -23,6 +23,7 @@ SOURCES += \
     HomePage.cpp \
     MainWindow-Setup.cpp \
     QObjectInfo.cpp \
+    RawXmlPage.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
     UnitFloatVector.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     QObjectInfo.h \
     QProperty.h \
     QQVector.h \
+    RawXmlPage.h \
     UnitFloat.h \
     UnitFloatLabel.h \
     UnitFloatVector.h \

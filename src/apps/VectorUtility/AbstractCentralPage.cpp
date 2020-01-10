@@ -7,8 +7,11 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent, const int flags)
     , mpStack(parent)
     , mFlags(flags)
     , mpGridLayout(new QGridLayout)
+    , mpPageTitleLabel(new QLabel)
 {
     setObjectName("AbstractCentralPage");
+    mpPageTitleLabel->setText("PageName");
+    mpGridLayout->addWidget(mpPageTitleLabel);
     setLayout(mpGridLayout);
     show();
 }
@@ -16,6 +19,11 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent, const int flags)
 QGridLayout *AbstractCentralPage::layout()
 {
     return mpGridLayout;
+}
+
+void AbstractCentralPage::setPageTitle(const QString & title)
+{
+    mpPageTitleLabel->setText(title);
 }
 
 QString AbstractCentralPage::baseName(void) const

@@ -44,7 +44,7 @@ void HomePage::setupWidgets(void)
     TRACE << splashPixmap.size();
     QLabel * splashLabel = new QLabel;
     splashLabel->setPixmap(splashPixmap);
-    layout()->addWidget(splashLabel);
+    layout()->addWidget(splashLabel, 1, 0);
     show();
     finishSetup(this);
 }

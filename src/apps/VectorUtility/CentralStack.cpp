@@ -8,6 +8,7 @@
 
 #include "GridPage.h"
 #include "HomePage.h"
+#include "RawXmlPage.h"
 
 CentralStack::CentralStack(MainWindow * parent)
     : QStackedWidget(parent)
@@ -23,16 +24,11 @@ CentralStack::CentralStack(MainWindow * parent)
 void CentralStack::setCurrentView(const Vector::View & view)
 {
     TRACE << Q_FUNC_INFO << view;
-#if 1
     int x = 0;
     AbstractCentralPage * page;
     while (page = (AbstractCentralPage *)(widget(x++)))
         if (view == page->view())
             setCurrentWidget(page);
-#else
-    QString fullName = Vector::viewString(view);
-    setCurrentPage(fullName);
-#endif
 }
 
 void CentralStack::setCurrentPage(const QString & fullName)
@@ -66,6 +62,8 @@ void CentralStack::setupPages()
     gridPage->setModel(master()->tableModel());
     addCentralPage(gridPage);
 
+    addCentralPage(new RawXmlPage(this));
+
     QTimer::singleShot(100, this, &CentralStack::setupConnections);
 }
 
@@ -82,6 +80,7 @@ void CentralStack::addCentralPage(AbstractCentralPage * newPage)
 {
     TRACEQFI << newPage->objectName();
     // TODO TBD
+    newPage->setPageTitle(newPage->pageName());
     QStackedWidget::addWidget(newPage);
     mFullNamePageDMap.insertUnique(newPage->fullName(), newPage);
     // UNDO

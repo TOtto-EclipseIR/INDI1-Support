@@ -1,7 +1,9 @@
 #pragma once
 
 #include <QWidget>
-class QGridLayout;
+
+#include <QGridLayout>
+#include <QLabel>
 
 #include "CentralStack.h"
 #include "Vector.h"
@@ -19,6 +21,7 @@ protected:
 public:
     CentralStack * stack(void)
     { return mpStack; }
+    void setPageTitle(const QString & title);
 
 public: // virtual
     virtual Vector::View view(void) const = 0;
@@ -45,5 +48,6 @@ private:
     QString mSuffix;
     int mSequence=0;
     QGridLayout * mpGridLayout=nullptr;
+    QLabel * mpPageTitleLabel=nullptr;
 };
 
