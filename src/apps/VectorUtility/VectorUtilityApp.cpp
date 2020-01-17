@@ -26,16 +26,13 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     setApplicationName("VectorUtility");
     mpSettings = new QSettings(QSettings::UserScope, organizationName(),
                                applicationName(), this);
-    TRACE << mpSettings->fileName();
+    //TRACE << mpSettings->fileName();
     mCoefRows = mpSettings->value("Vector/CoefRows",
                                   mCoefRows).toInt();
-
-
     connect(this, &VectorUtilityApp::ctorFinished,
             this, &VectorUtilityApp::startSetup);
     connect(this, &VectorUtilityApp::vectorOpened,
             this, &VectorUtilityApp::setVector);
-
     emit ctorFinished(this);
 }
 
@@ -61,14 +58,14 @@ VectorObject * VectorUtilityApp::vector(const Vector::FileScope scope)
 QSettings::SettingsMap VectorUtilityApp::
         settings(const QString & groupName)
 {
-    TRACE << Q_FUNC_INFO << mpSettings->fileName();
-    QSettings::SettingsMap snapshot;
+    TRACE << Q_FUNC_INFO << groupName;
+    QSettings::SettingsMap exportMap;
     mpSettings->beginGroup(groupName);
     QStringList keys = mpSettings->allKeys();
     foreach (QString key, keys)
-        snapshot.insert(key, mpSettings->value(key));
+        exportMap.insert(key, mpSettings->value(key));
     mpSettings->endGroup();
-    return  snapshot;
+    return exportMap;
 }
 
 void VectorUtilityApp::setMainWindow(MainWindow * mainWindow)

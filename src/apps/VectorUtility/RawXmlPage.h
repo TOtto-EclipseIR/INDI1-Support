@@ -23,9 +23,9 @@ protected slots:
     void startSetup(QObject * thisObject);
     void finishSetup(QObject * thisObject)
     { Q_UNUSED(thisObject); emit setupFinished(this); }
-    virtual void scopeChanged(Vector::FileScope scope);
-    void showVector(VectorObject * newVec);
-    virtual void setVector(VectorObject * vector);
+//    virtual void scopeChanged(Vector::FileScope scope);
+//    void showVector(VectorObject * newVec);
+    virtual void setVector(VectorObject * vector) override;
 
 
 signals:
@@ -33,5 +33,7 @@ signals:
     void setupFinished(QObject * thisObject);
 
 private:
-    QTextEdit * mpTextEdit=nullptr;
+    QTextEdit * mpBaselineText=nullptr;
+    QTextEdit * mpSubjectOneText=nullptr;
+    QTextEdit * mpSubjectTwoText=nullptr;
 };

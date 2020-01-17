@@ -12,7 +12,7 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
     , mpColumnSet(new VectorColumnSet(this))
     , mpGridLayout(new QGridLayout)
     , mpPageTitleLabel(new QLabel)
-    , mpScopeTitleLabel(new QLabel)
+//    , mpScopeTitleLabel(new QLabel)
 {
     TRACEFN()
     setObjectName("AbstractCentralPage");
@@ -20,16 +20,16 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
     TSTALLOC(mpColumnSet);
     TSTALLOC(mpGridLayout);
     TSTALLOC(mpPageTitleLabel);
-    TSTALLOC(mpScopeTitleLabel);
+//    TSTALLOC(mpScopeTitleLabel);
     connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn::Role)),
             this, SLOT(columnChanged(VectorColumn::Role)));
     connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn)),
             this, SLOT(columnChanged(VectorColumn)));
-    mpPageTitleLabel->setText("PageName");
-    mpScopeTitleLabel->setText("Scope");
+    mpPageTitleLabel->setText("{PageName}");
+//    mpScopeTitleLabel->setText("Scope");
     mpGridLayout->setObjectName("QGridLayout:AbstractCentralPage");
     mpGridLayout->addWidget(mpPageTitleLabel, 0, 0);
-    mpGridLayout->addWidget(mpScopeTitleLabel, 0, 1);
+//    mpGridLayout->addWidget(mpScopeTitleLabel, 0, 1);
     setLayout(mpGridLayout);
     show();
 }
@@ -45,7 +45,7 @@ void AbstractCentralPage::setPageTitle(const QString & title)
     WEXPECTNE(nullptr, mpPageTitleLabel);
     if (mpPageTitleLabel) mpPageTitleLabel->setText(title);
 }
-
+/*
 void AbstractCentralPage::setScopeTitle(const Vector::FileScope scope)
 {
     TRACEQFI << Vector::scopeString(scope);
@@ -53,7 +53,7 @@ void AbstractCentralPage::setScopeTitle(const Vector::FileScope scope)
     if (mpScopeTitleLabel)
         mpScopeTitleLabel->setText(Vector::scopeString(scope));
 }
-
+*/
 void AbstractCentralPage::columnChanged(VectorColumn vc)
 {
     TRACEQFI << vc.roleString();
@@ -72,14 +72,14 @@ void AbstractCentralPage::setNames(void)
     mFullName = mBaseName;
     TRACE << "BaseName" << mBaseName << "FullName" << mFullName;
 }
-
+/*
 void AbstractCentralPage::scopeChanged(Vector::FileScope scope)
 {
     WEXPECTNE(nullptr, mpScopeTitleLabel);
     if (mpScopeTitleLabel)
         mpScopeTitleLabel->setText(Vector::scopeString(scope));
 }
-
+*/
 QString AbstractCentralPage::baseName(void) const
 {
     return mBaseName;

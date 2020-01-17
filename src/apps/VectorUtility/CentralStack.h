@@ -39,7 +39,7 @@ public slots:
 protected slots:
     void setupPages(void);
     void setupConnections(void);
-    void scopeChanged(Vector::FileScope scope);
+//    void scopeChanged(Vector::FileScope scope);
     void addCentralPage(AbstractCentralPage * newPage);
     void indexChanged(int newIndex);
 

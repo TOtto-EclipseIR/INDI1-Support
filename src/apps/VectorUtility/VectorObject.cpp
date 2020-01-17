@@ -49,6 +49,8 @@ void VectorObject::readPngFile(void)
     TRACEFN()
     QImage pngImage(mFileInfo.absoluteFilePath());
     TRACE << pngImage.textKeys();
+    if (pngImage.height() > 16 && pngImage.width() > 16)
+        data().setNormalizedImage(pngImage);
     QString xmlBytes = pngImage.text("INDIface").toLocal8Bit();
     data().setXmlString(xmlBytes);
 //    TRACE << mXmlBytes;

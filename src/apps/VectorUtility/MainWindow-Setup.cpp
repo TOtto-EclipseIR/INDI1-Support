@@ -38,19 +38,19 @@ void MainWindow::setupMenuActions(void)
     QAction * homeAction = menuAction(mpViewMenu, "Home",
                "ViewHome", Vector::nullView, mpViewActionGroup);
     homeAction->setShortcut(QKeySequence::Cancel); // Esc
-    menuAction(mpViewMenu, "Summary",
+    menuAction(mpViewMenu, "&Summary",
                "ViewSummary", Vector::Summary, mpViewActionGroup);
     menuAction(mpViewMenu, "Gri&d",
                "ViewGrid", Vector::Grid, mpViewActionGroup);
     menuAction(mpViewMenu, "Gra&ph",
                "ViewGraph", Vector::Graph, mpViewActionGroup);
-    menuAction(mpViewMenu, "E&ye Location",
-               "ViewEyeLocation", Vector::EyeLocation, mpViewActionGroup);
-    menuAction(mpViewMenu, "&Normal-Reconstruction",
-               "ViewNormalRecon", Vector::NormalRecon, mpViewActionGroup);
+//    menuAction(mpViewMenu, "E&ye Location",
+  //             "ViewEyeLocation", Vector::EyeLocation, mpViewActionGroup);
+    menuAction(mpViewMenu, "&Reconstruction",
+               "ViewNormalRecon", Vector::Reconstruction, mpViewActionGroup);
     menuAction(mpViewMenu, "Raw &XML",
                "ViewRawXml", Vector::RawXml, mpViewActionGroup);
-
+/*
     mpScopeMenu = menuBar()->addMenu("&Scope");
     mpScopeMenu->setObjectName("QMenu:Scope");
     menuAction(mpScopeMenu, "&None",
@@ -61,7 +61,7 @@ void MainWindow::setupMenuActions(void)
                "ScopeSubjectOne", Vector::SubjectOne, mpScopeActionGroup);
     menuAction(mpScopeMenu, "Subject&Two",
                "ScopeSubjectTwo", Vector::SubjectTwo, mpScopeActionGroup);
-
+*/
     QTimer::singleShot(100, this,
                        &MainWindow::setupStatus);
 }
@@ -73,7 +73,7 @@ void MainWindow::setupStatus(void)
     connect(statusBar, &QStatusBar::messageChanged,
             this, &MainWindow::messageChanged);
 
-    action("ScopeNone")->setChecked(true);
+//    action("ScopeNone")->setChecked(true);
 
     QTimer::singleShot(100, this,
                        &MainWindow::setupActionConnections);
@@ -94,8 +94,8 @@ void MainWindow::setupActionConnections(void)
             this, &MainWindow::closeAll);
     connect(action("Quit"), &QAction::triggered,
             qApp, &QApplication::quit);
-    connect(mpScopeActionGroup, &QActionGroup::triggered,
-            this, &MainWindow::scopeGroupTriggered);
+//    connect(mpScopeActionGroup, &QActionGroup::triggered,
+  //          this, &MainWindow::scopeGroupTriggered);
     connect(mpViewActionGroup, &QActionGroup::triggered,
             this, &MainWindow::viewGroupTriggered);
 //    connect(this, &MainWindow::openDialogFileName,

@@ -10,6 +10,7 @@
 #include "GridPage.h"
 #include "HomePage.h"
 #include "RawXmlPage.h"
+#include "ReconPage.h"
 #include "SummaryPage.h"
 
 CentralStack::CentralStack(MainWindow * parent)
@@ -25,7 +26,7 @@ CentralStack::CentralStack(MainWindow * parent)
 
 void CentralStack::setCurrentView(const Vector::View & view)
 {
-    TRACE << Q_FUNC_INFO << view << Vector::viewString(view);
+    TRACEQFI << view << Vector::viewString(view);
     if (0 == view)
     {
         TODO("undo workaround");
@@ -33,27 +34,25 @@ void CentralStack::setCurrentView(const Vector::View & view)
     }
     else
     {
-#if 1
         AbstractCentralPage * page;
         int n = QStackedWidget::count();
-        for (int x = 0; x < n; x++)
+        WEXPECTNE(0, QStackedWidget::count())
+        if (n)
         {
-            page = (AbstractCentralPage *)(QStackedWidget::widget(x));
-            TRACE << "trying" << page->objectName() << page->view() << Vector::viewString(page->view());
-            if (page->view() == view)
+            for (int x = 0; x < n; x++)
             {
-                QStackedWidget::setCurrentIndex(x);
-                TRACEQFI << "success" << page->objectName() << page->fullName();
-                break;
+                page = (AbstractCentralPage *)
+                            (QStackedWidget::widget(x));
+                TRACE << "trying" << page->objectName() << page->view() << Vector::viewString(page->view());
+                if (page->view() == view)
+                {
+                    QStackedWidget::setCurrentIndex(x);
+                    TRACEQFI << "success" << page->objectName() << page->fullName();
+                    break;
+                }
             }
+            WARNQFI << "failed";
         }
-        WARNQFI << "failed";
-#else
-        int x = 0;
-        while ((page = (AbstractCentralPage *)(widget(x++))))
-            if (view == page->view())
-                setCurrentWidget(page);
-#endif
     }
     show();
 }
@@ -99,7 +98,13 @@ void CentralStack::setupPages(void)
     gridPage->setIndex(0, master()->rows());
     addCentralPage(gridPage);
 
-    addCentralPage(new RawXmlPage(this));
+    ReconPage * reconPage = new ReconPage(this, 0);
+    TSTALLOC(reconPage);
+    addCentralPage(reconPage);
+
+    RawXmlPage * rawXmlPage = new RawXmlPage(this, 0);
+    TSTALLOC(rawXmlPage);
+    addCentralPage(rawXmlPage);
 
     QTimer::singleShot(100, this, &CentralStack::setupConnections);
 }
@@ -128,7 +133,7 @@ void CentralStack::setVector(VectorObject * vector)
     }
 
 }
-
+/*
 void CentralStack::scopeChanged(Vector::FileScope scope)
 {
     TRACEQFI << Vector::scopeString(scope);
@@ -143,7 +148,7 @@ void CentralStack::scopeChanged(Vector::FileScope scope)
         page->scopeChanged(scope);
     }
 }
-
+*/
 void CentralStack::addCentralPage(AbstractCentralPage * newPage)
 {
     VCHKPTR(newPage);
@@ -151,8 +156,6 @@ void CentralStack::addCentralPage(AbstractCentralPage * newPage)
     newPage->setPageTitle(newPage->pageName());
     QStackedWidget::addWidget(newPage);
     mFullNamePageDMap.insertUnique(newPage->fullName(), newPage);
-    connect(this, &CentralStack::currentScopeChanged,
-            newPage, &AbstractCentralPage::scopeChanged);
     show();
 }
 

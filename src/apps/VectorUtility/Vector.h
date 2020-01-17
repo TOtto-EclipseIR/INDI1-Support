@@ -23,8 +23,8 @@ public:
         Summary,
         Grid,
         Graph,
-        EyeLocation,
-        NormalRecon,
+//        EyeLocation,
+        Reconstruction,
         RawXml,
         sizeView
     };

@@ -33,7 +33,7 @@
     TND(QVariantHash, MetaPerson, QVariantHash()) \
     TND(QVariantHash, MetaFace, QVariantHash()) \
     TND(QVariantHash, MetaVector, QVariantHash()) \
-    TND(QPixmap, GraphPixmap, QPixmap()) \
+    TND(QPixmap, GraphUnitPixmap, QPixmap()) \
     TND(QPixmap, ReconPixmap, QPixmap()) \
     TND(QPixmap, LEyePixmap, QPixmap()) \
     TND(QPixmap, REyePixmap, QPixmap()) \

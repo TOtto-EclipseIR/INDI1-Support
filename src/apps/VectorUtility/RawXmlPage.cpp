@@ -33,12 +33,37 @@ QString RawXmlPage::pageName() const
 
 void RawXmlPage::setVector(VectorObject * vector)
 {
+    WEXPECTNE(nullptr, vector)
     if (vector)
     {
-        scopeChanged(vector->scope());
-        VCHKPTR(mpTextEdit);
-        mpTextEdit->setPlainText(vector->data().getXmlString());
-        showVector(vector);
+        Vector::FileScope scope = vector->scope();
+//        scopeChanged(scope);
+        switch (scope)
+        {
+        case Vector::BaseLine:
+            VCHKPTR(mpBaselineText);
+            mpBaselineText->setPlainText(vector->data().getXmlString());
+            mpBaselineText->textCursor().movePosition(QTextCursor::Start);
+            break;
+
+        case Vector::SubjectOne:
+            VCHKPTR(mpSubjectOneText);
+            mpSubjectOneText->setPlainText(vector->data().getXmlString());
+            mpSubjectOneText->textCursor().movePosition(QTextCursor::Start);
+            break;
+
+        case Vector::SubjectTwo:
+            VCHKPTR(mpSubjectTwoText);
+            mpSubjectTwoText->setPlainText(vector->data().getXmlString());
+            mpSubjectTwoText->textCursor().movePosition(QTextCursor::Start);
+            break;
+
+        default:
+            WARN << "Invalid case" << scope;
+            break;
+        }
+        update();
+        show();
     }
 }
 
@@ -47,18 +72,35 @@ void RawXmlPage::startSetup(QObject * thisObject)
     TRACEFN()
     UNUSED(thisObject);
 
-    mpTextEdit = new QTextEdit(this);
-    TSTALLOC(mpTextEdit);
-    mpTextEdit->setObjectName("QTextEdit:RawXmlPage");
-    mpTextEdit->setFontFamily("Lucida Console");
-    mpTextEdit->setFontPointSize(14);
-    mpTextEdit->setReadOnly(true);
+    mpBaselineText = new QTextEdit(this);
+    TSTALLOC(mpBaselineText);
+    mpBaselineText->setObjectName("QTextEdit:RawXmlPage");
+    mpBaselineText->setFontFamily("Lucida Console");
+    mpBaselineText->setFontPointSize(14);
+    mpBaselineText->setReadOnly(true);
+
+    mpSubjectOneText = new QTextEdit(this);
+    TSTALLOC(mpSubjectOneText);
+    mpSubjectOneText->setObjectName("QTextEdit:RawXmlPage");
+    mpSubjectOneText->setFontFamily("Lucida Console");
+    mpSubjectOneText->setFontPointSize(14);
+    mpSubjectOneText->setReadOnly(true);
+
+    mpSubjectTwoText = new QTextEdit(this);
+    TSTALLOC(mpSubjectTwoText);
+    mpSubjectTwoText->setObjectName("QTextEdit:RawXmlPage");
+    mpSubjectTwoText->setFontFamily("Lucida Console");
+    mpSubjectTwoText->setFontPointSize(14);
+    mpSubjectTwoText->setReadOnly(true);
+
 
     layout()->setColumnStretch(2, 2);
-    layout()->addWidget(mpTextEdit, 1, 0, 1, 3);
+    layout()->addWidget(mpBaselineText, 1, 0, 1, 3);
+    layout()->addWidget(mpSubjectOneText, 2, 0, 1, 3);
+    layout()->addWidget(mpSubjectTwoText, 3, 0, 1, 3);
     setLayout(layout());
-    update();
-    updateGeometry();
+//    update();
+  //  updateGeometry();
     show();
 
     connect(stack()->master(), &VectorUtilityApp::vectorSet,
@@ -66,19 +108,20 @@ void RawXmlPage::startSetup(QObject * thisObject)
 
     finishSetup(this);
 }
-
+/*
 void RawXmlPage::scopeChanged(Vector::FileScope scope)
 {
     TRACEQFI << Vector::scopeString(scope);
     showVector(vector(scope));
 }
-
+*/
+/*
 void RawXmlPage::showVector(VectorObject * newVec)
 {
     VCHKPTR(newVec);
     VCHKPTR(mpTextEdit);
     TRACEQFI << (newVec ? Vector::scopeString(newVec->scope()) : "NULL")
             << mpTextEdit->objectName();
-    setScopeTitle(newVec->scope());
     mpTextEdit->setPlainText(newVec->data().getXmlString());
 }
+*/

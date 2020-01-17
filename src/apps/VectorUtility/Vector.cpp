@@ -22,8 +22,8 @@ QString Vector::viewString(const Vector::View view)
     case Summary:       return "Summary";
     case Grid:          return "Grid";
     case Graph:         return "Graph";
-    case EyeLocation:   return "EyeLocation";
-    case NormalRecon:   return "NormalRecon";
+//    case EyeLocation:   return "EyeLocation";
+    case Reconstruction:   return "NormalRecon";
     case RawXml:        return "RawXml";
     default:            return "{???}";
     }

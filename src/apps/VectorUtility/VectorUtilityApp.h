@@ -17,7 +17,7 @@ class VectorUtilityApp : public QApplication
     Q_OBJECT
 public:
     explicit VectorUtilityApp(int ArgC, char * ArgV[]);
-    MainWindow *mainWindow(void);
+    MainWindow * mainWindow(void);
     QSettings * settings(void);
     QSettings::SettingsMap settings(const QString & groupName);
     int rows(void) const
@@ -37,8 +37,8 @@ signals:
     void ctorFinished(QObject * thisObject);
     void setupFinished(QObject * thisObject);
     void vectorOpened(VectorObject *);
-    void scopeSet(Vector::FileScope);
     void vectorSet(VectorObject *);
+    void scopeSet(Vector::FileScope);
 
 private:
     MainWindow * mpMainWindow=nullptr;
