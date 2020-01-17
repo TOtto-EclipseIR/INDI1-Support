@@ -19,6 +19,7 @@ protected slots:
     void startSetup(QObject * thisObject);
     void finishSetup(QObject * thisObject)
     { Q_UNUSED(thisObject); emit setupFinished(this); }
+    void setVector(VectorObject * vector);
 
 
 

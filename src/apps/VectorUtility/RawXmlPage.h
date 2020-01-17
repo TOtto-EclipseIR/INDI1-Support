@@ -3,6 +3,9 @@
 #include <QWidget>
 #include "AbstractCentralPage.h"
 
+#include "Vector.h"
+#include "VectorObject.h"
+
 class QTextEdit;
 
 class RawXmlPage : public AbstractCentralPage
@@ -20,6 +23,9 @@ protected slots:
     void startSetup(QObject * thisObject);
     void finishSetup(QObject * thisObject)
     { Q_UNUSED(thisObject); emit setupFinished(this); }
+    virtual void scopeChanged(Vector::FileScope scope);
+    void showVector(VectorObject * newVec);
+    virtual void setVector(VectorObject * vector);
 
 
 signals:

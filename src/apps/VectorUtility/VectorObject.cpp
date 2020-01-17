@@ -8,6 +8,9 @@
 #include "Debug.h"
 #include "QObjectInfo.h"
 
+QHash<Vector::FileScope, VectorObject *> VectorObject::mVectors;
+
+
 VectorObject::VectorObject(const Vector::FileScope scope,
                            QObject * parent)
     : QObject(parent)
@@ -18,14 +21,14 @@ VectorObject::VectorObject(const Vector::FileScope scope,
     QObjectInfo qoi(this);
 }
 
-
-UnitFloat::Value VectorObject::at(const int x) const
+void VectorObject::set(VectorObject * vo)
 {
-    TRACEQFI << x << vectorSize();
-    return (x >= 0 && x < vectorSize())
-            ? UnitFloat::Value(coefVector().value(x))
-            : 0.0;
+    VectorObject * oldVector = mVectors[vo->scope()];
+    if (oldVector) oldVector->deleteLater();
+    mVectors[vo->scope()] = vo;
+
 }
+
 
 void VectorObject::openFileName(const QString & fileName)
 {
@@ -113,6 +116,7 @@ void VectorObject::setVectorCoefData(void)
     mCoefVector.setFromText(mData.getCoefText(),
                     mData.getCoefCount());
 //    TRACE << mCoefVector.at(0);
+    set(this);
     emit opened(this);
 }
 

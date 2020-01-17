@@ -13,6 +13,7 @@ HomePage::HomePage(CentralStack * parent,
 {
     TRACEFN()
     setObjectName("HomePage");
+    setNames();
     connect(this, &HomePage::ctorFinished,
             this, &HomePage::startSetup);
     emit ctorFinished(this);
@@ -34,6 +35,12 @@ void HomePage::startSetup(QObject * thisObject)
     TRACEFN()
     Q_UNUSED(thisObject);
     QTimer::singleShot(100, this, &HomePage::setupWidgets);
+}
+
+void HomePage::setVector(VectorObject * vector)
+{
+    VCHKPTR(vector);
+    TRACEQFI << Vector::scopeString(vector->scope());
 }
 
 

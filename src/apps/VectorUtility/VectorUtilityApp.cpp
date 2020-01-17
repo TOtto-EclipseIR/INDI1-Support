@@ -9,7 +9,6 @@
 #include "Debug.h"
 #include "MainWindow.h"
 #include "QObjectInfo.h"
-#include "VectorTableModel.h"
 
 
 VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
@@ -31,14 +30,32 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     mCoefRows = mpSettings->value("Vector/CoefRows",
                                   mCoefRows).toInt();
 
-    mpTableModel = new VectorTableModel(mCoefRows, this);
 
     connect(this, &VectorUtilityApp::ctorFinished,
             this, &VectorUtilityApp::startSetup);
-    connect(this, &VectorUtilityApp::ctorFinished,
-            mpTableModel, &VectorTableModel::startSetup);
+    connect(this, &VectorUtilityApp::vectorOpened,
+            this, &VectorUtilityApp::setVector);
 
     emit ctorFinished(this);
+}
+
+MainWindow * VectorUtilityApp::mainWindow()
+{
+    VCHKPTR(mpMainWindow);
+    return mpMainWindow;
+}
+
+QSettings * VectorUtilityApp::settings()
+{
+    VCHKPTR(mpSettings);
+    return mpSettings;
+}
+
+VectorObject * VectorUtilityApp::vector(const Vector::FileScope scope)
+{
+    TRACEQFI << Vector::scopeString(scope);
+    VectorObject * scopeVector = mVectorSet.value(scope);
+    return CHKPTR(scopeVector);
 }
 
 QSettings::SettingsMap VectorUtilityApp::
@@ -54,11 +71,41 @@ QSettings::SettingsMap VectorUtilityApp::
     return  snapshot;
 }
 
-void VectorUtilityApp::set(MainWindow * mainWindow)
+void VectorUtilityApp::setMainWindow(MainWindow * mainWindow)
 {
+    VCHKPTR(mainWindow);
+    TRACEQFI << mainWindow->objectName();
     mpMainWindow = mainWindow;
+    connect(mpMainWindow, &MainWindow::openDialogFileName,
+            this, &VectorUtilityApp::openVector);
 }
 
+
+void VectorUtilityApp::setVector(VectorObject * vector)
+{
+    Vector::FileScope scope = vector->scope();
+    TRACEQFI << Vector::scopeString(scope);
+    if (mVectorSet.contains(scope))
+    {
+        VectorObject * oldVec = mVectorSet.value(scope);
+        VCHKPTR(oldVec);
+        oldVec->deleteLater();
+    }
+    VCHKPTR(vector);
+    mVectorSet.insert(scope, vector);
+    emit scopeSet(scope);
+    emit vectorSet(vector);
+    mainWindow()->setVector(vector);
+}
+
+void VectorUtilityApp::openVector(Vector::FileScope scope,
+                                  QString fileName)
+{
+    VectorObject * newVec = new VectorObject(scope, this);
+    connect(newVec, &VectorObject::opened,
+            this, &VectorUtilityApp::vectorOpened);
+    newVec->openFileName(fileName);
+}
 
 
 void VectorUtilityApp::startSetup(QObject * thisObject)

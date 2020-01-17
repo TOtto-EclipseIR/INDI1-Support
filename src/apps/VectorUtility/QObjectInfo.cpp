@@ -81,7 +81,7 @@ QObjectInfo::EnumItemMap QObjectInfo::enumItemMap(const QMetaEnum &qme)
     {
         int v = qme.keyToValue(qPrintable(k));
         eim.insertUnique(k, v);
-        TRACE << k << v << QString::number(v, 16);
+        // TRACE << k << v << QString::number(v, 16);
     }
     return eim;
 }

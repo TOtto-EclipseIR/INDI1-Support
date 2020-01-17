@@ -13,26 +13,21 @@
 #include "CentralStack.h"
 #include "Debug.h"
 #include "Vector.h"
-#include "VectorItemDelegate.h"
-#include "VectorTableHorizontalHeader.h"
-#include "VectorTableView.h"
-#include "VectorTableVerticalHeader.h"
 #include "VectorTableWidget.h"
 
 
 MainWindow::MainWindow(VectorUtilityApp * parent)
     : mpMaster(parent)
     , mpCentralStack(new CentralStack(this))
-    , mpTablePageWidget(new VectorTableWidget(mpCentralStack))
     , mpViewActionGroup(new QActionGroup(this))
     , mpScopeActionGroup(new QActionGroup(this))
 {
     TRACEFN()
     setObjectName("MainWindow:VectorUtility");
-    mpMaster->set(this);
+    mpMaster->setMainWindow(this);
     mpViewActionGroup->setObjectName("QActionGroup:View");
     mpViewActionGroup->setExclusive(true);
-    mpScopeActionGroup->setObjectName("QActionGroup:Window");
+    mpScopeActionGroup->setObjectName("QActionGroup:Scope");
     mpScopeActionGroup->setExclusive(true);
     QMainWindow::setCentralWidget(mpCentralStack);
 
@@ -44,11 +39,25 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
             this, &MainWindow::startSetup);
     connect(this, &MainWindow::setupFinished,
             mpCentralStack, &CentralStack::startSetup);
+    connect(master(), &VectorUtilityApp::setVector,
+            mpCentralStack, &CentralStack::setVector);
     emit ctorFinished(this);
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+VectorUtilityApp * MainWindow::master()
+{
+    VCHKPTR(mpMaster);
+    return mpMaster;
+}
+
+CentralStack * MainWindow::stack(void)
+{
+    VCHKPTR(mpCentralStack);
+    return mpCentralStack;
 }
 
 void MainWindow::openBaseline(void)
@@ -107,6 +116,14 @@ void MainWindow::viewGroupTriggered(QAction * action)
 
 }
 
+void MainWindow::setScopeCheck(Vector::FileScope scope)
+{
+    TRACEQFI << Vector::scopeString(scope);
+    foreach(QAction * action, menuActions(scopeMenu()))
+        if (action->data().toInt() == scope)
+            action->setChecked(true);
+}
+
 void MainWindow::showMessage(const QString & status,
                              const int msecTime)
 {
@@ -118,11 +135,21 @@ void MainWindow::clearMessage()
     QMainWindow::statusBar()->clearMessage();
 }
 
-
-QAction * MainWindow::action(const QString &actionName) const
+void MainWindow::setVector(VectorObject * vector)
 {
-    TRACEFN()
-    return mNameActionMap.value(actionName);
+    VCHKPTR(vector);
+    TRACEQFI << Vector::scopeString(vector->scope());
+    stack()->setVector(vector);
+}
+
+
+QAction * MainWindow::action(const QString & actionName) const
+{
+    TRACEQFI << actionName;
+    QAction * act = mNameActionMap.value(actionName);
+    VCHKPTR(act);
+    TRACE << "return" << act->objectName();
+    return act;
 }
 
 

@@ -1,11 +1,4 @@
-[X] 200104T1202aho
-void VectorTableModel::openVectorFile(Vector::FileScope scope,
-                                      QString fileName)
-{
-    vector(scope)->openFileName(fileName);
-}
 
-Called with vector(scope) null.
 ===
 [+] 200104T1431aho
 QSettings ctor in VectorUtilityApp

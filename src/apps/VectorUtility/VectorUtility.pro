@@ -17,39 +17,40 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     AbstractCentralPage.cpp \
-    BlankPage.cpp \
+    BaseColorSet.cpp \
     CentralStack.cpp \
+    GraphPage.cpp \
     GridPage.cpp \
     HomePage.cpp \
     MainWindow-Setup.cpp \
     QObjectInfo.cpp \
     RawXmlPage.cpp \
+    SummaryPage.cpp \
+    SummaryView.cpp \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
     UnitFloatVector.cpp \
+    UnitVectorGraph.cpp \
     VariantMatrix.cpp \
     Vector.cpp \
+    VectorColumn.cpp \
+    VectorColumnSet.cpp \
+    VectorColumnTableWidget.cpp \
+    VectorColumnTwig.cpp \
     VectorData.cpp \
-    VectorItemDelegate.cpp \
     VectorObject.cpp \
-    VectorTableHorizontalHeader.cpp \
-    VectorTableIndex.cpp \
-    VectorTableItem.cpp \
-    VectorTableModel.cpp \
-    VectorTableVerticalHeader.cpp \
-    VectorTableView.cpp \
-    VectorTableWidget.cpp \
     VectorUtilityApp.cpp \
     main.cpp \
     MainWindow.cpp \
 
 HEADERS += \
     AbstractCentralPage.h \
-    BlankPage.h \
+    BaseColorSet.h \
     CentralStack.h \
     DataProperty.h \
     Debug.h \
     DualMap.h \
+    GraphPage.h \
     GridPage.h \
     HomePage.h \
     MainWindow.h \
@@ -58,21 +59,20 @@ HEADERS += \
     QProperty.h \
     QQVector.h \
     RawXmlPage.h \
+    SummaryPage.h \
+    SummaryView.h \
     UnitFloat.h \
     UnitFloatLabel.h \
     UnitFloatVector.h \
+    UnitVectorGraph.h \
     VariantMatrix.h \
     Vector.h \
+    VectorColumn.h \
+    VectorColumnSet.h \
+    VectorColumnTableWidget.h \
+    VectorColumnTwig.h \
     VectorData.h \
-    VectorItemDelegate.h \
     VectorObject.h \ \
-    VectorTableHorizontalHeader.h \
-    VectorTableIndex.h \
-    VectorTableItem.h \
-    VectorTableModel.h \
-    VectorTableVerticalHeader.h \
-    VectorTableView.h \
-    VectorTableWidget.h \
     VectorUtilityApp.h \
 
 # Default rules for deployment.
@@ -82,7 +82,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     .gitignore \ \
-    Notes.txt
+    BlankPage-cpp.txt \
+    BlankPage-h.txt \
+    Notes.txt \
+    TraceD20200116T1632.txt
 
 RESOURCES += \
     VectorUtility.qrc

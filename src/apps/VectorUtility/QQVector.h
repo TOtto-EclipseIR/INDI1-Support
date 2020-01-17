@@ -21,6 +21,13 @@ public:
     { QVector<T>::prepend(t); checkCapacity(); }
     void insert(const int x, const T & t)
     { QVector<T>::insert(x, t); checkCapacity(); }
+    QVector<T> mid(const int startIndex, const int length=-1)
+    { checkCapacity(); return QVector<T>::mid(startIndex, length); }
+    T first(void)
+    { return mid(0, 1)[0]; }
+    QVector<T> first(const int count)
+    { return mid(0, count); }
+
 
 
 private:

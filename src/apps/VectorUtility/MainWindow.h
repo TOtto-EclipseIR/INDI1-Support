@@ -29,10 +29,12 @@ public:
 public:
     MainWindow(VectorUtilityApp * parent);
     ~MainWindow();
-    VectorUtilityApp * master(void)
-    { return mpMaster; }
-    CentralStack * stack(void)
-    { return mpCentralStack; }
+    VectorUtilityApp * master(void);
+    CentralStack * stack(void);
+    QMenu * scopeMenu(void)
+    { return mpScopeMenu; }
+    QAction * action(const QString & actionName) const;
+    QList<QAction *> menuActions(QMenu * menu) const;
 
 public slots:
     void showMessage(const QString & status,
@@ -40,6 +42,7 @@ public slots:
     void clearMessage(void);
 //  TODO setStatusLabel(), startStatusProgress(), enableCancel()
 //  TODO mainToolBar
+    void setVector(VectorObject * vector);
 
 protected slots:
     void startSetup(QObject * thisObject);
@@ -56,11 +59,11 @@ protected slots:
     void close(const Vector::FileScope scope);
     void scopeGroupTriggered(QAction * action);
     void viewGroupTriggered(QAction * action);
+    void setScopeCheck(Vector::FileScope scope);
 
 signals:
     void ctorFinished(QObject * thisObject);
     void setupFinished(QObject * thisObject);
-//    void setupComplete(void);
 
     void messageChanged(QString status);
     void openDialogCancelled(Vector::FileScope scope);
@@ -77,13 +80,10 @@ private:
                     const QString & actionName,
                     const QVariant & actionData=QVariant(),
                     QActionGroup * actionGroup=nullptr);
-    QAction * action(const QString & actionName) const;
-    QList<QAction *> menuActions(QMenu * menu) const;
 
 private:
     VectorUtilityApp * mpMaster=nullptr;
     CentralStack * mpCentralStack=nullptr;
-    VectorTableWidget * mpTablePageWidget=nullptr;
 
     QHash<QString, QAction *> mNameActionMap;
     QActionGroup * mpViewActionGroup=nullptr;

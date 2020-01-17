@@ -48,17 +48,28 @@ public:
 public:
     explicit VectorObject(const Vector::FileScope scope,
                            QObject * parent=nullptr);
-    Vector::FileScope scope(void) const { return cmScope; }
+    Vector::FileScope scope(void) const
+    { return cmScope; }
+    QString scopeString(void) const
+    { return Vector::scopeString(cmScope); }
     VectorData data(void) const { return mData; }
     VectorData & data(void) { return mData; }
     int vectorSize(void) const { return mCoefVector.size(); }
     UnitFloatVector coefVector(void) const
     { return mCoefVector; }
-    UnitFloat::Value at(const int x) const;
+    bool isValid(int index) const
+    { return (index >= 0) && (index < mCoefVector.size()) ; }
+    UnitFloat::Value & at(const int x)
+    { Q_ASSERT(isValid(x)); return mCoefVector[x]; }
+    UnitFloat::Value value(const int x) const
+    { return isValid(x) ? mCoefVector.value(x) : UnitFloat::Value(); }
 
 public: // static
     static int columnCount(void)
     { return sizeColumns & ColMaskIndex; }
+//    static VectorObject * vector(const Vector::FileScope scope)
+  //  { return mVectors[scope] ; }
+    static void set(VectorObject * vector);
 
 signals:
     void openCancelled(Vector::FileScope scope);
@@ -81,4 +92,5 @@ private:
     QFileInfo mFileInfo;
     VectorData mData;
     UnitFloatVector mCoefVector;
+    static QHash<Vector::FileScope, VectorObject *> mVectors;
 };
