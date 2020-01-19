@@ -33,11 +33,13 @@ void VectorObject::set(VectorObject * vo)
 void VectorObject::openFileName(const QString & fileName)
 {
     TRACEQFI << fileName;
-    mFileInfo.setFile(fileName);
-    if ("png" == mFileInfo.suffix().toLower())
+    QFileInfo fileInfo;
+    fileInfo.setFile(fileName);
+    data().setFileInfo(fileInfo);
+    if ("png" == fileInfo.suffix().toLower())
             QTimer::singleShot(100, this,
                                &VectorObject::readPngFile);
-    else if ("xml" == mFileInfo.suffix().toLower())
+    else if ("xml" == fileInfo.suffix().toLower())
             QTimer::singleShot(100, this,
                                &VectorObject::readXmlFile);
     else
@@ -47,7 +49,7 @@ void VectorObject::openFileName(const QString & fileName)
 void VectorObject::readPngFile(void)
 {
     TRACEFN()
-    QImage pngImage(mFileInfo.absoluteFilePath());
+    QImage pngImage(data().getFileInfo().absoluteFilePath());
     TRACE << pngImage.textKeys();
     if (pngImage.height() > 16 && pngImage.width() > 16)
         data().setNormalizedImage(pngImage);
@@ -63,7 +65,7 @@ void VectorObject::readPngFile(void)
 void VectorObject::readXmlFile(void)
 {
     TRACEFN()
-    QFile xmlFile(mFileInfo.absoluteFilePath());
+    QFile xmlFile(data().getFileInfo().absoluteFilePath());
     xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QString xmlBytes = xmlFile.readAll();
     data().setXmlString(xmlBytes);

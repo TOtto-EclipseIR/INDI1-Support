@@ -89,7 +89,7 @@ private slots:
 
 private:
     const Vector::FileScope cmScope=Vector::nullScope;
-    QFileInfo mFileInfo;
+//    QFileInfo mFileInfo;
     VectorData mData;
     UnitFloatVector mCoefVector;
     static QHash<Vector::FileScope, VectorObject *> mVectors;
