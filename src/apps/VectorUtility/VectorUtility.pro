@@ -23,6 +23,7 @@ SOURCES += \
     GridPage.cpp \
     HomePage.cpp \
     MainWindow-Setup.cpp \
+    PageGridLayout.cpp \
     QObjectInfo.cpp \
     RawXmlPage.cpp \
     ReconPage.cpp \
@@ -31,6 +32,8 @@ SOURCES += \
     UnitFloat.cpp \
     UnitFloatLabel.cpp \
     UnitFloatVector.cpp \
+    UnitDeltaGraph.cpp \
+    UnitRatioGraph.cpp \
     UnitVectorGraph.cpp \
     VariantMatrix.cpp \
     Vector.cpp \
@@ -41,6 +44,7 @@ SOURCES += \
     VectorData.cpp \
     VectorObject.cpp \
     VectorUtilityApp.cpp \
+    VersionInfo.cpp \
     main.cpp \
     MainWindow.cpp \
 
@@ -56,6 +60,7 @@ HEADERS += \
     HomePage.h \
     MainWindow.h \
     Matrix.h \
+    PageGridLayout.h \
     QObjectInfo.h \
     QProperty.h \
     QQVector.h \
@@ -66,6 +71,8 @@ HEADERS += \
     UnitFloat.h \
     UnitFloatLabel.h \
     UnitFloatVector.h \
+    UnitDeltaGraph.h \
+    UnitRatioGraph.h \
     UnitVectorGraph.h \
     VariantMatrix.h \
     Vector.h \
@@ -75,7 +82,9 @@ HEADERS += \
     VectorColumnTwig.h \
     VectorData.h \
     VectorObject.h \ \
-    VectorUtilityApp.h \
+    VectorUtilityApp.h \ \
+    Version.h \
+    VersionInfo.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
