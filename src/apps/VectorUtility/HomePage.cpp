@@ -37,21 +37,17 @@ void HomePage::startSetup(QObject * thisObject)
     QTimer::singleShot(100, this, &HomePage::setupWidgets);
 }
 
-void HomePage::setVector(VectorObject * vector)
-{
-    VCHKPTR(vector);
-    TRACEQFI << Vector::scopeString(vector->scope());
-}
-
-
 void HomePage::setupWidgets(void)
 {
     TRACEFN()
     QPixmap splashPixmap(":/images/jpg/SplashPixmap");
     TRACE << splashPixmap.size();
     QLabel * splashLabel = new QLabel;
+    QLabel * versionLabel = new QLabel;
+    versionLabel->setText(stack()->master()->versionString());
     splashLabel->setPixmap(splashPixmap);
-    layout()->addWidget(splashLabel, 1, 0);
+    layout()->addWidget(splashLabel, 1, 0, 5, 5, Qt::AlignCenter);
+    layout()->addWidget(versionLabel, 0, 1, Qt::AlignCenter);
     show();
     finishSetup(this);
 }

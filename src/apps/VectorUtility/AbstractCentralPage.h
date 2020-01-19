@@ -7,6 +7,7 @@
 #include <QTimer>
 
 #include "CentralStack.h"
+#include "PageGridLayout.h"
 #include "Vector.h"
 #include "VectorColumn.h"
 #include "VectorColumnSet.h"
@@ -39,6 +40,7 @@ public:
 protected slots: // virtual
     virtual void columnChanged(VectorColumn vc);
     virtual void columnChanged(VectorColumn::Role vcr);
+//    virtual QSize maximumSize() const;
 
 public: // virtual
     virtual Vector::View view(void) const = 0;
@@ -65,7 +67,7 @@ private:
     QString mFullName;
     QString mSuffix;
     int mSequence=0;
-    QGridLayout * mpGridLayout=nullptr;
+    PageGridLayout * mpGridLayout=nullptr;
     QLabel * mpPageTitleLabel=nullptr;
 //    QLabel * mpScopeTitleLabel=nullptr;
 };

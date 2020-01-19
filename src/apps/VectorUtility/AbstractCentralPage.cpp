@@ -3,6 +3,8 @@
 #include <QGridLayout>
 
 #include "Debug.h"
+#include "PageGridLayout.h"
+
 
 AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
                                          const int flags)
@@ -10,9 +12,8 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
     , mpStack(parent)
     , mFlags(flags)
     , mpColumnSet(new VectorColumnSet(this))
-    , mpGridLayout(new QGridLayout)
+    , mpGridLayout(new PageGridLayout)
     , mpPageTitleLabel(new QLabel)
-//    , mpScopeTitleLabel(new QLabel)
 {
     TRACEFN()
     setObjectName("AbstractCentralPage");
@@ -20,16 +21,14 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
     TSTALLOC(mpColumnSet);
     TSTALLOC(mpGridLayout);
     TSTALLOC(mpPageTitleLabel);
-//    TSTALLOC(mpScopeTitleLabel);
     connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn::Role)),
             this, SLOT(columnChanged(VectorColumn::Role)));
     connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn)),
             this, SLOT(columnChanged(VectorColumn)));
     mpPageTitleLabel->setText("{PageName}");
-//    mpScopeTitleLabel->setText("Scope");
     mpGridLayout->setObjectName("QGridLayout:AbstractCentralPage");
-    mpGridLayout->addWidget(mpPageTitleLabel, 0, 0);
-//    mpGridLayout->addWidget(mpScopeTitleLabel, 0, 1);
+    mpGridLayout->addWidget(mpPageTitleLabel, 0, 0, Qt::AlignRight);
+
     setLayout(mpGridLayout);
     show();
 }
@@ -44,16 +43,9 @@ void AbstractCentralPage::setPageTitle(const QString & title)
     TRACEQFI << title;
     WEXPECTNE(nullptr, mpPageTitleLabel);
     if (mpPageTitleLabel) mpPageTitleLabel->setText(title);
+    update(); show();
 }
-/*
-void AbstractCentralPage::setScopeTitle(const Vector::FileScope scope)
-{
-    TRACEQFI << Vector::scopeString(scope);
-    WEXPECTNE(nullptr, mpScopeTitleLabel);
-    if (mpScopeTitleLabel)
-        mpScopeTitleLabel->setText(Vector::scopeString(scope));
-}
-*/
+
 void AbstractCentralPage::columnChanged(VectorColumn vc)
 {
     TRACEQFI << vc.roleString();
