@@ -20,6 +20,8 @@ public:
                             QWidget * parent=nullptr);
     void set(const UnitFloat::Value uf);
     void setUnitText(void);
+    QString formatUnit(const int decimals=4,
+                       const bool forceSign=true);
 
 
 public: // static
@@ -36,8 +38,6 @@ public: // static
 public slots:
 
 protected:
-    QString formatUnit(const int decimals=4,
-                       const bool forceSign=true);
     QChar sign(void);
 
 

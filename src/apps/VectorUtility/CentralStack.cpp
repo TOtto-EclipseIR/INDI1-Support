@@ -39,22 +39,22 @@ void CentralStack::setCurrentView(const Vector::View & view)
         WEXPECTNE(0, QStackedWidget::count())
         if (n)
         {
-            for (int x = 0; x < n; x++)
+            for (int ix = 0; ix < n; ix++)
             {
                 page = (AbstractCentralPage *)
-                            (QStackedWidget::widget(x));
+                            (QStackedWidget::widget(ix));
                 TRACE << "trying" << page->objectName() << page->view() << Vector::viewString(page->view());
                 if (page->view() == view)
                 {
-                    QStackedWidget::setCurrentIndex(x);
+                    QStackedWidget::setCurrentIndex(ix);
                     TRACEQFI << "success" << page->objectName() << page->fullName();
                     break;
                 }
+                WEXPECTNE(n, ix);
             }
-            WARNQFI << "failed";
         }
     }
-    show();
+    update(); show();
 }
 
 void CentralStack::setCurrentPage(const QString & fullName)
@@ -95,7 +95,6 @@ void CentralStack::setupPages(void)
 
     GridPage * gridPage = new GridPage(this, 0);
     TSTALLOC(gridPage);
-    gridPage->setIndex(0, master()->rows());
     addCentralPage(gridPage);
 
     ReconPage * reconPage = new ReconPage(this, 0);

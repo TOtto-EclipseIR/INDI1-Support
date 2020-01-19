@@ -10,6 +10,8 @@
 
 #include "VectorItemModel.h"
 #include "VectorObject.h"
+#include "Version.h"
+#include "VersionInfo.h"
 class MainWindow;
 
 class VectorUtilityApp : public QApplication
@@ -23,6 +25,9 @@ public:
     int rows(void) const
     { return mCoefRows; }
     VectorObject * vector(const Vector::FileScope scope);
+    VersionInfo version(void) const
+    { return cmVersion; }
+    QString versionString(void) const;
 
 public slots:
     void setMainWindow(MainWindow * mainWindow);
@@ -45,5 +50,6 @@ private:
     QSettings * mpSettings=nullptr;
     int mCoefRows = 320;
     QHash<Vector::FileScope, VectorObject *> mVectorSet;
+    const VersionInfo cmVersion;
 };
 

@@ -19,7 +19,6 @@ public:
     virtual QString pageName(void) const override;
 
 public slots:
-    void setIndex(int indexColumn, int rowCount);
     void setVector(VectorObject * vector) override;
 
 protected slots:

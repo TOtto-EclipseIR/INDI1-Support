@@ -9,10 +9,14 @@
 #include "Debug.h"
 #include "MainWindow.h"
 #include "QObjectInfo.h"
+#include "Version.h"
+#include "VersionInfo.h"
 
 
 VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     : QApplication(ArgC, ArgV)
+    , cmVersion(VER_STRING, VER_MAJOR, VER_MINOR,
+                VER_RELEASE, VER_BRANCH, VER_BUILD)
 {
     TRACEFN()
     setParent(qApp);
@@ -33,6 +37,9 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
             this, &VectorUtilityApp::startSetup);
     connect(this, &VectorUtilityApp::vectorOpened,
             this, &VectorUtilityApp::setVector);
+
+    INFO << cmVersion.toString() << "built" << cmVersion.buildDate();
+
     emit ctorFinished(this);
 }
 
@@ -53,6 +60,12 @@ VectorObject * VectorUtilityApp::vector(const Vector::FileScope scope)
     TRACEQFI << Vector::scopeString(scope);
     VectorObject * scopeVector = mVectorSet.value(scope);
     return CHKPTR(scopeVector);
+}
+
+QString VectorUtilityApp::versionString() const
+{
+    return QString("%1 %2").arg(cmVersion.toString())
+                           .arg(cmVersion.buildDate());
 }
 
 QSettings::SettingsMap VectorUtilityApp::

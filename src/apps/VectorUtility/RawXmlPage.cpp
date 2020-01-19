@@ -94,7 +94,7 @@ void RawXmlPage::startSetup(QObject * thisObject)
     mpSubjectTwoText->setReadOnly(true);
 
 
-    layout()->setColumnStretch(2, 2);
+    //layout()->setColumnStretch(2, 2);
     layout()->addWidget(mpBaselineText, 1, 0, 1, 3);
     layout()->addWidget(mpSubjectOneText, 2, 0, 1, 3);
     layout()->addWidget(mpSubjectTwoText, 3, 0, 1, 3);
