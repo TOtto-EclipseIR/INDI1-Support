@@ -32,7 +32,7 @@ void UnitFloatVector::setFromText(const QString vectorText,
 #if 1
     QStringList qsl = vectorText.simplified()
                                 .split(' ', QString::KeepEmptyParts);
-    TRACE << qsl;
+//    TRACE << qsl;
     while ( ! qsl.isEmpty() && mVector.size() < expectedSize)
     {
         QString s = qsl.takeFirst();

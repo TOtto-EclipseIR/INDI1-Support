@@ -21,10 +21,10 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
     TSTALLOC(mpColumnSet);
     TSTALLOC(mpGridLayout);
     TSTALLOC(mpPageTitleLabel);
-    connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn::Role)),
-            this, SLOT(columnChanged(VectorColumn::Role)));
-    connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn)),
-            this, SLOT(columnChanged(VectorColumn)));
+    EXPECT(connect(mpColumnSet, SIGNAL(columnChangedRole(VectorColumn::Role)),
+            this, SLOT(columnChanged(VectorColumn::Role))));
+    EXPECT(connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn)),
+            this, SLOT(columnChanged(VectorColumn))));
     mpPageTitleLabel->setText("{PageName}");
     mpGridLayout->setObjectName("QGridLayout:AbstractCentralPage");
     mpGridLayout->addWidget(mpPageTitleLabel, 0, 0, Qt::AlignRight);
@@ -64,14 +64,7 @@ void AbstractCentralPage::setNames(void)
     mFullName = mBaseName;
     TRACE << "BaseName" << mBaseName << "FullName" << mFullName;
 }
-/*
-void AbstractCentralPage::scopeChanged(Vector::FileScope scope)
-{
-    WEXPECTNE(nullptr, mpScopeTitleLabel);
-    if (mpScopeTitleLabel)
-        mpScopeTitleLabel->setText(Vector::scopeString(scope));
-}
-*/
+
 QString AbstractCentralPage::baseName(void) const
 {
     return mBaseName;
@@ -97,7 +90,6 @@ void AbstractCentralPage::setVector(VectorObject * vector)
     TRACEQFI << vector->scopeString();
     VectorColumn vc(VectorColumn::Role(vector->scope()),
                     vector->coefVector());
-    setColumn(vc);
 }
 
 void AbstractCentralPage::setColumn(VectorColumn column)

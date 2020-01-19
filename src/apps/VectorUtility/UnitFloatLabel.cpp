@@ -32,7 +32,7 @@ void UnitFloatLabel::set(const UnitFloat::Value ufv)
 {
     mUFV = ufv;
     UnitFloat::Value auf = (ufv < 0.0) ? -ufv : ufv;
-    mFraction = unsigned((auf - 1.0) * 10000000000.0);
+    mFraction = unsigned(auf * 100000000.0);
 }
 
 void UnitFloatLabel::setUnitText(void)
@@ -45,7 +45,7 @@ QString UnitFloatLabel::formatUnit(const int decimals,
 {
     QString qst;
     if (forceSign) qst = sign();
-    qst += QString::number(mFraction).left(decimals);
+    qst += QString("%1").arg(mFraction, 8, 10, QChar('0')).left(decimals);
     return qst;
 }
 

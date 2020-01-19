@@ -102,7 +102,7 @@ QVariant UnitDeltaGraph::Parms::value(const QString & key,
                                 const QVariant & defValue) const
 {
     QVariant var = mSettings.value(key, defValue);
-    TRACEQFI << key << var;
+//    TRACEQFI << key << var;
     return var;
 }
 

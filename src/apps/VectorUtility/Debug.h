@@ -2,8 +2,10 @@
 #pragma once
 
 #include <QtDebug>
+#include <QCoreApplication>
 #include <QDateTime>
 #include <QPointer>
+#include <QTimer>
 
 #define TIME QDateTime::currentDateTime().toString("hh:mm:ss.zzz")
 #define DEBUG(qmt, pfx) qmt() << pfx << TIME
@@ -17,6 +19,9 @@
 #define DEBUGXEQ(qmt, pfx, expt, var) { if (expt != var) qmt() << pfx << TIME   << "Expectation FAILED:" << #expt << expt << "==" << #var << var; }
 #define DEBUGXNE(qmt, pfx, expt, var) { if (expt == var) qmt() << pfx << TIME   << "Expectation FAILED:" << #expt << expt << "!=" << #var << var; }
 #define DEBUGXPTR(qmt, pfx, ptr) { if (nullptr == ptr) qmt() << pfx << TIME   << "Allocation FAILED:" <<  #ptr; }
+#define DEBUGRTN(qmt, pfx, expr) { qmt() << pfx << TIME << Q_FUNC_INFO << "Return:" << #expr; return expr; }
+#define DEBUGRTV(qmt, pfx) { qmt() << pfx << TIME << Q_FUNC_INFO << "Return(void)"; return; }
+#define DEBUGQUIT { QTimer::singleShot(0, qApp, SLOT(quit())); }
 
 #define PINFO   "=INFO "
 #define PTRACE  "-TRACE"
@@ -66,13 +71,15 @@
 #define EXPECTNE(expt, var)     DEBUGXNE(qCritical, PERROR, expt, var)
 #define NEEDDO(msg)             DEBUGDO(qCritical, PERROR, msg)
 #define NEEDUSE(msg)            DEBUGUSE(qCritical, PERROR, msg)
+#define NEEDRTN(expr)           DEBUGRTN(qCritical, PERROR, expr)
+#define NEEDRTV()               DEBUGRTV(qCritical, PERROR)
 
 #define ABORT(strm)             DEBUG(qCritical, PABORT) << strm; Q_ASSERT_X(false, "Expectation", "Exit")
 #define ABORTQFI(strm)          DEBUGQFI(qCritical, PABORT) << strm; Q_ASSERT_X(false, "Expectation", "Exit")
 #define ABORTFN()               DEBUGFN(qCritical, PABORT); Q_ASSERT_X(false, "Expectation", "Exit")
 #define ABORTPSZ(psz)           DEBUGPSZ(qCritical, PABORT, psz); Q_ASSERT_X(false, "Expectation", "Exit")
 #define ABORTQST(qst)           DEBUGQST(qCritical, PABORT, qPrintable(qst)); Q_ASSERT_X(false, "Expectation", "Exit")
-#define BEXPECT(bexpr)          DEBUGEXP(qCritical, PABORT, bexpr); Q_ASSERT_X( ! bexpr, "Expectation", "Exit")
+#define BEXPECT(bexpr)          DEBUGEXP(qCritical, PABORT, bexpr); DEBUGQUIT // Q_ASSERT_X( ! bexpr, "Expectation", "Exit")
 #define BEXPECTEQ(expt, var)    DEBUGXEQ(qCritical, PABORT, expt, var); Q_ASSERT_X(expt != var, "Expectation", "Exit")
 #define BEXPECTNE(expt, var)    DEBUGXNE(qCritical, PABORT, expt, var); Q_ASSERT_X(expt != var, "Expectation", "Exit")
 #define BEXPECTPTR(ptr)         DEBUGXPTR(qCritical, PABORT, ptr); Q_ASSERT_X(nullptr != ptr, "Allocation", "Exit");

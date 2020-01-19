@@ -31,16 +31,17 @@ protected:
     VectorColumnSet * columnSet(void) const
     { return mpColumnSet; }
 
+public slots:
+    void setColumn(VectorColumn column);
+
 public:
     CentralStack * stack(void)
     { return mpStack; }
     void setPageTitle(const QString & title);
-//    void setScopeTitle(const Vector::FileScope scope);
 
 protected slots: // virtual
     virtual void columnChanged(VectorColumn vc);
     virtual void columnChanged(VectorColumn::Role vcr);
-//    virtual QSize maximumSize() const;
 
 public: // virtual
     virtual Vector::View view(void) const = 0;
@@ -52,8 +53,6 @@ public: // virtual
 
 protected: // virtual
     virtual void setVector(VectorObject * vector);
-    virtual void setColumn(VectorColumn column);
-//    virtual void scopeChanged(Vector::FileScope scope);
     virtual void setNames(void);
 
 signals:
@@ -69,6 +68,5 @@ private:
     int mSequence=0;
     PageGridLayout * mpGridLayout=nullptr;
     QLabel * mpPageTitleLabel=nullptr;
-//    QLabel * mpScopeTitleLabel=nullptr;
 };
 

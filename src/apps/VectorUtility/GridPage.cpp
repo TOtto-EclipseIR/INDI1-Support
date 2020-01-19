@@ -14,6 +14,12 @@ GridPage::GridPage(CentralStack * parent,
     TSTALLOC(mpTableWidget);
     setObjectName("GridPage");
     setNames();
+
+    mpTableWidget->setRows(stack()->master()->rows());
+    mpTableWidget->configure(stack()->master()->
+                             settings("VectorColumnTableWidget"));
+    mpTableWidget->fillTable();
+
     connect(this, &GridPage::ctorFinished,
             this, &GridPage::startSetup);
     emit ctorFinished(this);
@@ -32,10 +38,11 @@ QString GridPage::pageName() const
 void GridPage::setVector(VectorObject * vector)
 {
     VCHKPTR(vector);
+    AbstractCentralPage::setVector(vector);
     VCHKPTR(mpTableWidget);
     Vector::FileScope scope = vector->scope();
     TRACEQFI << scope;
-    mpTableWidget->fillUnitVector(scope, vector->coefVector());
+    mpTableWidget->setUnitVector(scope, vector->coefVector());
 }
 
 void GridPage::startSetup(QObject * thisObject)
@@ -49,7 +56,7 @@ void GridPage::setupViews(void)
 {
     TRACEFN()
     layout()->addWidget(mpTableWidget, 1, 0, 5, 5);
-    mpTableWidget->fillHeaders();
+//    mpTableWidget->fillHeaders();
     update(); show();
     finishSetup(this);
     TRACEQFI << "exit";

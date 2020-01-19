@@ -23,25 +23,10 @@ public:
         Summary,
         Grid,
         Graph,
-//        EyeLocation,
         Reconstruction,
         RawXml,
         sizeView
     };
-/*
-    enum Window
-    {
-        nullWindow = 0,
-        BaseLine,
-        SubjectOne,
-        SubjectTwo,
-        BaseOne,
-        BaseTwo,
-        OneTwo,
-        BaseBoth,
-        sizeWindow
-    };
-*/
 
     //typedef QPair<Window, View> WindowView;
 

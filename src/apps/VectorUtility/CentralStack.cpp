@@ -130,24 +130,10 @@ void CentralStack::setVector(VectorObject * vector)
         VCHKPTR(page);
         page->setVector(vector);
     }
+    VectorColumn setVC(vector->scope(), vector->coefVector());
 
 }
-/*
-void CentralStack::scopeChanged(Vector::FileScope scope)
-{
-    TRACEQFI << Vector::scopeString(scope);
-    mCurrentScope = scope;
-    QStringList pageNames = mFullNamePageDMap.keys();
-    TRACE << pageNames;
-    foreach(QString pageName, pageNames)
-    {
-        AbstractCentralPage * page
-            = (AbstractCentralPage *)mFullNamePageDMap.at(pageName);
-        VCHKPTR(page);
-        page->scopeChanged(scope);
-    }
-}
-*/
+
 void CentralStack::addCentralPage(AbstractCentralPage * newPage)
 {
     VCHKPTR(newPage);
