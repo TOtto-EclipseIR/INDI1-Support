@@ -23,7 +23,8 @@ public:
     explicit CentralStack(MainWindow * parent=nullptr);
     VectorUtilityApp * master(void)
     { return CHKPTR(mpMaster); }
-    QWidget * page(const QString & fullName);
+    AbstractCentralPage * page(const QString & fullName);
+    AbstractCentralPage * widget(int ix) const;
 
 
 public slots:
@@ -51,7 +52,7 @@ signals:
 
 private:
     VectorUtilityApp * mpMaster=nullptr;
-    DualMap<QString, QWidget *> mFullNamePageDMap;
+    DualMap<QString, AbstractCentralPage *> mFullNamePageDMap;
     AbstractCentralPage * mpHomePage=nullptr;
     AbstractCentralPage * mpCurrentPage=nullptr;
     Vector::FileScope mCurrentScope=Vector::nullScope;

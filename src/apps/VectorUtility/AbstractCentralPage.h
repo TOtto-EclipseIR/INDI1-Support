@@ -26,8 +26,7 @@ protected:
     QGridLayout * layout(void);
     VectorObject * vector(const Vector::FileScope scope)
     { return stack()->master()->vector(scope); }
-    VectorColumn column(const int scopeRole) const
-    { return mpColumnSet->column(scopeRole); }
+    VectorColumn column(const VectorColumnRole::Column col) const;
     VectorColumnSet * columnSet(void) const
     { return mpColumnSet; }
 
@@ -41,7 +40,7 @@ public:
 
 protected slots: // virtual
     virtual void columnChanged(VectorColumn vc);
-    virtual void columnChanged(VectorColumn::Role vcr);
+    virtual void columnChanged(VectorColumnRole::Column col);
 
 public: // virtual
     virtual Vector::View view(void) const = 0;

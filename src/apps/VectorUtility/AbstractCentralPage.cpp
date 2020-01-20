@@ -17,7 +17,7 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
 {
     TRACEFN()
     setObjectName("AbstractCentralPage");
-    WEXPECTNE(nullptr, mpStack);
+    TSTALLOC(mpStack);
     TSTALLOC(mpColumnSet);
     TSTALLOC(mpGridLayout);
     TSTALLOC(mpPageTitleLabel);
@@ -28,7 +28,6 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
     mpPageTitleLabel->setText("{PageName}");
     mpGridLayout->setObjectName("QGridLayout:AbstractCentralPage");
     mpGridLayout->addWidget(mpPageTitleLabel, 0, 0, Qt::AlignRight);
-
     setLayout(mpGridLayout);
     show();
 }
@@ -38,22 +37,33 @@ QGridLayout * AbstractCentralPage::layout()
     return CHKPTR(mpGridLayout);
 }
 
+VectorColumn AbstractCentralPage::column(
+        const VectorColumnRole::Column col) const
+{
+    TRACEQFI << VectorColumnRole::columnName(col);
+    VCHKPTR(mpColumnSet);
+    VectorColumn vc = mpColumnSet->value(col);
+    TRACEQFI << vc.columnName() << vc.values().first();
+    return vc;
+}
+
 void AbstractCentralPage::setPageTitle(const QString & title)
 {
     TRACEQFI << title;
     WEXPECTNE(nullptr, mpPageTitleLabel);
     if (mpPageTitleLabel) mpPageTitleLabel->setText(title);
     update(); show();
+    TRACEQFI << "exit";
 }
 
 void AbstractCentralPage::columnChanged(VectorColumn vc)
 {
-    TRACEQFI << vc.roleString();
+    TRACEQFI << vc.columnName() << "exit";
 }
 
-void AbstractCentralPage::columnChanged(VectorColumn::Role vcr)
+void AbstractCentralPage::columnChanged(VectorColumnRole::Column col)
 {
-    TRACEQFI << VectorColumn::roleString(vcr);
+    TRACEQFI << VectorColumn::columnName(col) << "exit";
 }
 
 void AbstractCentralPage::setNames(void)
@@ -88,12 +98,14 @@ int AbstractCentralPage::sequence(void) const
 void AbstractCentralPage::setVector(VectorObject * vector)
 {
     TRACEQFI << vector->scopeString();
-    VectorColumn vc(VectorColumn::Role(vector->scope()),
+    VectorColumn vc(VectorColumnRole::Column(vector->scope()),
                     vector->coefVector());
+    TRACEQFI << "exit";
 }
 
 void AbstractCentralPage::setColumn(VectorColumn column)
 {
-    TRACEQFI << column.roleString();
+    TRACEQFI << column.columnName();
     mpColumnSet->set(column);
+    TRACEQFI << "exit";
 }

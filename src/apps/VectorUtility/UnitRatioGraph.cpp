@@ -63,8 +63,9 @@ QPixmap UnitRatioGraph::graphPixmap(VectorColumnSet * columnSet)
     painter->begin(&graphMap);
 
     for (int x = 1; x <= 3; x++)
-        if (columnSet->contains(x))
-            mParms.drawColumn(painter, columnSet->column(x), x);
+        if (columnSet->contains(VectorColumnRole::Column(x)))
+            mParms.drawColumn(painter,
+                columnSet->value(VectorColumnRole::Column(x)), x);
 
     TODO("More?");
 
@@ -202,7 +203,7 @@ void UnitRatioGraph::Parms::drawColumn(QPainter * painter,
                                         const VectorColumn & column,
                                         const int vecX)
 {
-    TRACEQFI << column.roleString() << vecX;
+    TRACEQFI << column.columnName() << vecX;
     for (int coefX = 0; coefX < maxCoefs(); ++coefX)
     {
         WANTDO("Shading?")

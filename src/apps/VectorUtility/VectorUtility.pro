@@ -38,6 +38,8 @@ SOURCES += \
     VariantMatrix.cpp \
     Vector.cpp \
     VectorColumn.cpp \
+    VectorColumnObject.cpp \
+    VectorColumnRole.cpp \
     VectorColumnSet.cpp \
     VectorColumnTableWidget.cpp \
     VectorColumnTwig.cpp \
@@ -60,6 +62,7 @@ HEADERS += \
     HomePage.h \
     MainWindow.h \
     Matrix.h \
+    Named.h \
     PageGridLayout.h \
     QObjectInfo.h \
     QProperty.h \
@@ -77,6 +80,8 @@ HEADERS += \
     VariantMatrix.h \
     Vector.h \
     VectorColumn.h \
+    VectorColumnObject.h \
+    VectorColumnRole.h \
     VectorColumnSet.h \
     VectorColumnTableWidget.h \
     VectorColumnTwig.h \

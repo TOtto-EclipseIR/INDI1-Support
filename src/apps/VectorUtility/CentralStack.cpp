@@ -19,9 +19,31 @@ CentralStack::CentralStack(MainWindow * parent)
 {
     TRACEFN()
     setObjectName("CentralStack:VectorUtility");
-    connect(this, &QStackedWidget::currentChanged,
-            this, &CentralStack::indexChanged);
+
+    EXPECT(connect(this, &QStackedWidget::currentChanged,
+            this, &CentralStack::indexChanged));
     emit ctorFinished(this);
+}
+
+AbstractCentralPage * CentralStack::page(const QString &fullName)
+{
+    TRACEQFI << fullName;
+    AbstractCentralPage * pacp = mFullNamePageDMap.at(fullName);
+    VCHKPTR(pacp)
+    TRACEQFI << "return" << pacp->objectName();
+    return pacp;
+}
+
+AbstractCentralPage * CentralStack::widget(int ix) const
+{
+    TRACEQFI << ix;
+    QWidget * pw = QStackedWidget::widget(ix);
+    VCHKPTR(pw)
+    AbstractCentralPage * pacp
+            = qobject_cast<AbstractCentralPage *>(pw);
+    VCHKPTR(pacp)
+    TRACEQFI << "return" << pacp->objectName();
+    return pacp;
 }
 
 void CentralStack::setCurrentView(const Vector::View & view)
@@ -34,15 +56,15 @@ void CentralStack::setCurrentView(const Vector::View & view)
     }
     else
     {
-        AbstractCentralPage * page;
+        AbstractCentralPage * page = nullptr;
         int n = QStackedWidget::count();
         WEXPECTNE(0, QStackedWidget::count())
         if (n)
         {
             for (int ix = 0; ix < n; ix++)
             {
-                page = (AbstractCentralPage *)
-                            (QStackedWidget::widget(ix));
+                page = widget(ix);
+                VCHKPTR(page);
                 TRACE << "trying" << page->objectName() << page->view() << Vector::viewString(page->view());
                 if (page->view() == view)
                 {
@@ -55,6 +77,7 @@ void CentralStack::setCurrentView(const Vector::View & view)
         }
     }
     update(); show();
+    TRACEQFI << "exit";
 }
 
 void CentralStack::setCurrentPage(const QString & fullName)
@@ -67,6 +90,7 @@ void CentralStack::setCurrentPage(const QString & fullName)
     updateGeometry();
     update();
     show();
+    TRACEQFI << "exit";
 }
 
 
@@ -75,7 +99,7 @@ void CentralStack::startSetup(QObject *thisObject)
     TRACEFN()
     Q_UNUSED(thisObject);
     QTimer::singleShot(100, this, &CentralStack::setupPages);
-
+    TRACEQFI << "exit";
 }
 
 void CentralStack::setupPages(void)
@@ -106,19 +130,22 @@ void CentralStack::setupPages(void)
     addCentralPage(rawXmlPage);
 
     QTimer::singleShot(100, this, &CentralStack::setupConnections);
+    TRACEQFI << "exit";
 }
 
 void CentralStack::setupConnections(void)
 {
     TRACEFN()
-    connect(master()->mainWindow(), &MainWindow::viewChanged,
-            this, &CentralStack::setCurrentView);
+    EXPECT(connect(master()->mainWindow(), &MainWindow::viewChanged,
+            this, &CentralStack::setCurrentView));
     setCurrentPage("Home");
     setupFinished(this);
+    TRACEQFI << "exit";
 }
 
 void CentralStack::setVector(VectorObject * vector)
 {
+    TRACEQFI << vector->scopeString();
     VCHKPTR(vector);
     TRACEQFI << Vector::scopeString(vector->scope());
     QStringList pageNames = mFullNamePageDMap.keys();
@@ -130,8 +157,12 @@ void CentralStack::setVector(VectorObject * vector)
         VCHKPTR(page);
         page->setVector(vector);
     }
-    VectorColumn setVC(vector->scope(), vector->coefVector());
-
+/*
+    TRACE << "VectorColumn setVC(VectorColumnRole::Column(vector->scope()), vector->coefVector())";
+    VectorColumn setVC(VectorColumnRole::Column(vector->scope()),
+                       vector->coefVector());
+*/
+    TRACEQFI << "exit";
 }
 
 void CentralStack::addCentralPage(AbstractCentralPage * newPage)
@@ -142,13 +173,15 @@ void CentralStack::addCentralPage(AbstractCentralPage * newPage)
     QStackedWidget::addWidget(newPage);
     mFullNamePageDMap.insertUnique(newPage->fullName(), newPage);
     show();
+    TRACEQFI << "exit";
 }
 
 void CentralStack::indexChanged(int newIndex)
 {
-    QWidget * newPage = QStackedWidget::widget(newIndex);
+    TRACEQFI << newIndex;
+    AbstractCentralPage * newPage = widget(newIndex);
     VCHKPTR(newPage);
-    TRACEQFI << Q_FUNC_INFO << newPage->objectName()
-          << qobject_cast<AbstractCentralPage *>(newPage)->fullName();
+    TRACE << newPage->objectName() << newPage->fullName();
     emit currentPageChanged(mFullNamePageDMap.at(newPage), newPage);
+    TRACEQFI << "exit";
 }

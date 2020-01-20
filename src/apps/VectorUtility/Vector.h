@@ -10,7 +10,7 @@ public:
     enum FileScope
     {
         nullScope   = 0,
-        BaseLine    = 1,
+        Baseline    = 1,
         SubjectOne  = 2,
         SubjectTwo  = 3,
         sizeScope

@@ -40,7 +40,7 @@ void RawXmlPage::setVector(VectorObject * vector)
 //        scopeChanged(scope);
         switch (scope)
         {
-        case Vector::BaseLine:
+        case Vector::Baseline:
             VCHKPTR(mpBaselineText);
             mpBaselineText->setPlainText(vector->data().getXmlString());
             mpBaselineText->textCursor().movePosition(QTextCursor::Start);

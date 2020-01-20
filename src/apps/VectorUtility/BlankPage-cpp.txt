@@ -1,0 +1,22 @@
+#include "BlankPage-h.txt"
+
+#include <QTimer>
+
+#include "Debug.h"
+
+BlankPage::BlankPage(CentralStack * parent,
+                     const int flags)
+    : AbstractCentralPage(parent, flags)
+{
+    TRACE <<  "NOT INTENDED TO BE INSTANCIATED; EXAMPLE ONLY";
+    Q_ASSERT(false);
+    // Remove above two lines to race
+
+    TRACEFN()
+    setObjectName("BlankPage");
+    setNames();
+    connect(this, &BlankPage::ctorFinished,
+            this, &BlankPage::startSetup);
+    emit ctorFinished(this);
+    //    QTimer::singleShot(100, this, &BlankPage::setup0);
+}

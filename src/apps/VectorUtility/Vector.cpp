@@ -7,7 +7,7 @@ QString Vector::scopeString(const Vector::FileScope scope)
     switch (scope)
     {
     case nullScope:         return "{null}";
-    case BaseLine:      return "BaseLine";
+    case Baseline:      return "BaseLine";
     case SubjectOne:    return "SubjectOne";
     case SubjectTwo:    return "SubjectTwo";
     default:                return "{???}";
