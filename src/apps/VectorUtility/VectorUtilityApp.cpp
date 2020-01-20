@@ -33,10 +33,10 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     //TRACE << mpSettings->fileName();
     mCoefRows = mpSettings->value("Vector/CoefRows",
                                   mCoefRows).toInt();
-    connect(this, &VectorUtilityApp::ctorFinished,
-            this, &VectorUtilityApp::startSetup);
-    connect(this, &VectorUtilityApp::vectorOpened,
-            this, &VectorUtilityApp::setVector);
+    EXPECT(connect(this, &VectorUtilityApp::ctorFinished,
+            this, &VectorUtilityApp::startSetup));
+    EXPECT(connect(this, &VectorUtilityApp::vectorOpened,
+            this, &VectorUtilityApp::setVector));
 
     INFO << cmVersion.toString() << "built" << cmVersion.buildDate();
 
@@ -45,8 +45,7 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
 
 MainWindow * VectorUtilityApp::mainWindow()
 {
-    VCHKPTR(mpMainWindow);
-    return mpMainWindow;
+    return  CHKPTR(mpMainWindow);
 }
 
 QSettings * VectorUtilityApp::settings()

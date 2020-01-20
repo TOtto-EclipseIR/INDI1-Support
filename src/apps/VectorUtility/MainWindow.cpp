@@ -22,6 +22,9 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     , mpViewActionGroup(new QActionGroup(this))
 {
     TRACEFN()
+    TSTALLOC(mpMaster)
+    TSTALLOC(mpCentralStack)
+    TSTALLOC(mpViewActionGroup)
     setObjectName("MainWindow:VectorUtility");
     mpMaster->setMainWindow(this);
     mpViewActionGroup->setObjectName("QActionGroup:View");
@@ -32,10 +35,10 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     QFileInfoList qrcInfos = qrc.entryInfoList();
     TRACE << qrcInfos;
 
-    connect(this, &MainWindow::ctorFinished,
-            this, &MainWindow::startSetup);
-    connect(this, &MainWindow::setupFinished,
-            mpCentralStack, &CentralStack::startSetup);
+    EXPECT(connect(parent, &VectorUtilityApp::setupFinished,
+            this, &MainWindow::startSetup));
+    EXPECT(connect(this, &MainWindow::setupFinished,
+            mpCentralStack, &CentralStack::startSetup));
     emit ctorFinished(this);
 }
 
