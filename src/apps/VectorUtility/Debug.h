@@ -13,7 +13,7 @@
 #define DEBUGFN(qmt, pfx) { qmt() << pfx << TIME   << Q_FUNC_INFO; }
 #define DEBUGPSZ(qmt, pfx, psz) { qmt(pfx << TIME  psz); }
 #define DEBUGQST(qmt, pfx, qst) { qmt(pfx << TIME  qPrintable(qst)); }
-#define DEBUGDO(qmt, pfx, msg) { qmt() << pfx << TIME  << Q_FUNC_INFO << "TODO:" << #msg; }
+#define DEBUGDO(qmt, pfx, msg) { qmt() << pfx << TIME  << Q_FUNC_INFO << __LINE__ << "TODO:" << #msg; }
 #define DEBUGUSE(qmt, pfx, var)  { (void)(var); qmt() << pfx << TIME   << Q_FUNC_INFO << "TO USE:" << #var; }
 #define DEBUGEXP(qmt, pfx, bexpr) { if ( ! bexpr) qmt() << pfx << TIME   << "Expectation FAILED:" << #bexpr; }
 #define DEBUGXEQ(qmt, pfx, expt, var) { if (expt != var) qmt() << pfx << TIME  << Q_FUNC_INFO   << "Expectation FAILED:" << #expt << expt << "==" << #var << var; }

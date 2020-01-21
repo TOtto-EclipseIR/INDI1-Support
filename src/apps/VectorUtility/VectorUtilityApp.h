@@ -1,12 +1,12 @@
 // file: VectorUtilityApp.h
-
 #pragma once
 
 #include <QObject>
 #include <QApplication>
 
-
 #include <QSettings>
+
+#include <Debug.h>
 
 #include "VectorItemModel.h"
 #include "VectorObject.h"
@@ -27,20 +27,21 @@ public:
     VectorObject * vector(const Vector::FileScope scope);
     VersionInfo version(void) const
     { return cmVersion; }
-    QString versionString(void) const;
+    QString versionBuiltString(void) const;
 
 public slots:
-    void setMainWindow(MainWindow * mainWindow);
     void setVector(VectorObject * vector);
-    void startSetup(QObject * thisObject);
-    void finishSetup(QObject * thisObject)
-    { Q_UNUSED(thisObject); emit setupFinished(this); }
     void openVector(Vector::FileScope scope,
                     QString fileName);
 
+protected slots:
+    void startSetup(void);
+    void setupMainWindow(void);
+    void finishSetup(void);
+
 signals:
-    void ctorFinished(QObject * thisObject);
-    void setupFinished(QObject * thisObject);
+    void ctorFinished(void);
+    void setupFinished(void);
     void vectorOpened(VectorObject *);
     void vectorSet(VectorObject *);
     void scopeSet(Vector::FileScope);

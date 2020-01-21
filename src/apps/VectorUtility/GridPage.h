@@ -13,8 +13,7 @@ class GridPage : public AbstractCentralPage
 {
     Q_OBJECT
 public:
-    explicit GridPage(CentralStack * parent,
-                       const int flags=0);
+    explicit GridPage(CentralStack * parent);
     virtual Vector::View view(void) const override;
     virtual QString pageName(void) const override;
 
@@ -22,14 +21,14 @@ public slots:
     void setVector(VectorObject * vector) override;
 
 protected slots:
-    void startSetup(QObject * thisObject);
-    void finishSetup(QObject * thisObject)
-    { Q_UNUSED(thisObject); emit setupFinished(this); }
+    void startSetup(void);
+    void finishSetup(void)
+    { emit setupFinished(); }
     void setupViews(void);
 
 signals:
-    void ctorFinished(QObject * thisObject);
-    void setupFinished(QObject * thisObject);
+    void ctorFinished(void);
+    void setupFinished(void);
 
 private:
     VectorColumnTableWidget * mpTableWidget=nullptr;

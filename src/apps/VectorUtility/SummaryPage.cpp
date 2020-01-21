@@ -5,13 +5,11 @@
 #include "Debug.h"
 #include "SummaryView.h"
 
-SummaryPage::SummaryPage(CentralStack * parent,
-                         const int flags)
-    : AbstractCentralPage(parent, flags)
+SummaryPage::SummaryPage(CentralStack * parent)
+    : AbstractCentralPage(parent)
 {
     TRACEFN()
     setObjectName("SummaryPage");
-    setNames();
     connect(this, &SummaryPage::ctorFinished,
             this, &SummaryPage::startSetup);
 
@@ -27,7 +25,7 @@ SummaryPage::SummaryPage(CentralStack * parent,
     TSTALLOC(mViewVector[Vector::SubjectTwo]);
 
 
-    emit ctorFinished(this);
+    emit ctorFinished();
     //    QTimer::singleShot(100, this, &BlankPage::setup0);
 }
 
@@ -52,10 +50,10 @@ void SummaryPage::setVector(VectorObject * vector)
     show();
 }
 
-void SummaryPage::startSetup(QObject * thisObject)
+void SummaryPage::startSetup(void)
 {
     TRACEFN()
-    Q_UNUSED(thisObject);
+    
     QLabel * BaselineLabel = new QLabel;
     QLabel * SubjectOneLabel = new QLabel;
     QLabel * SubjectTwoLabel = new QLabel;
@@ -79,6 +77,6 @@ void SummaryPage::startSetup(QObject * thisObject)
     layout()->addWidget(OneTwoLabel, 12, 0);
     update();
     show();
-    finishSetup(this);
+    finishSetup();
 }
 

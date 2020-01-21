@@ -28,19 +28,11 @@ public:
         sizeView
     };
 
-    //typedef QPair<Window, View> WindowView;
-
 public:
     Vector(void);
 
 public: // static
     static QString scopeString(const FileScope scope);
     static QString viewString(const View view);
-    /*
-    static QString windowString(const Window window);
-    static QString windowViewString(const WindowView windowView);
-    static bool windowIncludesScope(const Window window,
-                                    const FileScope scope);
-                                    */
 };
 

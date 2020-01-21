@@ -5,9 +5,8 @@
 #include "Debug.h"
 
 
-ReconPage::ReconPage(CentralStack * parent,
-                     const int flags)
-    : AbstractCentralPage(parent, flags)
+ReconPage::ReconPage(CentralStack * parent)
+    : AbstractCentralPage(parent)
     , mpBaselineReconPixmapLabel(new QLabel)
     , mpSubjectOneReconPixmapLabel(new QLabel)
     , mpSubjectTwoReconPixmapLabel(new QLabel)
@@ -17,10 +16,9 @@ ReconPage::ReconPage(CentralStack * parent,
 {
     TRACEFN()
     setObjectName("ReconPage");
-    setNames();
     connect(this, &ReconPage::ctorFinished,
             this, &ReconPage::startSetup);
-    emit ctorFinished(this);
+    emit ctorFinished();
 //    QTimer::singleShot(100, this, &ReconPage::setup0);
 }
 
@@ -34,10 +32,10 @@ QString ReconPage::pageName() const
     return "Reconstruction";
 }
 
-void ReconPage::startSetup(QObject * thisObject)
+void ReconPage::startSetup(void)
 {
     TRACEFN()
-    UNUSED(thisObject);
+
     mBaselineReconPixmap = QPixmap(cmSize);
     mSubjectOneReconPixmap = QPixmap(cmSize);
     mSubjectTwoReconPixmap = QPixmap(cmSize);

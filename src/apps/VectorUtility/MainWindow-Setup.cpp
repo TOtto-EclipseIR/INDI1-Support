@@ -13,11 +13,11 @@
 #include "Debug.h"
 #include "Vector.h"
 
-void MainWindow::startSetup(QObject *thisObject)
+void MainWindow::startSetup(void)
 {
-    Q_UNUSED(thisObject);
+    TRACEFN()
     QTimer::singleShot(100, this, &MainWindow::setupMenuActions);
-
+    TRACEQFI << "exit";
 }
 
 void MainWindow::setupMenuActions(void)
@@ -81,7 +81,7 @@ void MainWindow::setupActionConnections(void)
     EXPECT(connect(action("Quit"), &QAction::triggered,
             qApp, &QApplication::quit));
     show();
-    emit setupFinished(this);
+    emit setupFinished();
     TRACEQFI << "exit";
 }
 

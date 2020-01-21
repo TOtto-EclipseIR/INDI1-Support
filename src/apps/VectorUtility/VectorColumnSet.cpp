@@ -66,8 +66,8 @@ void VectorColumnSet::
 void VectorColumnSet::updateColumn(const VectorColumnRole::Column col)
 {
     TRACEQFI << col;
-    VectorColumnRole::Column firstCol;
-    VectorColumnRole::Column secondCol;
+    VectorColumnRole::Column firstCol = VectorColumnRole::nullCol;
+    VectorColumnRole::Column secondCol  = VectorColumnRole::nullCol;
     NEEDDO("figeritout");
     if (contains(firstCol) && contains(secondCol))
     {

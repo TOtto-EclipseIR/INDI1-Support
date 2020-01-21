@@ -43,9 +43,9 @@ public slots:
     void setVector(VectorObject * vector);
 
 protected slots:
-    void startSetup(QObject * thisObject);
-    void finishSetup(QObject * thisObject)
-    { Q_UNUSED(thisObject); emit setupFinished(this); }
+    void startSetup(void);
+    void finishSetup(void)
+    { emit setupFinished(); }
     void setupMenuActions(void);
     void setupStatus(void);
     void setupActionConnections(void);
@@ -58,8 +58,8 @@ protected slots:
     void viewGroupTriggered(QAction * action);
 
 signals:
-    void ctorFinished(QObject * thisObject);
-    void setupFinished(QObject * thisObject);
+    void ctorFinished(void);
+    void setupFinished(void);
 
     void messageChanged(QString status);
     void openDialogCancelled(Vector::FileScope scope);

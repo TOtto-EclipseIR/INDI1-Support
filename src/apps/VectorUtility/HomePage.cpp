@@ -7,16 +7,14 @@
 
 #include "Debug.h"
 
-HomePage::HomePage(CentralStack * parent,
-                     const int flags)
-    : AbstractCentralPage(parent, flags)
+HomePage::HomePage(CentralStack * parent)
+    : AbstractCentralPage(parent)
 {
     TRACEFN()
     setObjectName("HomePage");
-    setNames();
     connect(this, &HomePage::ctorFinished,
             this, &HomePage::startSetup);
-    emit ctorFinished(this);
+    emit ctorFinished();
 }
 
 Vector::View HomePage::view() const
@@ -30,10 +28,10 @@ QString HomePage::pageName() const
 }
 
 
-void HomePage::startSetup(QObject * thisObject)
+void HomePage::startSetup(void)
 {
     TRACEFN()
-    Q_UNUSED(thisObject);
+
     QTimer::singleShot(100, this, &HomePage::setupWidgets);
 }
 
@@ -44,10 +42,10 @@ void HomePage::setupWidgets(void)
     TRACE << splashPixmap.size();
     QLabel * splashLabel = new QLabel;
     QLabel * versionLabel = new QLabel;
-    versionLabel->setText(stack()->master()->versionString());
+    versionLabel->setText(stack()->master()->versionBuiltString());
     splashLabel->setPixmap(splashPixmap);
     layout()->addWidget(splashLabel, 1, 0, 5, 5, Qt::AlignCenter);
     layout()->addWidget(versionLabel, 0, 1, Qt::AlignCenter);
     show();
-    finishSetup(this);
+    finishSetup();
 }
