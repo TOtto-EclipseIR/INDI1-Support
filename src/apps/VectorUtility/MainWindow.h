@@ -31,24 +31,18 @@ public:
     ~MainWindow();
     VectorUtilityApp * master(void);
     CentralStack * stack(void);
+    QList<QAction *> actionsFor(QMenu * menu) const;
     QAction * action(const QString & actionName) const;
-    QList<QAction *> menuActions(QMenu * menu) const;
 
 public slots:
     void showMessage(const QString & status,
                      const int msecTime=0);
     void clearMessage(void);
-//  TODO setStatusLabel(), startStatusProgress(), enableCancel()
-//  TODO mainToolBar
+
+public: // protected:
     void setVector(VectorObject * vector);
 
 protected slots:
-    void startSetup(void);
-    void finishSetup(void)
-    { emit setupFinished(); }
-    void setupMenuActions(void);
-    void setupStatus(void);
-    void setupActionConnections(void);
     void openBaseline(void);
     void openSubjectOne(void);
     void openSubjectTwo(void);
@@ -56,6 +50,22 @@ protected slots:
     void closeAll(void);
     void close(const Vector::FileScope scope);
     void viewGroupTriggered(QAction * action);
+
+/***** MainWindow-Setup.cpp *****/
+protected slots:
+    void startSetup(void);
+    void setupMenuActions(void);
+    void setupStatus(void);
+    void setupActionConnections(void);
+    void finishSetup(void);
+
+protected:
+    QAction * addMenuAction(QMenu * menu,
+                    const QString & menuText,
+                    const QString & actionName,
+                    const QVariant & actionData=QVariant(),
+                    QActionGroup * actionGroup=nullptr);
+
 
 signals:
     void ctorFinished(void);
@@ -68,14 +78,6 @@ signals:
     void closeScope(Vector::FileScope scope);
     void scopeChanged(Vector::FileScope newScope);
     void viewChanged(Vector::View newView);
-
-
-private:
-    QAction * menuAction(QMenu * menu,
-                    const QString & menuText,
-                    const QString & actionName,
-                    const QVariant & actionData=QVariant(),
-                    QActionGroup * actionGroup=nullptr);
 
 private:
     VectorUtilityApp * mpMaster=nullptr;

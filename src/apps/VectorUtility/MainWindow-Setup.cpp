@@ -25,34 +25,33 @@ void MainWindow::setupMenuActions(void)
     TRACEFN()
     mpFileMenu = menuBar()->addMenu("&File");
     mpFileMenu->setObjectName("QMenu:File");
-    menuAction(mpFileMenu, "Open &Baseline", "OpenBaseline");
-    menuAction(mpFileMenu, "Open Subject&One", "OpenSubjectOne");
-    menuAction(mpFileMenu, "Open Subject&Two", "OpenSubjectTwo");
-    menuAction(mpFileMenu, "Close &All", "CloseAll");
+    addMenuAction(mpFileMenu, "Open &Baseline", "OpenBaseline");
+    addMenuAction(mpFileMenu, "Open Subject&One", "OpenSubjectOne");
+    addMenuAction(mpFileMenu, "Open Subject&Two", "OpenSubjectTwo");
+    addMenuAction(mpFileMenu, "Close &All", "CloseAll");
     mpFileMenu->addSeparator();
-    QAction * quitAction = menuAction(mpFileMenu, "&Quit", "Quit");
+    QAction * quitAction = addMenuAction(mpFileMenu, "&Quit", "Quit");
     quitAction->setShortcut(QKeySequence::Quit);
 
     mpViewMenu = menuBar()->addMenu("&View");
     mpViewMenu->setObjectName("QMenu:View");
-    QAction * homeAction = menuAction(mpViewMenu, "Home",
+    QAction * homeAction = addMenuAction(mpViewMenu, "Home",
                "ViewHome", Vector::nullView, mpViewActionGroup);
     homeAction->setShortcut(QKeySequence::Cancel); // Esc
-    menuAction(mpViewMenu, "&Summary",
+    addMenuAction(mpViewMenu, "&Summary",
                "ViewSummary", Vector::Summary, mpViewActionGroup);
-    menuAction(mpViewMenu, "Gri&d",
+    addMenuAction(mpViewMenu, "Gri&d",
                "ViewGrid", Vector::Grid, mpViewActionGroup);
-    menuAction(mpViewMenu, "Gra&ph",
+    addMenuAction(mpViewMenu, "Gra&ph",
                "ViewGraph", Vector::Graph, mpViewActionGroup);
-    menuAction(mpViewMenu, "&Reconstruction",
+    addMenuAction(mpViewMenu, "&Reconstruction",
                "ViewNormalRecon", Vector::Reconstruction, mpViewActionGroup);
-    menuAction(mpViewMenu, "Raw &XML",
+    addMenuAction(mpViewMenu, "Raw &XML",
                "ViewRawXml", Vector::RawXml, mpViewActionGroup);
     QTimer::singleShot(100, this,
                        &MainWindow::setupStatus);
-    TRACEQFI << "exit";
+    TRACEQFI << "sshot setupActionConnesetupStatusctions() & exit";
 }
-
 
 void MainWindow::setupStatus(void)
 {
@@ -62,7 +61,7 @@ void MainWindow::setupStatus(void)
             this, &MainWindow::messageChanged);
     QTimer::singleShot(100, this,
                        &MainWindow::setupActionConnections);
-    TRACEQFI << "exit";
+    TRACEQFI << "sshot setupActionConnections() & exit";
 }
 
 void MainWindow::setupActionConnections(void)
@@ -81,11 +80,21 @@ void MainWindow::setupActionConnections(void)
     EXPECT(connect(action("Quit"), &QAction::triggered,
             qApp, &QApplication::quit));
     show();
-    emit setupFinished();
+
+//    EXPECT(connect(this, &MainWindow::setupFinished,
+  //          mpCentralStack, &CentralStack::startSetup));
+
+//    emit setupFinished();
     TRACEQFI << "exit";
 }
 
-QAction *  MainWindow::menuAction(QMenu * menu,
+void MainWindow::finishSetup()
+{
+    { emit setupFinished(); }
+
+}
+
+QAction *  MainWindow::addMenuAction(QMenu * menu,
                             const QString & menuText,
                             const QString & actionName,
                             const QVariant & actionData,
@@ -107,7 +116,7 @@ QAction *  MainWindow::menuAction(QMenu * menu,
 }
 
 
-QList<QAction *> MainWindow::menuActions(QMenu * menu) const
+QList<QAction *> MainWindow::actionsFor(QMenu *menu) const
 {
     TRACEFN()
     QList<QAction *> result;

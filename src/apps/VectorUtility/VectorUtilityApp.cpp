@@ -42,6 +42,7 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
     INFO << "Starting:" << arguments().first();
     INFO << cmVersion.toString() << "built" << cmVersion.buildDate();
     emit ctorFinished();
+    TRACEQFI << "emit ctorFinished() -> startSetup() & exit" ;
 }
 
 MainWindow * VectorUtilityApp::mainWindow()
@@ -96,6 +97,7 @@ void VectorUtilityApp::setVector(VectorObject * vector)
     mVectorSet.insert(scope, vector);
     emit scopeSet(scope);
     emit vectorSet(vector);
+    TODO("connect to vectorSet() signal; make protected in MainWindow")
     mainWindow()->setVector(vector);
 }
 
@@ -115,7 +117,7 @@ void VectorUtilityApp::startSetup(void)
 {
     TRACEFN()
     QTimer::singleShot(0, this, &VectorUtilityApp::setupMainWindow);
-    TRACEQFI << "exit";
+    TRACEQFI << "sshot setupMainWindow() exit";
 }
 
 void VectorUtilityApp::setupMainWindow(void)
@@ -127,7 +129,7 @@ void VectorUtilityApp::setupMainWindow(void)
     EXPECT(connect(mpMainWindow, &MainWindow::openDialogFileName,
             this, &VectorUtilityApp::openVector));
     QTimer::singleShot(0, this, &VectorUtilityApp::finishSetup);
-    TRACEQFI << "exit";
+    TRACEQFI << "sshot finishSetup() exit";
 }
 
 void VectorUtilityApp::finishSetup(void)

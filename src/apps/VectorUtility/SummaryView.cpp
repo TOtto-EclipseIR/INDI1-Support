@@ -26,11 +26,11 @@ SummaryView::SummaryView(const Vector::FileScope scope,
 
 void SummaryView::setupLayout()
 {
-    CHKALLOC(QLabel, FileNameLabel, QLabel);
+    TRYALLOC(QLabel, FileNameLabel, QLabel);
     FileNameLabel->setText("File Name:");
-    CHKALLOC(QLabel, DirectoryLabel, QLabel);
+    TRYALLOC(QLabel, DirectoryLabel, QLabel);
     DirectoryLabel->setText("Directory Name:");
-    CHKALLOC(QLabel, FileSizeLabel, QLabel);
+    TRYALLOC(QLabel, FileSizeLabel, QLabel);
     FileSizeLabel->setText("File Size:");
     mpFileNameText->setReadOnly(true);
     mpGridLayout->addWidget(FileNameLabel,  0, 0);
