@@ -55,7 +55,7 @@ protected slots:
 protected slots:
     void startSetup(void);
     void setupMenuActions(void);
-    void setupStatus(void);
+    void setupStatusBar(void);
     void setupActionConnections(void);
     void finishSetup(void);
 

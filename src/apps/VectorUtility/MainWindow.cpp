@@ -30,8 +30,6 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     mpViewActionGroup->setExclusive(true);
     QMainWindow::setCentralWidget(mpCentralStack);
 
-    LIKEDO("setStatusLabel(), startStatusProgress(), enableCancel()")
-    LIKEDO("mainToolBar")
     QDir  qrc(":/images/jpg");
     QFileInfoList qrcInfos = qrc.entryInfoList();
     TRACE << qrcInfos;
@@ -43,7 +41,7 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
             this, &MainWindow::startSetup);
     connect(this, &MainWindow::setupFinished,
             mpCentralStack, &CentralStack::startSetup);
-    emit ctorFinished(this);
+    emit ctorFinished();
 }
 
 MainWindow::~MainWindow()

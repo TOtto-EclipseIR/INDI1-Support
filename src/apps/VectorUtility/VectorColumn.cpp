@@ -70,6 +70,7 @@ void VectorColumn::set(VectorObject * vector)
 void VectorColumn::set(const ForeBackGroundColors & fbgc)
 {
     WANTUSE(fbgc);
+    WANTDO("implimenmt");
 }
 
 VectorColumn VectorColumn::setDelta(const VectorColumn &vcMinuend,

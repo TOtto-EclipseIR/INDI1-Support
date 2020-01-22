@@ -48,20 +48,24 @@ void MainWindow::setupMenuActions(void)
                "ViewNormalRecon", Vector::Reconstruction, mpViewActionGroup);
     addMenuAction(mpViewMenu, "Raw &XML",
                "ViewRawXml", Vector::RawXml, mpViewActionGroup);
-    QTimer::singleShot(100, this,
-                       &MainWindow::setupStatus);
+
     TRACEQFI << "sshot setupActionConnesetupStatusctions() & exit";
+    QTimer::singleShot(100, this,
+                       &MainWindow::setupStatusBar);
 }
 
-void MainWindow::setupStatus(void)
+void MainWindow::setupStatusBar(void)
 {
     TRACEFN()
+    LIKEDO("setStatusLabel(), startStatusProgress(), enableCancel()")
+
     QStatusBar * statusBar = QMainWindow::statusBar();
     connect(statusBar, &QStatusBar::messageChanged,
             this, &MainWindow::messageChanged);
+    TRACEQFI << "sshot setupActionConnections() & exit";
+    LIKEDO("mainToolBar")
     QTimer::singleShot(100, this,
                        &MainWindow::setupActionConnections);
-    TRACEQFI << "sshot setupActionConnections() & exit";
 }
 
 void MainWindow::setupActionConnections(void)
@@ -78,20 +82,18 @@ void MainWindow::setupActionConnections(void)
     EXPECT(connect(qApp, &QApplication::aboutToQuit,
             this, &MainWindow::closeAll));
     EXPECT(connect(action("Quit"), &QAction::triggered,
-            qApp, &QApplication::quit));
+            this, &QApplication::quit));
     show();
 
-//    EXPECT(connect(this, &MainWindow::setupFinished,
-  //          mpCentralStack, &CentralStack::startSetup));
-
-//    emit setupFinished();
-    TRACEQFI << "exit";
+    TRACEQFI << "sshot finishSetup() & exit";
+    QTimer::singleShot(100, this, &MainWindow::finishSetup);
 }
 
 void MainWindow::finishSetup()
 {
-    { emit setupFinished(); }
-
+    TRACEFN()
+    emit setupFinished();
+    TRACEQFI << "emit setupFinished(); & exit";
 }
 
 QAction *  MainWindow::addMenuAction(QMenu * menu,
