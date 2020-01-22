@@ -28,6 +28,7 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     setObjectName("MainWindow:VectorUtility");
     mpViewActionGroup->setObjectName("QActionGroup:View");
     mpViewActionGroup->setExclusive(true);
+    QMainWindow::setCentralWidget(mpCentralStack);
 
     LIKEDO("setStatusLabel(), startStatusProgress(), enableCancel()")
     LIKEDO("mainToolBar")
@@ -38,6 +39,11 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     EXPECT(connect(mpMaster, &VectorUtilityApp::setupFinished,
             this, &MainWindow::startSetup));
     emit ctorFinished();
+    connect(this, &MainWindow::ctorFinished,
+            this, &MainWindow::startSetup);
+    connect(this, &MainWindow::setupFinished,
+            mpCentralStack, &CentralStack::startSetup);
+    emit ctorFinished(this);
 }
 
 MainWindow::~MainWindow()
