@@ -20,15 +20,12 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
     : mpMaster(parent)
     , mpCentralStack(new CentralStack(this))
     , mpViewActionGroup(new QActionGroup(this))
-//    , mpScopeActionGroup(new QActionGroup(this))
 {
     TRACEFN()
     setObjectName("MainWindow:VectorUtility");
     mpMaster->setMainWindow(this);
     mpViewActionGroup->setObjectName("QActionGroup:View");
     mpViewActionGroup->setExclusive(true);
-//    mpScopeActionGroup->setObjectName("QActionGroup:Scope");
-  //  mpScopeActionGroup->setExclusive(true);
     QMainWindow::setCentralWidget(mpCentralStack);
 
     QDir  qrc(":/images/jpg");
@@ -39,8 +36,6 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
             this, &MainWindow::startSetup);
     connect(this, &MainWindow::setupFinished,
             mpCentralStack, &CentralStack::startSetup);
-//    connect(master(), &VectorUtilityApp::setVector,
-  //          mpCentralStack, &CentralStack::setVector);
     emit ctorFinished(this);
 }
 
@@ -101,29 +96,14 @@ void MainWindow::close(const Vector::FileScope scope)
     TRACE << Q_FUNC_INFO << Vector::scopeString(scope);
     emit closeScope(scope);
 }
-/*
-void MainWindow::scopeGroupTriggered(QAction * action)
-{
-    TRACE << Q_FUNC_INFO << action->objectName() << action->data();
-    emit scopeChanged(Vector::FileScope(action->data().toInt()));
 
-}
-*/
 void MainWindow::viewGroupTriggered(QAction * action)
 {
     TRACE << Q_FUNC_INFO << action->objectName() << action->data();
     emit viewChanged(Vector::View(action->data().toInt()));
 
 }
-/*
-void MainWindow::setScopeCheck(Vector::FileScope scope)
-{
-    TRACEQFI << Vector::scopeString(scope);
-    foreach(QAction * action, menuActions(scopeMenu()))
-        if (action->data().toInt() == scope)
-            action->setChecked(true);
-}
-*/
+
 void MainWindow::showMessage(const QString & status,
                              const int msecTime)
 {

@@ -31,8 +31,6 @@ public:
     ~MainWindow();
     VectorUtilityApp * master(void);
     CentralStack * stack(void);
-//    QMenu * scopeMenu(void)
-  //  { return mpScopeMenu; }
     QAction * action(const QString & actionName) const;
     QList<QAction *> menuActions(QMenu * menu) const;
 
@@ -40,8 +38,6 @@ public slots:
     void showMessage(const QString & status,
                      const int msecTime=0);
     void clearMessage(void);
-//  TODO setStatusLabel(), startStatusProgress(), enableCancel()
-//  TODO mainToolBar
     void setVector(VectorObject * vector);
 
 protected slots:
@@ -57,9 +53,7 @@ protected slots:
     void openVectorDialog(Vector::FileScope scope);
     void closeAll(void);
     void close(const Vector::FileScope scope);
-//    void scopeGroupTriggered(QAction * action);
     void viewGroupTriggered(QAction * action);
-//    void setScopeCheck(Vector::FileScope scope);
 
 signals:
     void ctorFinished(QObject * thisObject);
@@ -87,8 +81,6 @@ private:
 
     QHash<QString, QAction *> mNameActionMap;
     QActionGroup * mpViewActionGroup=nullptr;
-//    QActionGroup * mpScopeActionGroup=nullptr;
     QMenu * mpFileMenu=nullptr;
     QMenu * mpViewMenu=nullptr;
-//    QMenu * mpScopeMenu=nullptr;
 };

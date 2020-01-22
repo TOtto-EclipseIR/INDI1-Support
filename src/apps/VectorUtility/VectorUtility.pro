@@ -17,7 +17,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     AbstractCentralPage.cpp \
-    BaseColorSet.cpp \
     CentralStack.cpp \
     GraphPage.cpp \
     GridPage.cpp \
@@ -50,7 +49,6 @@ SOURCES += \
 
 HEADERS += \
     AbstractCentralPage.h \
-    BaseColorSet.h \
     CentralStack.h \
     DataProperty.h \
     Debug.h \
