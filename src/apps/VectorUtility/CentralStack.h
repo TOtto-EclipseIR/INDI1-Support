@@ -9,7 +9,6 @@
 #include <QString>
 #include <QWidget>
 
-#include "Debug.h"
 #include "DualMap.h"
 #include "Vector.h"
 class AbstractCentralPage;
@@ -25,8 +24,7 @@ public:
 
 public:
     explicit CentralStack(MainWindow * parent=nullptr);
-    VectorUtilityApp * master(void)
-    { return CHKPTR(mpMaster); }
+    VectorUtilityApp * master(void);
     AbstractCentralPage * page(const Vector::View view);
     AbstractCentralPage * widget(int ix) const;
 
