@@ -1,4 +1,4 @@
-// file:: MainWindow-Setup.cpp
+﻿// file:: MainWindow-Setup.cpp
 
 #include "MainWindow.h"
 

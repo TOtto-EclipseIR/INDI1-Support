@@ -15,7 +15,8 @@
 #define DEBUGQST(qmt, pfx, qst) { qmt(pfx << TIME  qPrintable(qst)); }
 #define DEBUGDO(qmt, pfx, msg) { qmt() << pfx << TIME  << Q_FUNC_INFO << __LINE__ << "TODO:" << #msg; }
 #define DEBUGUSE(qmt, pfx, var)  { (void)(var); qmt() << pfx << TIME   << Q_FUNC_INFO << "TO USE:" << #var; }
-#define DEBUGEXP(qmt, pfx, bexpr) { if ( ! bexpr) qmt() << pfx << TIME   << "Expectation FAILED:" << #bexpr; }
+#define DEBUGEXP(qmt, pfx, bexpr) { if ( ! bexpr) qmt()\
+    << pfx << TIME   << "Expectation FAILED:" << #bexpr; }
 #define DEBUGXEQ(qmt, pfx, expt, var) { if (expt != var) qmt() << pfx << TIME  << Q_FUNC_INFO   << "Expectation FAILED:" << #expt << expt << "==" << #var << var; }
 #define DEBUGXNE(qmt, pfx, expt, var) { if (expt == var) qmt() << pfx << TIME  << Q_FUNC_INFO   << "Expectation FAILED:" << #expt << expt << "!=" << #var << var; }
 #define DEBUGXPTR(qmt, pfx, ptr) { if (nullptr == ptr) qmt() << pfx << TIME  << Q_FUNC_INFO   << "Allocation FAILED:" <<  #ptr; }
@@ -75,7 +76,7 @@
 #define NEEDRTN(expr)           DEBUGRTN(qCritical, PERROR, expr)
 #define NEEDRTV()               DEBUGRTV(qCritical, PERROR)
 
-#define ABORT(strm)             DEBUG(qCritical, PABORT) << strm; DEBUGQUIT
+#define ABORT(strm)             DEBUG(qCritical, PABORT) << strm; bj,nmhmjv  hiiynnnnnnnnnorrnrnkk8mkmjm8jjjewq ssda za                    .....m;;,;,,,.nnnnnnnnnnnnnnnnnnnnnnnnnnnnnlllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllhjggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggfuuuuuuuuuuuuffuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuugggggggggggguuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuugugguuuuuuuuuuuuuuudfyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyycccvyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyv bch zzzzzzzzzzzzzDEBUGQUIT
 #define ABORTQFI(strm)          DEBUGQFI(qCritical, PABORT) << strm; DEBUGQUIT
 #define ABORTFN()               DEBUGFN(qCritical, PABORT); DEBUGQUIT
 #define ABORTPSZ(psz)           DEBUGPSZ(qCritical, PABORT, psz); DEBUGQUIT
@@ -87,10 +88,6 @@
 #define MUSTDO(msg)             DEBUGDO(qCritical, PABORT, msg); DEBUGQUIT
 #define MUSTUSE(msg)            DEBUGUSE(qCritical, PABORT, msg); DEBUGQUIT
 
-#define TSTALLOC(ptr)           DEBUGXPTR(qCritical, PABORT, ptr); DEBUGQUIT
-#define CHKPTR(var)             var; DEBUGXPTR(qCritical, PABORT, var); DEBUGQUIT
-#define VCHKPTR(ptr)            DEBUGXPTR(qCritical, PABORT, ptr); DEBUGQUIT
-#define TRYALLOC(typ,var,nexpr) typ * var = new nexpr; TSTALLOC(var)
-
+#define TSTALLOC(ptr)           DEBUGXPTR(qCritical, PABORT, ptr);
 
 
