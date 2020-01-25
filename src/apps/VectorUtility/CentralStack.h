@@ -4,6 +4,7 @@
 #include <QStackedWidget>
 
 #include <QMap>
+#include <QQueue>
 #include <QSettings>
 #include <QString>
 #include <QWidget>
@@ -20,39 +21,42 @@ class CentralStack : public QStackedWidget
 {
     Q_OBJECT
 public:
+    typedef QQueue<Vector::View> ViewQueue;
+
+public:
     explicit CentralStack(MainWindow * parent=nullptr);
     VectorUtilityApp * master(void)
     { return CHKPTR(mpMaster); }
-    AbstractCentralPage * page(const QString & fullName);
+    AbstractCentralPage * page(const Vector::View view);
     AbstractCentralPage * widget(int ix) const;
-
 
 public slots:
     void setCurrentView(const Vector::View & View);
-    void setCurrentPage(const QString & fullName);
+//    void setCurrentPage(const QString & pageName);
     void setVector(VectorObject * vector);
 
-    void startSetup(QObject * thisObject);
-    void finishSetup(QObject * thisObject)
-    { Q_UNUSED(thisObject); emit setupFinished(this); }
+    void startSetup(void);
+    void finishSetup(void)
+    //    QMainWindow::setCentralWidget(mpCentralStack);
+    { emit setupFinished(); }
 
 
 protected slots:
-    void setupPages(void);
-    void setupConnections(void);
+    void setupNextPage(void);
     void addCentralPage(AbstractCentralPage * newPage);
     void indexChanged(int newIndex);
 
 signals:
-    void ctorFinished(QObject * thisObject);
-    void setupFinished(QObject * thisObject);
-
-    void currentPageChanged(QString fullName, QWidget * page);
-    void currentScopeChanged(Vector::FileScope);
+    void ctorFinished(void);
+    void pageSetupStart(Vector::View view);
+    void pageSetupFinished(Vector::View view);
+    void setupFinished(void);
+    void currentPageChanged(QString pageName, QWidget * page);
 
 private:
     VectorUtilityApp * mpMaster=nullptr;
-    DualMap<QString, AbstractCentralPage *> mFullNamePageDMap;
+    ViewQueue mPendingSetupQueue;
+    DualMap<Vector::View, AbstractCentralPage *> mViewPageDMap;
     AbstractCentralPage * mpHomePage=nullptr;
     AbstractCentralPage * mpCurrentPage=nullptr;
     Vector::FileScope mCurrentScope=Vector::nullScope;

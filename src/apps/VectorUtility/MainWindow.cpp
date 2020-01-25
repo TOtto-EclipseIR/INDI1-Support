@@ -18,28 +18,26 @@
 
 MainWindow::MainWindow(VectorUtilityApp * parent)
     : mpMaster(parent)
-    , mpCentralStack(new CentralStack(this))
     , mpViewActionGroup(new QActionGroup(this))
 {
     TRACEFN()
     TSTALLOC(mpMaster)
+    WANTDO("Try ABORT flush"); // << "This" << "is a" << "test" << "of the" << "ABORT" << "Debug macro")
     TSTALLOC(mpCentralStack)
     TSTALLOC(mpViewActionGroup)
     setObjectName("MainWindow:VectorUtility");
-    mpMaster->setMainWindow(this);
     mpViewActionGroup->setObjectName("QActionGroup:View");
     mpViewActionGroup->setExclusive(true);
-    QMainWindow::setCentralWidget(mpCentralStack);
 
+    LIKEDO("setStatusLabel(), startStatusProgress(), enableCancel()")
+    LIKEDO("mainToolBar")
     QDir  qrc(":/images/jpg");
     QFileInfoList qrcInfos = qrc.entryInfoList();
     TRACE << qrcInfos;
 
-    EXPECT(connect(parent, &VectorUtilityApp::setupFinished,
+    EXPECT(connect(mpMaster, &VectorUtilityApp::setupFinished,
             this, &MainWindow::startSetup));
-    EXPECT(connect(this, &MainWindow::setupFinished,
-            mpCentralStack, &CentralStack::startSetup));
-    emit ctorFinished(this);
+    emit ctorFinished();
 }
 
 MainWindow::~MainWindow()
@@ -123,6 +121,7 @@ void MainWindow::setVector(VectorObject * vector)
     VCHKPTR(vector);
     TRACEQFI << Vector::scopeString(vector->scope());
     stack()->setVector(vector);
+    TODO("Refactor: SIGNAL direect to CentralStack")
 }
 
 

@@ -9,16 +9,14 @@
 #include "VectorObject.h"
 #include "VectorUtilityApp.h"
 
-RawXmlPage::RawXmlPage(CentralStack * parent,
-                     const int flags)
-    : AbstractCentralPage(parent, flags)
+RawXmlPage::RawXmlPage(CentralStack * parent)
+    : AbstractCentralPage(parent)
 {
     TRACEFN()
     setObjectName("RawXmlPage");
-    setNames();
     connect(this, &RawXmlPage::ctorFinished,
             this, &RawXmlPage::startSetup);
-    emit ctorFinished(this);
+    emit ctorFinished();
 }
 
 Vector::View RawXmlPage::view() const
@@ -67,10 +65,10 @@ void RawXmlPage::setVector(VectorObject * vector)
     }
 }
 
-void RawXmlPage::startSetup(QObject * thisObject)
+void RawXmlPage::startSetup(void)
 {
     TRACEFN()
-    UNUSED(thisObject);
+
 
     mpBaselineText = new QTextEdit(this);
     TSTALLOC(mpBaselineText);
@@ -106,7 +104,7 @@ void RawXmlPage::startSetup(QObject * thisObject)
     connect(stack()->master(), &VectorUtilityApp::vectorSet,
             this, &RawXmlPage::setVector);
 
-    finishSetup(this);
+    finishSetup();
 }
 /*
 void RawXmlPage::scopeChanged(Vector::FileScope scope)

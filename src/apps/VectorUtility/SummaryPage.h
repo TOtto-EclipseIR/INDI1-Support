@@ -9,8 +9,7 @@ class SummaryPage : public AbstractCentralPage
 {
     Q_OBJECT
 public:
-    explicit SummaryPage(CentralStack * parent,
-                         const int flags=0);
+    explicit SummaryPage(CentralStack * parent);
     virtual Vector::View view(void) const override;
     virtual QString pageName(void) const override;
 
@@ -18,14 +17,14 @@ public slots:
     void setVector(VectorObject * vector) override;
 
 protected slots:
-    void startSetup(QObject * thisObject);
-    void finishSetup(QObject * thisObject)
-    { Q_UNUSED(thisObject); emit setupFinished(this); }
+    void startSetup(void);
+    void finishSetup(void)
+    { emit setupFinished(); }
 
 
 signals:
-    void ctorFinished(QObject * thisObject);
-    void setupFinished(QObject * thisObject);
+    void ctorFinished(void);
+    void setupFinished(void);
 
 private:
     QVector<SummaryView *> mViewVector;

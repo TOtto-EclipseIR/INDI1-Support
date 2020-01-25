@@ -13,7 +13,7 @@
 #define DEBUGFN(qmt, pfx) { qmt() << pfx << TIME   << Q_FUNC_INFO; }
 #define DEBUGPSZ(qmt, pfx, psz) { qmt(pfx << TIME  psz); }
 #define DEBUGQST(qmt, pfx, qst) { qmt(pfx << TIME  qPrintable(qst)); }
-#define DEBUGDO(qmt, pfx, msg) { qmt() << pfx << TIME  << Q_FUNC_INFO << "TODO:" << #msg; }
+#define DEBUGDO(qmt, pfx, msg) { qmt() << pfx << TIME  << Q_FUNC_INFO << __LINE__ << "TODO:" << #msg; }
 #define DEBUGUSE(qmt, pfx, var)  { (void)(var); qmt() << pfx << TIME   << Q_FUNC_INFO << "TO USE:" << #var; }
 #define DEBUGEXP(qmt, pfx, bexpr) { if ( ! bexpr) qmt() << pfx << TIME   << "Expectation FAILED:" << #bexpr; }
 #define DEBUGXEQ(qmt, pfx, expt, var) { if (expt != var) qmt() << pfx << TIME  << Q_FUNC_INFO   << "Expectation FAILED:" << #expt << expt << "==" << #var << var; }
@@ -21,7 +21,7 @@
 #define DEBUGXPTR(qmt, pfx, ptr) { if (nullptr == ptr) qmt() << pfx << TIME  << Q_FUNC_INFO   << "Allocation FAILED:" <<  #ptr; }
 #define DEBUGRTN(qmt, pfx, expr) { qmt() << pfx << TIME << Q_FUNC_INFO << "Return:" << #expr; return expr; }
 #define DEBUGRTV(qmt, pfx) { qmt() << pfx << TIME << Q_FUNC_INFO << "Return(void)"; return; }
-#define DEBUGQUIT { QTimer::singleShot(0, qApp, SLOT(quit())); }
+#define DEBUGQUIT { qCritical() << ""; QTimer::singleShot(0, qApp, SLOT(quit())); }
 
 #define PINFO   "=INFO "
 #define PTRACE  "-TRACE"
@@ -37,6 +37,7 @@
 #define NEXPECT(bexpr)          DEBUGEXP(qInfo, PINFO, bexpr)
 #define NEXPECTEQ(expt, var)    DEBUGXEQ(qInfo, PINFO, expt, var)
 #define NEXPECTNE(expt, var)    DEBUGXNE(qInfo, PINFO, expt, var)
+#define LIKEDO(msg)             DEBUGDO(qInfo, PINFO, msg)
 
 #define TRACE                   DEBUG(qDebug, PTRACE) // << stuff
 #define TRACEQFI                DEBUGQFI(qDebug, PTRACE) // << stuff
@@ -86,9 +87,10 @@
 #define MUSTDO(msg)             DEBUGDO(qCritical, PABORT, msg); DEBUGQUIT
 #define MUSTUSE(msg)            DEBUGUSE(qCritical, PABORT, msg); DEBUGQUIT
 
-#define CHKPTR(var) var; BEXPECTNE(nullptr, var)
-#define VCHKPTR(var) BEXPECTNE(nullptr, var)
-#define CHKALLOC(typ, var, nexpr) typ * var = new nexpr; TSTALLOC(var)
-#define TSTALLOC(var) BEXPECTPTR(var)
+#define TSTALLOC(ptr)           DEBUGXPTR(qCritical, PABORT, ptr); DEBUGQUIT
+#define CHKPTR(var)             var; DEBUGXPTR(qCritical, PABORT, var); DEBUGQUIT
+#define VCHKPTR(ptr)            DEBUGXPTR(qCritical, PABORT, ptr); DEBUGQUIT
+#define TRYALLOC(typ,var,nexpr) typ * var = new nexpr; TSTALLOC(var)
+
 
 

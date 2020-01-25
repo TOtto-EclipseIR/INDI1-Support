@@ -18,11 +18,12 @@ class AbstractCentralPage : public QWidget
 {
     Q_OBJECT
 public:
-    friend class CentralStack;
+//    friend class CentralStack;
 
 protected:
-    explicit AbstractCentralPage(CentralStack * parent,
-                                 const int flags=0);
+    explicit AbstractCentralPage(CentralStack * parent);
+    CentralStack * stack(void)
+    { return mpStack; }
     QGridLayout * layout(void);
     VectorObject * vector(const Vector::FileScope scope)
     { return stack()->master()->vector(scope); }
@@ -30,41 +31,29 @@ protected:
     VectorColumnSet * columnSet(void) const
     { return mpColumnSet; }
 
+public: // virtual
+    virtual Vector::View view(void) const = 0;
+    virtual QString pageName(void) const = 0;
+    virtual QString pageTitle(void) const;
+
 public slots:
+    void setPageTitle(void);
     void setColumn(VectorColumn column);
 
-public:
-    CentralStack * stack(void)
-    { return mpStack; }
-    void setPageTitle(const QString & title);
+public slots: // virtual
+    virtual void setVector(VectorObject * vector);
+
+protected: // virtual
 
 protected slots: // virtual
     virtual void columnChanged(VectorColumn vc);
     virtual void columnChanged(VectorColumnRole::Column col);
 
-public: // virtual
-    virtual Vector::View view(void) const = 0;
-    virtual QString pageName(void) const = 0;
-    virtual QString baseName(void) const;
-    virtual QString fullName(void) const;
-    virtual QString suffix(void) const;
-    virtual int sequence(void) const;
-
-protected: // virtual
-    virtual void setVector(VectorObject * vector);
-    virtual void setNames(void);
-
 signals:
-
 
 private:
     CentralStack * mpStack;
-    int mFlags=0;
     VectorColumnSet * mpColumnSet=nullptr;
-    QString mBaseName;
-    QString mFullName;
-    QString mSuffix;
-    int mSequence=0;
     PageGridLayout * mpGridLayout=nullptr;
     QLabel * mpPageTitleLabel=nullptr;
 };

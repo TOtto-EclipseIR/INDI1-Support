@@ -6,11 +6,9 @@
 #include "PageGridLayout.h"
 
 
-AbstractCentralPage::AbstractCentralPage(CentralStack * parent,
-                                         const int flags)
+AbstractCentralPage::AbstractCentralPage(CentralStack * parent)
     : QWidget(parent)
     , mpStack(parent)
-    , mFlags(flags)
     , mpColumnSet(new VectorColumnSet(this))
     , mpGridLayout(new PageGridLayout)
     , mpPageTitleLabel(new QLabel)
@@ -47,11 +45,16 @@ VectorColumn AbstractCentralPage::column(
     return vc;
 }
 
-void AbstractCentralPage::setPageTitle(const QString & title)
+QString AbstractCentralPage::pageTitle() const
 {
-    TRACEQFI << title;
+    return pageName();
+}
+
+void AbstractCentralPage::setPageTitle(void)
+{
+    TRACEFN()
     WEXPECTNE(nullptr, mpPageTitleLabel);
-    if (mpPageTitleLabel) mpPageTitleLabel->setText(title);
+    if (mpPageTitleLabel) mpPageTitleLabel->setText(pageTitle());
     update(); show();
     TRACEQFI << "exit";
 }
@@ -64,35 +67,6 @@ void AbstractCentralPage::columnChanged(VectorColumn vc)
 void AbstractCentralPage::columnChanged(VectorColumnRole::Column col)
 {
     TRACEQFI << VectorColumn::columnName(col) << "exit";
-}
-
-void AbstractCentralPage::setNames(void)
-{
-    TRACEFN()
-    mBaseName = pageName();
-    // TODO if (flags sequential) ...
-    mFullName = mBaseName;
-    TRACE << "BaseName" << mBaseName << "FullName" << mFullName;
-}
-
-QString AbstractCentralPage::baseName(void) const
-{
-    return mBaseName;
-}
-
-QString AbstractCentralPage::fullName(void) const
-{
-    return mFullName;
-}
-
-QString AbstractCentralPage::suffix(void) const
-{
-    return mSuffix;
-}
-
-int AbstractCentralPage::sequence(void) const
-{
-    return mSequence;
 }
 
 void AbstractCentralPage::setVector(VectorObject * vector)

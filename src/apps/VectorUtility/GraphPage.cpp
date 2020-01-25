@@ -8,9 +8,8 @@
 #include "VectorUtilityApp.h"
 
 
-GraphPage::GraphPage(CentralStack * parent,
-                     const int flags)
-    : AbstractCentralPage(parent, flags)
+GraphPage::GraphPage(CentralStack * parent)
+    : AbstractCentralPage(parent)
     , mpVectorPixmapLabel(new QLabel)
     , mpDeltaPixmapLabel(new QLabel)
     , mpRatioPixmapLabel(new QLabel)
@@ -23,10 +22,9 @@ GraphPage::GraphPage(CentralStack * parent,
     mpVectorPixmapLabel->setObjectName("GraphPage:VectorPixmapLabel");
     mpDeltaPixmapLabel->setObjectName("GraphPage:DeltaPixmapLabel");
     mpRatioPixmapLabel->setObjectName("GraphPage:RatioPixmapLabel");
-    setNames();
     connect(this, &GraphPage::ctorFinished,
             this, &GraphPage::startSetup);
-    emit ctorFinished(this);
+    emit ctorFinished();
 }
 
 Vector::View GraphPage::view() const
@@ -39,10 +37,10 @@ QString GraphPage::pageName(void) const
     return QString("Graph");
 }
 
-void GraphPage::startSetup(QObject * thisObject)
+void GraphPage::startSetup(void)
 {
     TRACEFN()
-    Q_UNUSED(thisObject);
+    
     QVariantMap settings = stack()->
             master()->settings("UnitVectorGraph");
     mUnitVectorGraph.configure(settings);
@@ -53,7 +51,7 @@ void GraphPage::startSetup(QObject * thisObject)
     layout()->addWidget(mpRatioPixmapLabel, 3, 0, 1, 5);
     show();
     TRACEQFI << "exit";
-    finishSetup(this);
+    finishSetup();
 }
 
 void GraphPage::columnChanged(const VectorColumnRole::Column col)

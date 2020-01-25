@@ -8,23 +8,22 @@ class HomePage : public AbstractCentralPage
 {
     Q_OBJECT
 public:
-    explicit HomePage(CentralStack * parent,
-                       const int flags=0);
+    explicit HomePage(CentralStack * parent);
     virtual Vector::View view(void) const override;
     virtual QString pageName(void) const override;
 
 public slots:
 
 protected slots:
-    void startSetup(QObject * thisObject);
-    void finishSetup(QObject * thisObject)
-    { Q_UNUSED(thisObject); emit setupFinished(this); }
+    void startSetup(void);
+    void finishSetup(void)
+    { emit setupFinished(); }
 
 
 
 signals:
-    void ctorFinished(QObject * thisObject);
-    void setupFinished(QObject * thisObject);
+    void ctorFinished(void);
+    void setupFinished(void);
 
 protected slots:
     void setupWidgets(void);
