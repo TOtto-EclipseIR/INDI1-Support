@@ -29,7 +29,8 @@ void MainWindow::setupMenuActions(void)
     addMenuAction(mpFileMenu, "Open Subject&One", "OpenSubjectOne");
     addMenuAction(mpFileMenu, "Open Subject&Two", "OpenSubjectTwo");
     addMenuAction(mpFileMenu, "Close &All", "CloseAll");
-    addMenuAction(mpFileMenu, "Open Search &Results", "OpenSearchResults");
+    addMenuAction(mpFileMenu, "Open Search &Results",
+                              "OpenSearchResults");
     mpFileMenu->addSeparator();
     QAction * quitAction = addMenuAction(mpFileMenu, "&Quit", "Quit");
     quitAction->setShortcut(QKeySequence::Quit);
@@ -60,8 +61,8 @@ void MainWindow::setupStatusBar(void)
     TRACEFN()
     LIKEDO("setStatusLabel(), startStatusProgress(), enableCancel()")
 
-    QStatusBar * statusBar = QMainWindow::statusBar();
-    connect(statusBar, &QStatusBar::messageChanged,
+    mpStatusBar = QMainWindow::statusBar();
+    connect(mpStatusBar, &QStatusBar::messageChanged,
             this, &MainWindow::messageChanged);
     TRACEQFI << "sshot setupActionConnections() & exit";
     LIKEDO("mainToolBar")

@@ -34,8 +34,8 @@ MainWindow::MainWindow(VectorUtilityApp * parent)
 
     EXPECT(connect(mpApp, &VectorUtilityApp::setupFinished,
             this, &MainWindow::startSetup));
-    connect(this, &MainWindow::ctorFinished,
-            this, &MainWindow::startSetup);
+    EXPECT(connect(this, &MainWindow::searchResults,
+                   app(), &VectorUtilityApp::openSearchResults));
     emit ctorFinished();
 }
 
@@ -51,6 +51,11 @@ VectorUtilityApp * MainWindow::app()
 CentralStack * MainWindow::stack()
 {
     return mpCentralStack;
+}
+
+QStatusBar * MainWindow::statusBar()
+{
+    return mpStatusBar;
 }
 
 void MainWindow::openBaseline(void)
@@ -74,11 +79,18 @@ void MainWindow::openSubjectTwo(void)
 void MainWindow::openSearchResults(void)
 {
     TRACEFN()
+    static QString prevDirName = "/INDIface/INDIout";
     QString dirName = QFileDialog::getExistingDirectory(this,
-                                    "Open SearchResult Directory");
-    if (dirName.isEmpty()) return;
-    QDir searchResultDir(dirName);
-    emit searchResults(searchResultDir);
+                "Open Search Result Directory", prevDirName,
+                QFileDialog::ShowDirsOnly);
+    TRACE << dirName;
+    prevDirName = dirName;
+
+    if (dirName.isEmpty())
+        emit openDialogCancelled();
+    else
+        emit searchResults(QDir(dirName));
+    TRACERTV()
 }
 
 void MainWindow::openVectorDialog(Vector::FileScope scope)

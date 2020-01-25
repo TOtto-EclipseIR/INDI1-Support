@@ -15,7 +15,8 @@
 #define DEBUGQST(qmt, pfx, qst) { qmt(pfx << TIME << __LINE__  qPrintable(qst)); }
 #define DEBUGDO(qmt, pfx, msg) { qmt() << pfx << TIME  << Q_FUNC_INFO << __LINE__ << "TODO:" << #msg; }
 #define DEBUGUSE(qmt, pfx, var)  { (void)(var); qmt() << pfx << TIME   << Q_FUNC_INFO << __LINE__ << "TO USE:" << #var; }
-#define DEBUGEXP(qmt, pfx, bexpr) { if ( ! bexpr) qmt() << pfx << TIME << __LINE__  << "Pointer FAILED:" << #bexpr; }
+#define DEBUGEXP(qmt, pfx, bexpr) { if ( ! bexpr) qmt() << pfx << TIME << __LINE__  << "Expectation FAILED:" << #bexpr; }
+#define DEBUGXN(qmt, pfx, bexpr) { if (bexpr) qmt() << pfx << TIME << __LINE__  << "Expectation FAILED:" << #bexpr; }
 #define DEBUGXEQ(qmt, pfx, expt, var) { if (expt != var) qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Expectation FAILED:" << #expt << expt << "==" << #var << var; }
 #define DEBUGXNE(qmt, pfx, expt, var) { if (expt == var) qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Expectation FAILED:" << #expt << expt << "!=" << #var << var; }
 #define DEBUGXPTR(qmt, pfx, ptr) { if (nullptr == ptr) qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Allocation FAILED:" <<  #ptr; }
@@ -48,6 +49,8 @@
 #define TEXPECT(bexpr)          DEBUGEXP(qDebug, PTRACE, bexpr)
 #define TEXPECTEQ(expt, var)    DEBUGXEQ(qDebug, PTRACE, expt, var)
 #define TEXPECTNE(expt, var)    DEBUGXNE(qDebug, PTRACE, expt, var)
+#define TRACERTV()              DEBUGRTV(qDebug, PTRACE)
+#define TRACERTN(expr)          DEBUGRTN(qDebug, PTRACE, expr)
 #define TODO(msg)               DEBUGDO(qDebug, PTRACE, msg)
 #define TOUSE(msg)              DEBUGDOUSE(qDebug, PTRACE, msg)
 #define UNUSED(var)             Q_UNUSED(var)
@@ -58,6 +61,7 @@
 #define WARNPSZ(psz)            DEBUGPSZ(qWarning, PWARN, psz);
 #define WARNQST(qst)            DEBUGQST(qWarning, PWARN, qPrintable(qst));
 #define WEXPECT(bexpr)          DEBUGEXP(qWarning, PWARN, bexpr)
+#define WEXPECTNOT(bexpr)       DEBUGXN(qWarning, PWARN, bexpr)
 #define WEXPECTEQ(expt, var)    DEBUGXEQ(qWarning, PWARN, expt, var)
 #define WEXPECTNE(expt, var)    DEBUGXNE(qWarning, PWARN, expt, var)
 #define WANTDO(msg)             DEBUGDO(qWarning, PWARN, msg)
@@ -70,6 +74,7 @@
 #define ERRORPSZ(psz)           DEBUGPSZ(qCritical, PERROR, psz);
 #define ERRORQST(qst)           DEBUGQST(qCritical, PERROR, qPrintable(qst));
 #define EXPECT(bexpr)           DEBUGEXP(qCritical, PERROR, bexpr)
+#define EXPECTNOT(bexpr)        DEBUGXN(qCritical, PERROR, bexpr)
 #define EXPECTEQ(expt, var)     DEBUGXEQ(qCritical, PERROR, expt, var)
 #define EXPECTNE(expt, var)     DEBUGXNE(qCritical, PERROR, expt, var)
 #define CONNECT(src, sig, dst, slt) { TSTALLOC(src); TSTALLOC(dst); EXPECT (connect(src, sig, dst, slt)); }
@@ -85,6 +90,7 @@
 #define ABORTPSZ(psz)           DEBUGPSZ(qCritical, PABORT, psz); DEBUGQUIT
 #define ABORTQST(qst)           DEBUGQST(qCritical, PABORT, qPrintable(qst)); DEBUGQUIT
 #define BEXPECT(bexpr)          DEBUGEXP(qCritical, PABORT, bexpr); DEBUGQUIT
+#define BEXPECTNOT(bexpr)       DEBUGXN(qCritical, PABORT, bexpr); DEBUGQUIT
 #define BEXPECTEQ(expt, var)    DEBUGXEQ(qCritical, PABORT, expt, var); DEBUGQUIT
 #define BEXPECTNE(expt, var)    DEBUGXNE(qCritical, PABORT, expt, var); DEBUGQUIT
 #define BEXPECTPTR(ptr)         DEBUGXPTR(qCritical, PABORT, ptr); DEBUGQUIT

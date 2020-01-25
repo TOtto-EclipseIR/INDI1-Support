@@ -5,6 +5,7 @@
 
 #include <QFileDialog>
 #include <QSettings>
+#include <QStatusBar>
 #include <QTimer>
 
 #include "Debug.h"
@@ -111,12 +112,20 @@ void VectorUtilityApp::openVector(Vector::FileScope scope,
     TRACEQFI << "exit";
 }
 
-void VectorUtilityApp::dialogOpenSearchResult(void)
+void VectorUtilityApp::openSearchResults(QDir dir)
 {
-    TRACEFN()
-    QString dirName = QFileDialog::getExistingDirectory(mainWindow(),
-                "Open Search Result Directory", QString(),
-                QFileDialog::ShowDirsOnly);
+    TRACEQFI << dir.absolutePath();
+    mpSearchResult = new SearchResultObject(dir, this);
+    connect(mpSearchResult, &SearchResultObject::matrixImageWritten,
+            this,  &VectorUtilityApp::matrixFileWritten);
+    QTimer::singleShot(100, mpSearchResult,
+                       &SearchResultObject::createMatrix);
+    TRACERTV()
+}
+
+void VectorUtilityApp::matrixFileWritten(QString fileName)
+{
+    mainWindow()->statusBar()->showMessage(fileName+" written", 5000);
 }
 
 void VectorUtilityApp::startSetup(void)
@@ -132,9 +141,6 @@ void VectorUtilityApp::setupMainWindow(void)
     mpMainWindow = new MainWindow(this);
     TSTALLOC(mpMainWindow);
     TRACE << mpMainWindow->objectName();
-//    connect(mpMainWindow, &MainWindow::openDialogFileName,this, &VectorUtilityApp::setVector);
-    CONNECT(mainWindow(), &MainWindow::openSearchResults,
-            this, &VectorUtilityApp::dialogOpenSearchResult);
     QTimer::singleShot(0, this, &VectorUtilityApp::finishSetup);
     TRACEQFI << "sshot finishSetup() exit";
 }
@@ -142,7 +148,6 @@ void VectorUtilityApp::setupMainWindow(void)
 void VectorUtilityApp::finishSetup(void)
 {
     TRACEFN()
-    mpSearchResult = new SearchResultObject(this);
     emit setupFinished();
     TRACEQFI << "exit";
 }

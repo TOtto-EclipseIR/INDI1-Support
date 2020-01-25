@@ -32,6 +32,7 @@ public:
     ~MainWindow();
     VectorUtilityApp * app(void);
     CentralStack * stack(void);
+    QStatusBar * statusBar(void);
     QList<QAction *> actionsFor(QMenu * menu) const;
     QAction * action(const QString & actionName) const;
 
@@ -74,6 +75,7 @@ signals:
     void setupFinished(void);
 
     void messageChanged(QString status);
+    void openDialogCancelled(void);
     void openDialogCancelled(Vector::FileScope scope);
     void openDialogFileName(Vector::FileScope scope,
                              QString fileName);
@@ -88,5 +90,6 @@ private:
     QActionGroup * mpViewActionGroup=nullptr;
     QMenu * mpFileMenu=nullptr;
     QMenu * mpViewMenu=nullptr;
+    QStatusBar * mpStatusBar=nullptr;
     CentralStack * mpCentralStack=nullptr;
 };

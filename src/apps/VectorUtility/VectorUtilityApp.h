@@ -35,7 +35,8 @@ public slots:
     void setVector(VectorObject * vector);
     void openVector(Vector::FileScope scope,
                     QString fileName);
-    void dialogOpenSearchResult(void);
+    void openSearchResults(QDir dir);
+    void matrixFileWritten(QString fileName);
 
 protected slots:
     void startSetup(void);
