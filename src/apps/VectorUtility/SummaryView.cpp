@@ -45,7 +45,6 @@ void SummaryView::setupLayout()
 
 void SummaryView::setVector(VectorObject * vector)
 {
-    VCHKPTR(vector);
     TRACEQFI << vector->scopeString();
     Vector::FileScope scope = vector->scope();
     EXPECTEQ(cmScope, scope);

@@ -42,7 +42,7 @@ void HomePage::setupWidgets(void)
     TRACE << splashPixmap.size();
     QLabel * splashLabel = new QLabel;
     QLabel * versionLabel = new QLabel;
-    versionLabel->setText(stack()->master()->versionBuiltString());
+    versionLabel->setText(stack()->app()->versionBuiltString());
     splashLabel->setPixmap(splashPixmap);
     layout()->addWidget(splashLabel, 1, 0, 5, 5, Qt::AlignCenter);
     layout()->addWidget(versionLabel, 0, 1, Qt::AlignCenter);

@@ -8,11 +8,13 @@
 
 #include <Debug.h>
 
+#include "CentralStack.h"
 #include "VectorItemModel.h"
 #include "VectorObject.h"
 #include "Version.h"
 #include "VersionInfo.h"
 class MainWindow;
+class SearchResultObject;
 
 class VectorUtilityApp : public QApplication
 {
@@ -33,6 +35,7 @@ public slots:
     void setVector(VectorObject * vector);
     void openVector(Vector::FileScope scope,
                     QString fileName);
+    void dialogOpenSearchResult(void);
 
 protected slots:
     void startSetup(void);
@@ -49,6 +52,7 @@ signals:
 private:
     MainWindow * mpMainWindow=nullptr;
     QSettings * mpSettings=nullptr;
+    SearchResultObject * mpSearchResult=nullptr;
     int mCoefRows = 320;
     QHash<Vector::FileScope, VectorObject *> mVectorSet;
     const VersionInfo cmVersion;

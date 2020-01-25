@@ -23,20 +23,17 @@ public:
     typedef QQueue<Vector::View> ViewQueue;
 
 public:
-    explicit CentralStack(MainWindow * parent=nullptr);
-    VectorUtilityApp * master(void);
+    explicit CentralStack(MainWindow * parent);
+    VectorUtilityApp * app(void);
     AbstractCentralPage * page(const Vector::View view);
     AbstractCentralPage * widget(int ix) const;
 
 public slots:
     void setCurrentView(const Vector::View & View);
-//    void setCurrentPage(const QString & pageName);
     void setVector(VectorObject * vector);
 
     void startSetup(void);
-    void finishSetup(void)
-    //    QMainWindow::setCentralWidget(mpCentralStack);
-    { emit setupFinished(); }
+    void finishSetup(void);
 
 
 protected slots:
@@ -52,7 +49,7 @@ signals:
     void currentPageChanged(QString pageName, QWidget * page);
 
 private:
-    VectorUtilityApp * mpMaster=nullptr;
+    VectorUtilityApp * mpApp=nullptr;
     ViewQueue mPendingSetupQueue;
     DualMap<Vector::View, AbstractCentralPage *> mViewPageDMap;
     AbstractCentralPage * mpHomePage=nullptr;

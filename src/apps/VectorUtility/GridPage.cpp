@@ -7,14 +7,14 @@
 GridPage::GridPage(CentralStack * parent)
     : AbstractCentralPage(parent)
     , mpTableWidget(new VectorColumnTableWidget
-                    (parent->master()->rows(), this))
+                    (parent->app()->rows(), this))
 {
     TRACEFN()
     TSTALLOC(mpTableWidget);
     setObjectName("GridPage");
 
-    mpTableWidget->setRows(stack()->master()->rows());
-    mpTableWidget->configure(stack()->master()->
+    mpTableWidget->setRows(stack()->app()->rows());
+    mpTableWidget->configure(stack()->app()->
                              settings("VectorColumnTableWidget"));
     mpTableWidget->fillTable();
 
@@ -35,9 +35,7 @@ QString GridPage::pageName() const
 
 void GridPage::setVector(VectorObject * vector)
 {
-    VCHKPTR(vector);
     AbstractCentralPage::setVector(vector);
-    VCHKPTR(mpTableWidget);
     Vector::FileScope scope = vector->scope();
     TRACEQFI << scope;
     mpTableWidget->setUnitVector(scope, vector->coefVector());

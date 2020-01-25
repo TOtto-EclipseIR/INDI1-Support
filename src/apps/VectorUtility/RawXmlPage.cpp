@@ -39,19 +39,16 @@ void RawXmlPage::setVector(VectorObject * vector)
         switch (scope)
         {
         case Vector::Baseline:
-            VCHKPTR(mpBaselineText);
             mpBaselineText->setPlainText(vector->data().getXmlString());
             mpBaselineText->textCursor().movePosition(QTextCursor::Start);
             break;
 
         case Vector::SubjectOne:
-            VCHKPTR(mpSubjectOneText);
             mpSubjectOneText->setPlainText(vector->data().getXmlString());
             mpSubjectOneText->textCursor().movePosition(QTextCursor::Start);
             break;
 
         case Vector::SubjectTwo:
-            VCHKPTR(mpSubjectTwoText);
             mpSubjectTwoText->setPlainText(vector->data().getXmlString());
             mpSubjectTwoText->textCursor().movePosition(QTextCursor::Start);
             break;
@@ -101,7 +98,7 @@ void RawXmlPage::startSetup(void)
   //  updateGeometry();
     show();
 
-    connect(stack()->master(), &VectorUtilityApp::vectorSet,
+    connect(stack()->app(), &VectorUtilityApp::vectorSet,
             this, &RawXmlPage::setVector);
 
     finishSetup();

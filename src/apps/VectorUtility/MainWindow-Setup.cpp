@@ -29,6 +29,7 @@ void MainWindow::setupMenuActions(void)
     addMenuAction(mpFileMenu, "Open Subject&One", "OpenSubjectOne");
     addMenuAction(mpFileMenu, "Open Subject&Two", "OpenSubjectTwo");
     addMenuAction(mpFileMenu, "Close &All", "CloseAll");
+    addMenuAction(mpFileMenu, "Open Search &Results", "OpenSearchResults");
     mpFileMenu->addSeparator();
     QAction * quitAction = addMenuAction(mpFileMenu, "&Quit", "Quit");
     quitAction->setShortcut(QKeySequence::Quit);
@@ -71,18 +72,20 @@ void MainWindow::setupStatusBar(void)
 void MainWindow::setupActionConnections(void)
 {
     TRACEFN()
-    EXPECT(connect(action("OpenBaseline"), &QAction::triggered,
-            this, &MainWindow::openBaseline));
-    EXPECT(connect(action("OpenSubjectOne"), &QAction::triggered,
-            this, &MainWindow::openSubjectOne));
-    EXPECT(connect(action("OpenSubjectTwo"), &QAction::triggered,
-            this, &MainWindow::openSubjectTwo));
-    EXPECT(connect(action("CloseAll"), &QAction::triggered,
-            this, &MainWindow::closeAll));
-    EXPECT(connect(qApp, &QApplication::aboutToQuit,
-            this, &MainWindow::closeAll));
-    EXPECT(connect(action("Quit"), &QAction::triggered,
-            this, &QApplication::quit));
+    connect(action("OpenBaseline"), &QAction::triggered,
+            this, &MainWindow::openBaseline);
+    connect(action("OpenSubjectOne"), &QAction::triggered,
+            this, &MainWindow::openSubjectOne);
+    connect(action("OpenSubjectTwo"), &QAction::triggered,
+            this, &MainWindow::openSubjectTwo);
+    connect(action("OpenSearchResults"), &QAction::triggered,
+            this, &MainWindow::openSearchResults);
+    connect(action("CloseAll"), &QAction::triggered,
+            this, &MainWindow::closeAll);
+    connect(qApp, &QApplication::aboutToQuit,
+            this, &MainWindow::closeAll);
+    connect(action("Quit"), &QAction::triggered,
+            this, &QApplication::quit);
     show();
 
     TRACEQFI << "sshot finishSetup() & exit";
@@ -92,6 +95,7 @@ void MainWindow::setupActionConnections(void)
 void MainWindow::finishSetup()
 {
     TRACEFN()
+    mpCentralStack = new CentralStack(this);
     emit setupFinished();
     TRACEQFI << "emit setupFinished(); & exit";
 }
@@ -102,7 +106,6 @@ QAction *  MainWindow::addMenuAction(QMenu * menu,
                             const QVariant & actionData,
                             QActionGroup * actionGroup)
 {
-    VCHKPTR(menu);
     TRACEQFI << menu->title() << menuText << actionName << actionData << (actionGroup ? actionGroup->objectName() : "no Group");
     QAction * newAction = menu->addAction(menuText);
     TSTALLOC(newAction);
@@ -124,7 +127,6 @@ QList<QAction *> MainWindow::actionsFor(QMenu *menu) const
     QList<QAction *> result;
     foreach (QAction * action, mNameActionMap.values())
     {
-        VCHKPTR(action);
         if (action->menu() == menu)
             result.append(action);
     }

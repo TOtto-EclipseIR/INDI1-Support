@@ -26,7 +26,7 @@ protected:
     { return mpStack; }
     QGridLayout * layout(void);
     VectorObject * vector(const Vector::FileScope scope)
-    { return stack()->master()->vector(scope); }
+    { return stack()->app()->vector(scope); }
     VectorColumn column(const VectorColumnRole::Column col) const;
     VectorColumnSet * columnSet(void) const
     { return mpColumnSet; }

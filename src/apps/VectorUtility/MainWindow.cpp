@@ -17,30 +17,25 @@
 
 
 MainWindow::MainWindow(VectorUtilityApp * parent)
-    : mpMaster(parent)
+    : mpApp(parent)
     , mpViewActionGroup(new QActionGroup(this))
 {
     TRACEFN()
-    TSTALLOC(mpMaster)
+    TSTALLOC(mpApp)
     WANTDO("Try ABORT flush"); // << "This" << "is a" << "test" << "of the" << "ABORT" << "Debug macro")
-    TSTALLOC(mpCentralStack)
     TSTALLOC(mpViewActionGroup)
     setObjectName("MainWindow:VectorUtility");
     mpViewActionGroup->setObjectName("QActionGroup:View");
     mpViewActionGroup->setExclusive(true);
-    QMainWindow::setCentralWidget(mpCentralStack);
 
     QDir  qrc(":/images/jpg");
     QFileInfoList qrcInfos = qrc.entryInfoList();
     TRACE << qrcInfos;
 
-    EXPECT(connect(mpMaster, &VectorUtilityApp::setupFinished,
+    EXPECT(connect(mpApp, &VectorUtilityApp::setupFinished,
             this, &MainWindow::startSetup));
-    emit ctorFinished();
     connect(this, &MainWindow::ctorFinished,
             this, &MainWindow::startSetup);
-    connect(this, &MainWindow::setupFinished,
-            mpCentralStack, &CentralStack::startSetup);
     emit ctorFinished();
 }
 
@@ -48,15 +43,13 @@ MainWindow::~MainWindow()
 {
 }
 
-VectorUtilityApp * MainWindow::master()
+VectorUtilityApp * MainWindow::app()
 {
-    VCHKPTR(mpMaster);
-    return mpMaster;
+    return mpApp;
 }
 
-CentralStack * MainWindow::stack(void)
+CentralStack * MainWindow::stack()
 {
-    VCHKPTR(mpCentralStack);
     return mpCentralStack;
 }
 
@@ -76,6 +69,16 @@ void MainWindow::openSubjectTwo(void)
 {
     TRACEFN()
     openVectorDialog(Vector::SubjectTwo);
+}
+
+void MainWindow::openSearchResults(void)
+{
+    TRACEFN()
+    QString dirName = QFileDialog::getExistingDirectory(this,
+                                    "Open SearchResult Directory");
+    if (dirName.isEmpty()) return;
+    QDir searchResultDir(dirName);
+    emit searchResults(searchResultDir);
 }
 
 void MainWindow::openVectorDialog(Vector::FileScope scope)
@@ -122,7 +125,6 @@ void MainWindow::clearMessage()
 
 void MainWindow::setVector(VectorObject * vector)
 {
-    VCHKPTR(vector);
     TRACEQFI << Vector::scopeString(vector->scope());
     stack()->setVector(vector);
     TODO("Refactor: SIGNAL direect to CentralStack")
@@ -133,7 +135,6 @@ QAction * MainWindow::action(const QString & actionName) const
 {
     TRACEQFI << actionName;
     QAction * act = mNameActionMap.value(actionName);
-    VCHKPTR(act);
     TRACEQFI << "return" << act->objectName();
     return act;
 }

@@ -3,12 +3,14 @@
 #include <QCoreApplication>
 #include "VectorUtilityApp.h"
 
+#include <QFileDialog>
 #include <QSettings>
 #include <QTimer>
 
 #include "Debug.h"
 #include "MainWindow.h"
 #include "QObjectInfo.h"
+#include "SearchResultObject.h"
 #include "Version.h"
 #include "VersionInfo.h"
 
@@ -47,12 +49,11 @@ VectorUtilityApp::VectorUtilityApp(int ArgC, char *ArgV[])
 
 MainWindow * VectorUtilityApp::mainWindow()
 {
-    return  CHKPTR(mpMainWindow);
+    return  (mpMainWindow);
 }
 
 QSettings * VectorUtilityApp::settings()
 {
-    VCHKPTR(mpSettings);
     return mpSettings;
 }
 
@@ -60,7 +61,7 @@ VectorObject * VectorUtilityApp::vector(const Vector::FileScope scope)
 {
     TRACEQFI << Vector::scopeString(scope);
     VectorObject * scopeVector = mVectorSet.value(scope);
-    return CHKPTR(scopeVector);
+    return (scopeVector);
 }
 
 QString VectorUtilityApp::versionBuiltString() const
@@ -90,10 +91,8 @@ void VectorUtilityApp::setVector(VectorObject * vector)
     if (mVectorSet.contains(scope))
     {
         VectorObject * oldVec = mVectorSet.value(scope);
-        VCHKPTR(oldVec);
         oldVec->deleteLater();
     }
-    VCHKPTR(vector);
     mVectorSet.insert(scope, vector);
     emit scopeSet(scope);
     emit vectorSet(vector);
@@ -112,6 +111,13 @@ void VectorUtilityApp::openVector(Vector::FileScope scope,
     TRACEQFI << "exit";
 }
 
+void VectorUtilityApp::dialogOpenSearchResult(void)
+{
+    TRACEFN()
+    QString dirName = QFileDialog::getExistingDirectory(mainWindow(),
+                "Open Search Result Directory", QString(),
+                QFileDialog::ShowDirsOnly);
+}
 
 void VectorUtilityApp::startSetup(void)
 {
@@ -126,8 +132,9 @@ void VectorUtilityApp::setupMainWindow(void)
     mpMainWindow = new MainWindow(this);
     TSTALLOC(mpMainWindow);
     TRACE << mpMainWindow->objectName();
-    EXPECT(connect(mpMainWindow, &MainWindow::openDialogFileName,
-            this, &VectorUtilityApp::openVector));
+//    connect(mpMainWindow, &MainWindow::openDialogFileName,this, &VectorUtilityApp::setVector);
+    CONNECT(mainWindow(), &MainWindow::openSearchResults,
+            this, &VectorUtilityApp::dialogOpenSearchResult);
     QTimer::singleShot(0, this, &VectorUtilityApp::finishSetup);
     TRACEQFI << "sshot finishSetup() exit";
 }
@@ -135,8 +142,7 @@ void VectorUtilityApp::setupMainWindow(void)
 void VectorUtilityApp::finishSetup(void)
 {
     TRACEFN()
+    mpSearchResult = new SearchResultObject(this);
     emit setupFinished();
     TRACEQFI << "exit";
 }
-
-

@@ -42,7 +42,7 @@ void GraphPage::startSetup(void)
     TRACEFN()
     
     QVariantMap settings = stack()->
-            master()->settings("UnitVectorGraph");
+            app()->settings("UnitVectorGraph");
     mUnitVectorGraph.configure(settings);
     QPixmap formPixmap = mUnitVectorGraph.formPixmap();
     mpVectorPixmapLabel->setPixmap(formPixmap);

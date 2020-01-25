@@ -41,10 +41,8 @@ QString SummaryPage::pageName(void) const
 
 void SummaryPage::setVector(VectorObject * vector)
 {
-    VCHKPTR(vector);
     TRACEQFI << vector->scopeString();
     Vector::FileScope scope = vector->scope();
-    VCHKPTR(mViewVector[scope]);
     mViewVector[scope]->setVector(vector);
     update();
     show();
@@ -53,7 +51,7 @@ void SummaryPage::setVector(VectorObject * vector)
 void SummaryPage::startSetup(void)
 {
     TRACEFN()
-    
+
     QLabel * BaselineLabel = new QLabel;
     QLabel * SubjectOneLabel = new QLabel;
     QLabel * SubjectTwoLabel = new QLabel;

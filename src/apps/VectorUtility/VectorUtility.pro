@@ -26,6 +26,7 @@ SOURCES += \
     QObjectInfo.cpp \
     RawXmlPage.cpp \
     ReconPage.cpp \
+    SearchResultObject.cpp \
     SummaryPage.cpp \
     SummaryView.cpp \
     UnitFloat.cpp \
@@ -67,6 +68,7 @@ HEADERS += \
     QQVector.h \
     RawXmlPage.h \
     ReconPage.h \
+    SearchResultObject.h \
     SummaryPage.h \
     SummaryView.h \
     UnitFloat.h \

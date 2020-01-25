@@ -53,12 +53,6 @@ void ReconPage::startSetup(void)
     layout()->addWidget(subjectOneTextLabel, 2, 0, Qt::AlignTop | Qt::AlignRight);
     layout()->addWidget(subjectTwoTextLabel, 3, 0, Qt::AlignTop | Qt::AlignRight);
 
-    VCHKPTR(mpBaselineReconPixmapLabel);;
-    VCHKPTR(mpSubjectOneReconPixmapLabel);
-    VCHKPTR(mpSubjectTwoReconPixmapLabel);
-    VCHKPTR(mpBaselineNormalPixmapLabel);
-    VCHKPTR(mpSubjectOneNormalPixmapLabel);
-    VCHKPTR(mpSubjectTwoNormalPixmapLabel);
     mpBaselineReconPixmapLabel->setPixmap(mBaselineReconPixmap);
     mpSubjectOneReconPixmapLabel->setPixmap(mSubjectOneReconPixmap);
     mpSubjectTwoReconPixmapLabel->setPixmap(mSubjectTwoReconPixmap);

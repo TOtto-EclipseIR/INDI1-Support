@@ -32,14 +32,13 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent)
 
 QGridLayout * AbstractCentralPage::layout()
 {
-    return CHKPTR(mpGridLayout);
+    return (mpGridLayout);
 }
 
 VectorColumn AbstractCentralPage::column(
         const VectorColumnRole::Column col) const
 {
     TRACEQFI << VectorColumnRole::columnName(col);
-    VCHKPTR(mpColumnSet);
     VectorColumn vc = mpColumnSet->value(col);
     TRACEQFI << vc.columnName() << vc.values().first();
     return vc;

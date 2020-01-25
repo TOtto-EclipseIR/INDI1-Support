@@ -12,6 +12,7 @@
 #include <QString>
 #include <QVariant>
 
+#include "CentralStack.h"
 #include "Vector.h"
 #include "VectorObject.h"
 class CentralStack;
@@ -29,7 +30,7 @@ public:
 public:
     MainWindow(VectorUtilityApp * parent);
     ~MainWindow();
-    VectorUtilityApp * master(void);
+    VectorUtilityApp * app(void);
     CentralStack * stack(void);
     QList<QAction *> actionsFor(QMenu * menu) const;
     QAction * action(const QString & actionName) const;
@@ -42,10 +43,11 @@ public slots:
 public: // protected:
     void setVector(VectorObject * vector);
 
-protected slots:
+public slots:
     void openBaseline(void);
     void openSubjectOne(void);
     void openSubjectTwo(void);
+    void openSearchResults(void);
     void openVectorDialog(Vector::FileScope scope);
     void closeAll(void);
     void close(const Vector::FileScope scope);
@@ -75,16 +77,16 @@ signals:
     void openDialogCancelled(Vector::FileScope scope);
     void openDialogFileName(Vector::FileScope scope,
                              QString fileName);
+    void searchResults(QDir dir);
     void closeScope(Vector::FileScope scope);
     void scopeChanged(Vector::FileScope newScope);
     void viewChanged(Vector::View newView);
 
 private:
-    VectorUtilityApp * mpMaster=nullptr;
-    CentralStack * mpCentralStack=nullptr;
-
+    VectorUtilityApp * mpApp=nullptr;
     QHash<QString, QAction *> mNameActionMap;
     QActionGroup * mpViewActionGroup=nullptr;
     QMenu * mpFileMenu=nullptr;
     QMenu * mpViewMenu=nullptr;
+    CentralStack * mpCentralStack=nullptr;
 };
