@@ -19,10 +19,12 @@ AbstractCentralPage::AbstractCentralPage(CentralStack * parent)
     TSTALLOC(mpColumnSet);
     TSTALLOC(mpGridLayout);
     TSTALLOC(mpPageTitleLabel);
-    EXPECT(connect(mpColumnSet, SIGNAL(columnChangedRole(VectorColumn::Role)),
-            this, SLOT(columnChanged(VectorColumn::Role))));
-    EXPECT(connect(mpColumnSet, SIGNAL(columnChanged(VectorColumn)),
-            this, SLOT(columnChanged(VectorColumn))));
+    CONNECT(mpColumnSet, SIGNAL(columnChangedRole(VectorColumn::Role)),
+            this, SLOT(columnChanged(VectorColumn::Role)));
+    CONNECT(mpColumnSet, SIGNAL(columnChanged(VectorColumn)),
+            this, SLOT(columnChanged(VectorColumn)));
+    CONNECT(this, &AbstractCentralPage::setupFinished,
+            stack(), &CentralStack::viewSetupFinished);
     mpPageTitleLabel->setText("{PageName}");
     mpGridLayout->setObjectName("QGridLayout:AbstractCentralPage");
     mpGridLayout->addWidget(mpPageTitleLabel, 0, 0, Qt::AlignRight);
@@ -70,6 +72,7 @@ void AbstractCentralPage::columnChanged(VectorColumnRole::Column col)
 
 void AbstractCentralPage::setVector(VectorObject * vector)
 {
+    TSTALLOC(vector)
     TRACEQFI << vector->scopeString();
     VectorColumn vc(VectorColumnRole::Column(vector->scope()),
                     vector->coefVector());
@@ -79,6 +82,20 @@ void AbstractCentralPage::setVector(VectorObject * vector)
 void AbstractCentralPage::setColumn(VectorColumn column)
 {
     TRACEQFI << column.columnName();
+    TSTALLOC(mpColumnSet)
     mpColumnSet->set(column);
     TRACEQFI << "exit";
+}
+
+void AbstractCentralPage::startSetup()
+{
+    TRACEQFI << Vector::viewString(view());
+    TSTALLOC(mpGridLayout)
+    setLayout(mpGridLayout);
+}
+
+void AbstractCentralPage::finishSetup()
+{
+    TRACEQFI << Vector::viewString(view());
+    emit setupFinished(view());
 }

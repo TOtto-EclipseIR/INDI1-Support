@@ -29,6 +29,7 @@ void MainWindow::setupMenuActions(void)
     addMenuAction(mpFileMenu, "Open Subject&One", "OpenSubjectOne");
     addMenuAction(mpFileMenu, "Open Subject&Two", "OpenSubjectTwo");
     addMenuAction(mpFileMenu, "Close &All", "CloseAll");
+    mpFileMenu->addSeparator();
     addMenuAction(mpFileMenu, "Open Search &Results",
                               "OpenSearchResults");
     mpFileMenu->addSeparator();

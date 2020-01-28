@@ -41,6 +41,8 @@ public slots:
     void setColumn(VectorColumn column);
 
 public slots: // virtual
+    virtual void startSetup(void);
+    virtual void finishSetup(void);
     virtual void setVector(VectorObject * vector);
 
 protected: // virtual
@@ -50,9 +52,11 @@ protected slots: // virtual
     virtual void columnChanged(VectorColumnRole::Column col);
 
 signals:
+    void ctorFinished(void);
+    void setupFinished(Vector::View view);
 
 private:
-    CentralStack * mpStack;
+    CentralStack * mpStack=nullptr;
     VectorColumnSet * mpColumnSet=nullptr;
     PageGridLayout * mpGridLayout=nullptr;
     QLabel * mpPageTitleLabel=nullptr;

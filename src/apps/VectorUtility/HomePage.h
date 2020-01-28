@@ -15,15 +15,10 @@ public:
 public slots:
 
 protected slots:
-    void startSetup(void);
-    void finishSetup(void)
-    { emit setupFinished(); }
-
-
+    void startSetup(void) override;
+    void finishSetup(void) override;
 
 signals:
-    void ctorFinished(void);
-    void setupFinished(void);
 
 protected slots:
     void setupWidgets(void);

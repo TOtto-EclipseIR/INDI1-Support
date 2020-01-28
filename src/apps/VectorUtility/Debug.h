@@ -19,15 +19,17 @@
 #define DEBUGXN(qmt, pfx, bexpr) { if (bexpr) qmt() << pfx << TIME << __LINE__  << "Expectation FAILED:" << #bexpr; }
 #define DEBUGXEQ(qmt, pfx, expt, var) { if (expt != var) qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Expectation FAILED:" << #expt << expt << "==" << #var << var; }
 #define DEBUGXNE(qmt, pfx, expt, var) { if (expt == var) qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Expectation FAILED:" << #expt << expt << "!=" << #var << var; }
-#define DEBUGXPTR(qmt, pfx, ptr) { if (nullptr == ptr) qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Allocation FAILED:" <<  #ptr; }
+#define DEBUGXPTR(qmt, pfx, ptr) if (nullptr == ptr) qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Pointer FAILED:" <<  #ptr;
 #define DEBUGPTR(qmt, pfx, ptr, expr)     if (ptr) ptr->expr else DEBUG(qmt, pfx) "Pointer" << #ptr << "FAILED for" << #expr;
 #define DEBUGRTN(qmt, pfx, expr) { qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Return:" << #expr; return expr; }
 #define DEBUGRTV(qmt, pfx) { qmt() << pfx << TIME << Q_FUNC_INFO << __LINE__ << "Return(void)"; return; }
-#define DEBUGQUIT { qCritical() << ""; QTimer::singleShot(0, qApp, SLOT(quit())); }
+//#define DEBUGQUIT { qCritical() << ""; QTimer::singleShot(0, qApp, SLOT(quit())); }
+#define DEBUGQUIT Q_ASSERT(false);
+#define DEBUGCON(qmt, pfx, src, sig, rec, slt) TSTALLOC(src); TSTALLOC(rec); if ( ! connect(src,sig,rec,slt)) DEBUG(qmt, pfx) << "Connect FAILED:" << #src << #sig << #rec << #slt;
 
-#define PINFO   "=INFO "
+#define PINFO   "=INFO>"
 #define PTRACE  "-TRACE"
-#define PWARN   "*WARN "
+#define PWARN   "*WARN>"
 #define PERROR  "#ERROR"
 #define PABORT  "@FATAL"
 
@@ -61,6 +63,8 @@
 #define WARNPSZ(psz)            DEBUGPSZ(qWarning, PWARN, psz);
 #define WARNQST(qst)            DEBUGQST(qWarning, PWARN, qPrintable(qst));
 #define WEXPECT(bexpr)          DEBUGEXP(qWarning, PWARN, bexpr)
+//#define WCONNECT(src, sig, dst, slt) { TSTALLOC(src); TSTALLOC(dst); WEXPECT(connect(src, sig, dst, slt)); }
+#define WCONNECT(src, sig, dst, slt)    DEBUGCON(qWarning,  PWARN, src, sig, dst, slt)
 #define WEXPECTNOT(bexpr)       DEBUGXN(qWarning, PWARN, bexpr)
 #define WEXPECTEQ(expt, var)    DEBUGXEQ(qWarning, PWARN, expt, var)
 #define WEXPECTNE(expt, var)    DEBUGXNE(qWarning, PWARN, expt, var)
@@ -77,7 +81,8 @@
 #define EXPECTNOT(bexpr)        DEBUGXN(qCritical, PERROR, bexpr)
 #define EXPECTEQ(expt, var)     DEBUGXEQ(qCritical, PERROR, expt, var)
 #define EXPECTNE(expt, var)     DEBUGXNE(qCritical, PERROR, expt, var)
-#define CONNECT(src, sig, dst, slt) { TSTALLOC(src); TSTALLOC(dst); EXPECT (connect(src, sig, dst, slt)); }
+//#define CONNECT(src, sig, dst, slt) { TSTALLOC(src); TSTALLOC(dst); EXPECT(connect(src, sig, dst, slt)); }
+#define CONNECT(src, sig, dst, slt)    DEBUGCON(qCritical,  PERROR, src, sig, dst, slt)
 #define NEEDDO(msg)             DEBUGDO(qCritical, PERROR, msg)
 #define NEEDUSE(msg)            DEBUGUSE(qCritical, PERROR, msg)
 #define NEEDRTN(expr)           DEBUGRTN(qCritical, PERROR, expr)
@@ -90,6 +95,8 @@
 #define ABORTPSZ(psz)           DEBUGPSZ(qCritical, PABORT, psz); DEBUGQUIT
 #define ABORTQST(qst)           DEBUGQST(qCritical, PABORT, qPrintable(qst)); DEBUGQUIT
 #define BEXPECT(bexpr)          DEBUGEXP(qCritical, PABORT, bexpr); DEBUGQUIT
+//#define BCONNECT(src, sig, dst, slt) { TSTALLOC(src); TSTALLOC(dst); BEXPECT(connect(src, sig, dst, slt)); }
+#define BCONNECT(src, sig, dst, slt)    DEBUGCON(qCritical,  PERROR, src, sig, dst, slt); DEBUGQUIT
 #define BEXPECTNOT(bexpr)       DEBUGXN(qCritical, PABORT, bexpr); DEBUGQUIT
 #define BEXPECTEQ(expt, var)    DEBUGXEQ(qCritical, PABORT, expt, var); DEBUGQUIT
 #define BEXPECTNE(expt, var)    DEBUGXNE(qCritical, PABORT, expt, var); DEBUGQUIT

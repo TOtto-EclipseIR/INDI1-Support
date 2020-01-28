@@ -34,7 +34,7 @@ public slots:
 
     void startSetup(void);
     void finishSetup(void);
-
+    void viewSetupFinished(Vector::View view);
 
 protected slots:
     void setupNextPage(void);
@@ -50,7 +50,7 @@ signals:
 
 private:
     VectorUtilityApp * mpApp=nullptr;
-    ViewQueue mPendingSetupQueue;
+    ViewQueue mPendingViewSetupQueue;
     DualMap<Vector::View, AbstractCentralPage *> mViewPageDMap;
     AbstractCentralPage * mpHomePage=nullptr;
     AbstractCentralPage * mpCurrentPage=nullptr;

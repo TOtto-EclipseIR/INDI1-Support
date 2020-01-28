@@ -7,11 +7,10 @@ VectorColumnSet::VectorColumnSet(QObject * parent) :
 {
     TRACEFN()
     setObjectName("VectorColumnSet");
-
-    EXPECT(connect(this, SIGNAL(columnChangedRole(VectorColumn::Role)),
-            this, SLOT(updateForChangedColumn(VectorColumn::Role))));
-    EXPECT(connect(this, &VectorColumnSet::columnsToUpdate,
-            this, &VectorColumnSet::updateColumnList));
+    CONNECT(this, SIGNAL(columnChangedRole(VectorColumn::Role)),
+            this, SLOT(updateForChangedColumn(VectorColumn::Role)));
+    CONNECT(this, &VectorColumnSet::columnsToUpdate,
+            this, &VectorColumnSet::updateColumnList);
 }
 
 void VectorColumnSet::set(const VectorColumn & vc)
@@ -36,10 +35,11 @@ VectorColumn VectorColumnSet::value(const VectorColumnRole::Column col) const
     TRACEQFI << col;
     if ( ! mColumnSet.contains(col))
     {
-        ERROR << objectName() << "does not contain" << col;
+        ERRORQFI << "does not contain" << col;
         return VectorColumn();
     }
     VectorColumnObject * pvco = mColumnSet.value(col);
+    TSTALLOC(pvco);
     return VectorColumn(*pvco);
 }
 
@@ -48,6 +48,7 @@ void VectorColumnSet::remove(const VectorColumnRole::Column col)
     if (contains(col))
     {
         VectorColumnObject * pvco = mColumnSet.value(col);
+        TSTALLOC(pvco);
         pvco->deleteLater();
         mColumnSet.insert(col, nullptr);
     }
@@ -66,12 +67,12 @@ void VectorColumnSet::
 void VectorColumnSet::updateColumn(const VectorColumnRole::Column col)
 {
     TRACEQFI << col;
-    VectorColumnRole::Column firstCol = VectorColumnRole::nullCol;
-    VectorColumnRole::Column secondCol  = VectorColumnRole::nullCol;
+    VectorColumnRole::Column firstCol  = VectorColumnRole::nullCol;
+    VectorColumnRole::Column secondCol = VectorColumnRole::nullCol;
     NEEDDO("figeritout");
     if (contains(firstCol) && contains(secondCol))
     {
-        VectorColumn firstVC = value(firstCol);
+        VectorColumn firstVC  = value(firstCol);
         VectorColumn secondVC = value(secondCol);
         VectorColumn newVC(col, firstVC.rows());
         if (false)
@@ -82,7 +83,6 @@ void VectorColumnSet::updateColumn(const VectorColumnRole::Column col)
             newVC.setRatio(firstVC, secondVC);
         else
             WARNQFI << "Wierd Linkage not Delta or Ratio" << col;
-
         set(newVC);
     }
 }

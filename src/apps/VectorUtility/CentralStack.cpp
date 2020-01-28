@@ -20,15 +20,19 @@ CentralStack::CentralStack(MainWindow * parent)
     TRACEFN()
     setObjectName("CentralStack:VectorUtility");
 
-    //EXPECT(connect(this, ))
-    EXPECT(connect(this, &QStackedWidget::currentChanged,
-            this, &CentralStack::indexChanged));
+    CONNECT(this, &CentralStack::ctorFinished,
+            this, &CentralStack::startSetup);
+    CONNECT(this, &QStackedWidget::currentChanged,
+            this, &CentralStack::indexChanged);
+    CONNECT(app()->mainWindow(), &MainWindow::viewChanged,
+            this, &CentralStack::setCurrentView);
 
     emit ctorFinished();
 }
 
 VectorUtilityApp *CentralStack::app()
 {
+    TSTALLOC(mpApp);
     return mpApp;
 }
 
@@ -36,6 +40,7 @@ AbstractCentralPage * CentralStack::page(const Vector::View view)
 {
     TRACEQFI << Vector::viewString(view);
     AbstractCentralPage * pacp = mViewPageDMap.at(view);
+    TSTALLOC(pacp);
     TRACEQFI << "return" << pacp->objectName();
     return pacp;
 }
@@ -44,8 +49,10 @@ AbstractCentralPage * CentralStack::widget(int ix) const
 {
     TRACEQFI << ix;
     QWidget * pw = QStackedWidget::widget(ix);
+    TSTALLOC(pw)
     AbstractCentralPage * pacp
             = qobject_cast<AbstractCentralPage *>(pw);
+    TSTALLOC(pacp)
     TRACEQFI << "return" << pacp->objectName();
     return pacp;
 }
@@ -68,6 +75,7 @@ void CentralStack::setCurrentView(const Vector::View & view)
             for (int ix = 0; ix < n; ix++)
             {
                 page = widget(ix);
+                TSTALLOC(page);
                 TRACE << "trying" << page->objectName() << page->view() << Vector::viewString(page->view());
                 if (page->view() == view)
                 {
@@ -80,16 +88,15 @@ void CentralStack::setCurrentView(const Vector::View & view)
         }
     }
     update(); show();
-    TRACEQFI << "exit";
+    TRACERTV()
 }
 
 void CentralStack::startSetup(void)
 {
     TRACEFN()
-
-    EXPECT(connect(app()->mainWindow(), &MainWindow::viewChanged,
-            this, &CentralStack::setCurrentView));
-    NEEDDO("fill view queue");
+    mPendingViewSetupQueue << Vector::Home << Vector::Summary
+                       << Vector::Grid << Vector::Graph
+                       << Vector::Reconstruction << Vector::RawXml;
     QTimer::singleShot(100, this, &CentralStack::setupNextPage);
     TRACEQFI << "exit";
 }
@@ -97,14 +104,23 @@ void CentralStack::startSetup(void)
 void CentralStack::finishSetup()
 {
     TRACEFN()
-    emit setupFinished();
+            emit setupFinished();
+}
+
+void CentralStack::viewSetupFinished(Vector::View view)
+{
+    TRACEQFI << Vector::viewString(view);
+    mPendingViewSetupQueue.removeAll(view);
+    TRACE << mPendingViewSetupQueue;
+    QTimer::singleShot(100, this, &CentralStack::setupNextPage);
+    TRACERTV()
 }
 
 void CentralStack::setupNextPage(void)
 {
     TRACEFN()
 
-    if (mPendingSetupQueue.isEmpty())
+    if (mPendingViewSetupQueue.isEmpty())
     {
         TRACE << "Pending Page Setup Queue is empty";
         setCurrentView(Vector::Home);
@@ -112,7 +128,7 @@ void CentralStack::setupNextPage(void)
     }
     else
     {
-        Vector::View newView = mPendingSetupQueue.takeFirst();
+        Vector::View newView = mPendingViewSetupQueue.first();
         TRACE <<  "New View Page:" << Vector::viewString(newView);
         switch (newView)
         {
@@ -175,6 +191,7 @@ void CentralStack::setupNextPage(void)
 
 void CentralStack::setVector(VectorObject * vector)
 {
+    TSTALLOC(vector)
     TRACEQFI << vector->scopeString();
     TRACEQFI << Vector::scopeString(vector->scope());
     QList<Vector::View> pageViews = mViewPageDMap.keys();
@@ -183,6 +200,7 @@ void CentralStack::setVector(VectorObject * vector)
     {
         AbstractCentralPage * page
             = (AbstractCentralPage *)mViewPageDMap.at(view);
+        TSTALLOC(page)
         page->setVector(vector);
     }
 /*
@@ -195,6 +213,7 @@ void CentralStack::setVector(VectorObject * vector)
 
 void CentralStack::addCentralPage(AbstractCentralPage * newPage)
 {
+    TSTALLOC(newPage)
     TRACEQFI << newPage->objectName() << newPage->pageName();
     newPage->setPageTitle();
     QStackedWidget::addWidget(newPage);
@@ -207,6 +226,7 @@ void CentralStack::indexChanged(int newIndex)
 {
     TRACEQFI << newIndex;
     AbstractCentralPage * newPage = widget(newIndex);
+    TSTALLOC(newPage)
     TRACE << newPage->objectName() << newPage->pageName();
     emit currentPageChanged(newPage->pageName(), newPage);
     TRACEQFI << "exit";

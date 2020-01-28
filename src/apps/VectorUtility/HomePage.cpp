@@ -31,8 +31,13 @@ QString HomePage::pageName() const
 void HomePage::startSetup(void)
 {
     TRACEFN()
-
     QTimer::singleShot(100, this, &HomePage::setupWidgets);
+}
+
+void HomePage::finishSetup()
+{
+    TRACEFN()
+    emit setupFinished(view());
 }
 
 void HomePage::setupWidgets(void)
